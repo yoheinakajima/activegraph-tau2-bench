@@ -11,7 +11,7 @@ This repository is for evaluating **ActiveGraph.ai** against the official **tau2
   - ActiveGraph trace-only
   - ActiveGraph state-packet
   - ActiveGraph reactive manager
-- **Phase 1 (this phase):** local install + baseline no-LLM smoke checks only.
+- **Current phase boundary:** no ActiveGraph integration yet.
 
 ## Repo layout
 
@@ -25,52 +25,74 @@ activegraph-tau2-bench/
   docs/
 ```
 
-## Provenance
+## Provenance (currently blocked in this environment)
 
 Official upstream benchmark:
 - https://github.com/sierra-research/tau2-bench
 
-> Note: In this environment, outbound GitHub access is blocked (HTTP 403 tunnel error), so the vendor checkout cannot be fetched automatically here.
+Vendoring attempts on **2026-05-26** failed in this environment due to outbound GitHub access restrictions (`CONNECT tunnel failed, response 403`):
+
+```bash
+git clone https://github.com/sierra-research/tau2-bench vendor/tau2-bench
+git clone --depth 1 https://github.com/sierra-research/tau2-bench vendor/tau2-bench
+curl -L https://github.com/sierra-research/tau2-bench/archive/refs/heads/main.tar.gz
+```
+
+Because vendoring is blocked, there is **no upstream commit hash recorded yet**.
 
 When network access is available:
 
 ```bash
 git clone https://github.com/sierra-research/tau2-bench vendor/tau2-bench
-cd vendor/tau2-bench
-git rev-parse HEAD
+git -C vendor/tau2-bench rev-parse HEAD
 ```
 
-Record the printed commit hash in your run notes.
+Record that exact commit hash here and in `docs/source_map.md`.
 
-## Install (baseline)
+## Install (once vendored)
 
-After vendoring tau2-bench:
+Tau2 upstream docs indicate `uv`-based workflow and Python 3.12+.
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-# then install tau2-bench per upstream docs, e.g. one of:
-# pip install -e vendor/tau2-bench
-# or: uv pip install -e vendor/tau2-bench
+cd vendor/tau2-bench
+uv sync
+uv run tau2 check-data
+uv run tau2 intro
 ```
 
-## Smoke test (no LLM/API calls)
-
-Run:
+## Smoke test command
 
 ```bash
 python scripts/run_smoke_baseline.py
 ```
 
-This writes artifacts to `runs/<timestamp>/`:
-- `final_state.json`
-- `summary.md`
-- `raw.log`
+## Smoke behavior and limits
 
-The script is designed to avoid LLM/API calls; it only performs local structural checks and optional `pytest --collect-only` when vendor code exists.
+The smoke harness:
+- creates `runs/<timestamp>/`
+- writes `raw.log`, `summary.md`, and `final_state.json`
+- performs **no LLM/API calls**
+- reports one of these states:
+  - `upstream_missing`
+  - `install_failed`
+  - `import_failed`
+  - `data_check_failed`
+  - `source_inspection_only_passed`
+  - `no_llm_smoke_passed`
 
-## What remains once vendor code is present
+What it validates today in this blocked environment:
+- local repo structure and absence/presence of `vendor/tau2-bench`
 
-- Inspect and document tau2-bench runtime/entrypoints/domains/tools/policies/state/evaluation details.
-- Run the smallest local upstream smoke target that does not hit paid model APIs.
+What it does **not** validate until vendoring succeeds:
+- tau2 install/runtime behavior
+- data checks
+- CLI behavior
+- domain/task/policy/tool/evaluation loading from real upstream source
+
+## Next phases (not implemented here)
+
+After this Phase 1.5 vendoring/source-map/smoke step is complete with real upstream code:
+1. baseline tau2 behavior
+2. ActiveGraph trace-only
+3. ActiveGraph state-packet
+4. ActiveGraph reactive manager
