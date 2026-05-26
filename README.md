@@ -96,3 +96,7 @@ After this Phase 1.5 vendoring/source-map/smoke step is complete with real upstr
 2. ActiveGraph trace-only
 3. ActiveGraph state-packet
 4. ActiveGraph reactive manager
+
+## Latest blocker update (2026-05-26 UTC)
+
+Re-attempted vendoring in this session and still blocked by outbound GitHub restrictions (HTTP 403 / CONNECT tunnel failure). See `docs/source_map.md` for exact commands and next steps.
