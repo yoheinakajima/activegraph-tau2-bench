@@ -254,4 +254,41 @@ runs/<timestamp>/
 
 ## Source map
 
-See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary. See `docs/state_packets.md` for the Phase 4 state-packet schema and validation boundary. See `docs/reactive_manager_dry_run.md` for the Phase 5 dry-run replay/fork/diff planning boundary.
+See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary. See `docs/state_packets.md` for the Phase 4 state-packet schema and validation boundary. See `docs/reactive_manager_dry_run.md` for the Phase 5 dry-run replay/fork/diff planning boundary. See `docs/reactive_manager_contracts.md` for the Phase 6 guarded execution-contract boundary and `docs/live_reactive_manager_opt_in.md` for the Phase 7 live opt-in readiness boundary.
+
+## Phase 7 live reactive-manager opt-in contract smoke command
+
+```bash
+python scripts/run_live_manager_opt_in_contracts.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+live_manager_opt_in_contracts_passed
+```
+
+This command regenerates/preserves the Phase 6 fixture-backed artifacts and adds live opt-in proposal/readiness artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  contract_decisions.jsonl
+  contract_report.json
+  live_opt_in_decisions.jsonl
+  live_readiness_report.json
+  live_manager_proposal.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The live opt-in smoke is a proposal/readiness contract layer only. It models operator authorization, credential isolation, tau2/ActiveGraph ownership, sandboxing, rollback/recovery, audit logging, failure modes, and readiness scoring for a future live manager, while intentionally keeping `live_ready=false` and live execution unavailable/fail-closed. It does not execute tau2 control flow, does not feed state packets back into tau2, does not mutate tau2 behavior or vendored tau2 source, does not run `tau2 run`, and does not call model-backed agents or LLM/API services. See `docs/live_reactive_manager_opt_in.md` for schemas, gate details, failure modes, and future-phase handoff notes.
