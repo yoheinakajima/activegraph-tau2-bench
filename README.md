@@ -205,6 +205,40 @@ runs/<timestamp>/
 
 The reactive-manager dry run is still not live reactive control. It only reads fixture-backed artifacts and writes deterministic replay/fork/diff plans. It does not execute replay or fork steps, does not let ActiveGraph control tau2 lifecycle or task state, does not feed state packets back into tau2, does not mutate tau2 behavior, does not run `tau2 run`, and does not call model-backed agents or LLM/API services. See `docs/reactive_manager_dry_run.md` for schemas, validation rules, boundaries, and future-phase handoff notes.
 
+## Phase 6 reactive-manager execution contract smoke command
+
+```bash
+python scripts/run_reactive_manager_contracts.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+reactive_manager_contracts_passed
+```
+
+This command regenerates/preserves the Phase 5 fixture-backed artifacts and adds guarded execution-contract artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  contract_decisions.jsonl
+  contract_report.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The contract smoke defines a future execution request/decision boundary, validates safety gates, and hard-codes live execution as unavailable. A valid dry-run request is accepted as plan-only; live-control, missing-provenance, invalid-packet-chain, and secret-bearing requests are rejected fail-closed. It does not execute tau2 control flow, does not feed state packets back into tau2, does not mutate tau2 behavior, does not run `tau2 run`, and does not call model-backed agents or LLM/API services. See `docs/reactive_manager_contracts.md` for contract schemas, safety gates, failure modes, and future-phase handoff notes.
+
 ## Smoke output location
 
 Each smoke run creates a timestamped directory:
@@ -216,7 +250,7 @@ runs/<timestamp>/
   final_state.json
 ```
 
-`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2, Phase 3, Phase 4, and Phase 5 smokes also write `events.jsonl`; Phase 3, Phase 4, and Phase 5 write `activegraph_trace.json`; Phase 4 and Phase 5 write `state_packets.jsonl` and `state_packet_index.json`; Phase 5 additionally writes `manager_plan.json`, `manager_decisions.jsonl`, `replay_plan.json`, `fork_plan.json`, and `diff_report.json`.
+`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2, Phase 3, Phase 4, Phase 5, and Phase 6 smokes also write `events.jsonl`; Phase 3, Phase 4, Phase 5, and Phase 6 write `activegraph_trace.json`; Phase 4, Phase 5, and Phase 6 write `state_packets.jsonl` and `state_packet_index.json`; Phase 5 and Phase 6 additionally write `manager_plan.json`, `manager_decisions.jsonl`, `replay_plan.json`, `fork_plan.json`, and `diff_report.json`; Phase 6 additionally writes `contract_decisions.jsonl` and `contract_report.json`.
 
 ## Source map
 
