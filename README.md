@@ -4,8 +4,8 @@ This repository evaluates future **ActiveGraph.ai** integrations against the off
 
 ## Current phase boundary
 
-- **Current phase:** Phase 1.5 local vendored source map and no-LLM smoke baseline.
-- **Not implemented yet:** ActiveGraph integration, trace capture, state packets, reactive manager behavior, and Phase 2 observability hooks.
+- **Current phase:** Phase 2 trace-only observability smoke for the locally vendored tau2-bench baseline.
+- **Not implemented yet:** ActiveGraph integration, state packets, reactive manager behavior, and real tau2 runtime tracing. Phase 2 trace smoke is fixture-backed and no-LLM-safe.
 - Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
 
 ## Vendored upstream provenance
@@ -23,7 +23,10 @@ The source map in `docs/source_map.md` is based only on the local vendored tree 
 activegraph-tau2-bench/
   README.md
   docs/source_map.md
+  docs/trace_only.md
+  experiments/trace_only/
   scripts/run_smoke_baseline.py
+  scripts/run_trace_smoke.py
   runs/                         # generated smoke output
   vendor/tau2-bench/            # vendored upstream benchmark source
 ```
@@ -34,6 +37,7 @@ For local repository smoke checks, no tau2 install or API key is required:
 
 ```bash
 python scripts/run_smoke_baseline.py
+python scripts/run_trace_smoke.py
 ```
 
 For upstream tau2 development/runtime work, use the vendored upstream project environment:
@@ -49,7 +53,7 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. It:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. It:
 
 - never requires API keys;
 - never calls paid LLM APIs;
@@ -72,6 +76,31 @@ no_llm_smoke_passed
 
 The harness validates the local vendored source exists and will not report `upstream_missing` when `vendor/tau2-bench` is present.
 
+
+## Phase 2 trace-only smoke command
+
+```bash
+python scripts/run_trace_smoke.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+trace_smoke_passed
+```
+
+This command writes trace-only artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The trace smoke is fixture-backed. It inspects real local tau2 source paths with the Python standard library and emits baseline lifecycle events, but it does not import `tau2`, run `tau2 run`, call model-backed agents, integrate ActiveGraph, create state packets, or implement reactive manager behavior. See `docs/trace_only.md` for the event schema, hook boundaries, and Phase 3 handoff notes.
+
 ## Smoke output location
 
 Each smoke run creates a timestamped directory:
@@ -87,4 +116,4 @@ runs/<timestamp>/
 
 ## Source map
 
-See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and future Phase 2 observability hook candidates.
+See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details.
