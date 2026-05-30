@@ -334,3 +334,73 @@ runs/<timestamp>/
 ```
 
 The live-readiness audit is review-only. It validates deterministic audit-log hash-chain integrity, handle-only credential references, unavailable credential-vault runtime behavior, sandbox policy rejection of unsafe network/model/live-tau2 settings, and vendor immutability while intentionally preserving `live_ready=false` and live execution unavailable/fail-closed. It does not execute tau2 control flow, does not feed state packets back into tau2, does not mutate tau2 behavior or vendored tau2 source, does not run `tau2 run`, does not call model-backed agents or LLM/API services, and does not read or store real credentials. See `docs/live_readiness_audit.md` for schemas, integrity validation, policy checks, failure modes, and future-phase handoff notes.
+
+## Phase 9 external audit-store and vault readiness smoke command
+
+```bash
+python scripts/run_external_readiness_contracts.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+external_readiness_contracts_passed
+```
+
+This command regenerates/preserves the Phase 8 fixture-backed artifacts and adds design-only external audit-store and vault-integration readiness artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  contract_decisions.jsonl
+  contract_report.json
+  live_opt_in_decisions.jsonl
+  live_readiness_report.json
+  live_manager_proposal.json
+  audit_log.jsonl
+  audit_integrity_report.json
+  credential_policy_report.json
+  sandbox_policy_report.json
+  live_readiness_audit_report.json
+  external_audit_store_contracts.json
+  external_audit_store_decisions.jsonl
+  vault_integration_contracts.json
+  vault_integration_decisions.jsonl
+  external_readiness_report.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The external readiness smoke is design-only. It defines future external audit-store and vault resolver interfaces, validates deterministic mock contracts for append-only/read-back/hash-chain/source-artifact audit anchoring, rejects unsafe vault references including raw secrets and environment/file lookups, and intentionally preserves `live_ready=false`, `external_audit_store_live_ready=false`, `vault_integration_live_ready=false`, and live execution unavailable/fail-closed. It does not implement a real external service or vault, execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/external_audit_vault_readiness.md` for schemas, contracts, failure modes, and future-phase requirements.
+
+## Compact aggregate smoke command
+
+```bash
+python scripts/run_all_smokes.py
+```
+
+Expected successful aggregate state:
+
+```text
+all_smokes_passed
+```
+
+The aggregate command runs all local smoke scripts in order, prints a compact status table by default, and writes combined artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  aggregate_raw.log
+  aggregate_summary.md
+  aggregate_final_state.json
+```
+
+Use `python scripts/run_all_smokes.py --verbose` to print full child-script output. The aggregator does not change any existing smoke behavior; it only captures each child output directory and final status and fails if any smoke fails or expected status is missing.
