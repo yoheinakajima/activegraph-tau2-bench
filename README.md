@@ -1,102 +1,90 @@
 # activegraph-tau2-bench
 
-This repository is for evaluating **ActiveGraph.ai** against the official **tau2-bench** benchmark.
+This repository evaluates future **ActiveGraph.ai** integrations against the official **tau2-bench** benchmark while keeping the vendored benchmark source separate from local experiment code.
 
-## Scope
+## Current phase boundary
 
-- Upstream benchmark source should live in `vendor/tau2-bench`.
-- This repo keeps benchmark code separate from experiment code (`experiments/`, `scripts/`, `runs/`, `docs/`).
-- Planned comparisons in later phases:
-  - Baseline tau2-bench
-  - ActiveGraph trace-only
-  - ActiveGraph state-packet
-  - ActiveGraph reactive manager
-- **Current phase boundary:** no ActiveGraph integration yet.
+- **Current phase:** Phase 1.5 local vendored source map and no-LLM smoke baseline.
+- **Not implemented yet:** ActiveGraph integration, trace capture, state packets, reactive manager behavior, and Phase 2 observability hooks.
+- Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
+
+## Vendored upstream provenance
+
+- Upstream project: `sierra-research/tau2-bench`
+- Vendored source path: `vendor/tau2-bench`
+- Vendored upstream commit: `fcc9ed68df33c93ff0b8c946865f267d7c99fb06`
+- Commit marker file: `vendor/tau2-bench.UPSTREAM_COMMIT`
+
+The source map in `docs/source_map.md` is based only on the local vendored tree at that commit.
 
 ## Repo layout
 
 ```text
 activegraph-tau2-bench/
   README.md
-  vendor/tau2-bench/
-  experiments/
-  scripts/
-  runs/
-  docs/
+  docs/source_map.md
+  scripts/run_smoke_baseline.py
+  runs/                         # generated smoke output
+  vendor/tau2-bench/            # vendored upstream benchmark source
 ```
 
-## Provenance (currently blocked in this environment)
+## Install commands
 
-Official upstream benchmark:
-- https://github.com/sierra-research/tau2-bench
-
-Vendoring attempts on **2026-05-26** failed in this environment due to outbound GitHub access restrictions (`CONNECT tunnel failed, response 403`):
-
-```bash
-git clone https://github.com/sierra-research/tau2-bench vendor/tau2-bench
-git clone --depth 1 https://github.com/sierra-research/tau2-bench vendor/tau2-bench
-curl -L https://github.com/sierra-research/tau2-bench/archive/refs/heads/main.tar.gz
-```
-
-Because vendoring is blocked, there is **no upstream commit hash recorded yet**.
-
-When network access is available:
-
-```bash
-git clone https://github.com/sierra-research/tau2-bench vendor/tau2-bench
-git -C vendor/tau2-bench rev-parse HEAD
-```
-
-Record that exact commit hash here and in `docs/source_map.md`.
-
-## Install (once vendored)
-
-Tau2 upstream docs indicate `uv`-based workflow and Python 3.12+.
-
-```bash
-cd vendor/tau2-bench
-uv sync
-uv run tau2 check-data
-uv run tau2 intro
-```
-
-## Smoke test command
+For local repository smoke checks, no tau2 install or API key is required:
 
 ```bash
 python scripts/run_smoke_baseline.py
 ```
 
-## Smoke behavior and limits
+For upstream tau2 development/runtime work, use the vendored upstream project environment:
 
-The smoke harness:
-- creates `runs/<timestamp>/`
-- writes `raw.log`, `summary.md`, and `final_state.json`
-- performs **no LLM/API calls**
-- reports one of these states:
-  - `upstream_missing`
-  - `install_failed`
-  - `import_failed`
-  - `data_check_failed`
-  - `source_inspection_only_passed`
-  - `no_llm_smoke_passed`
+```bash
+cd vendor/tau2-bench
+uv sync
+uv run tau2 --help
+uv run tau2 check-data
+```
 
-What it validates today in this blocked environment:
-- local repo structure and absence/presence of `vendor/tau2-bench`
+Running real tau2 benchmark simulations may require model/API credentials depending on the selected agent, user simulator, review, voice, or NL-assertion configuration.
 
-What it does **not** validate until vendoring succeeds:
-- tau2 install/runtime behavior
-- data checks
-- CLI behavior
-- domain/task/policy/tool/evaluation loading from real upstream source
+## No-LLM/API-call boundary
 
-## Next phases (not implemented here)
+The Phase 1.5 smoke harness is intentionally source/data inspection only. It:
 
-After this Phase 1.5 vendoring/source-map/smoke step is complete with real upstream code:
-1. baseline tau2 behavior
-2. ActiveGraph trace-only
-3. ActiveGraph state-packet
-4. ActiveGraph reactive manager
+- never requires API keys;
+- never calls paid LLM APIs;
+- does not run `tau2 run`;
+- does not instantiate LLM agents or call user simulator generation;
+- does not run auto-review or NL-assertion evaluators;
+- uses Python standard-library checks over local files only.
 
-## Latest blocker update (2026-05-26 UTC)
+## Smoke command
 
-Re-attempted vendoring in this session and still blocked by outbound GitHub restrictions (HTTP 403 / CONNECT tunnel failure). See `docs/source_map.md` for exact commands and next steps.
+```bash
+python scripts/run_smoke_baseline.py
+```
+
+Expected successful state when `vendor/tau2-bench` exists:
+
+```text
+no_llm_smoke_passed
+```
+
+The harness validates the local vendored source exists and will not report `upstream_missing` when `vendor/tau2-bench` is present.
+
+## Smoke output location
+
+Each smoke run creates a timestamped directory:
+
+```text
+runs/<timestamp>/
+  raw.log
+  summary.md
+  final_state.json
+```
+
+`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results.
+
+## Source map
+
+See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and future Phase 2 observability hook candidates.
