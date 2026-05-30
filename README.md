@@ -292,3 +292,45 @@ runs/<timestamp>/
 ```
 
 The live opt-in smoke is a proposal/readiness contract layer only. It models operator authorization, credential isolation, tau2/ActiveGraph ownership, sandboxing, rollback/recovery, audit logging, failure modes, and readiness scoring for a future live manager, while intentionally keeping `live_ready=false` and live execution unavailable/fail-closed. It does not execute tau2 control flow, does not feed state packets back into tau2, does not mutate tau2 behavior or vendored tau2 source, does not run `tau2 run`, and does not call model-backed agents or LLM/API services. See `docs/live_reactive_manager_opt_in.md` for schemas, gate details, failure modes, and future-phase handoff notes.
+
+## Phase 8 live-readiness audit smoke command
+
+```bash
+python scripts/run_live_readiness_audit.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+live_readiness_audit_passed
+```
+
+This command regenerates/preserves the Phase 7 fixture-backed artifacts and adds review-only audit/readiness artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  contract_decisions.jsonl
+  contract_report.json
+  live_opt_in_decisions.jsonl
+  live_readiness_report.json
+  live_manager_proposal.json
+  audit_log.jsonl
+  audit_integrity_report.json
+  credential_policy_report.json
+  sandbox_policy_report.json
+  live_readiness_audit_report.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The live-readiness audit is review-only. It validates deterministic audit-log hash-chain integrity, handle-only credential references, unavailable credential-vault runtime behavior, sandbox policy rejection of unsafe network/model/live-tau2 settings, and vendor immutability while intentionally preserving `live_ready=false` and live execution unavailable/fail-closed. It does not execute tau2 control flow, does not feed state packets back into tau2, does not mutate tau2 behavior or vendored tau2 source, does not run `tau2 run`, does not call model-backed agents or LLM/API services, and does not read or store real credentials. See `docs/live_readiness_audit.md` for schemas, integrity validation, policy checks, failure modes, and future-phase handoff notes.
