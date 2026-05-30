@@ -4,8 +4,8 @@ This repository evaluates future **ActiveGraph.ai** integrations against the off
 
 ## Current phase boundary
 
-- **Current phase:** Phase 4 ActiveGraph state-packet serialization smoke for the locally vendored tau2-bench baseline.
-- **Not implemented yet:** ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 4 state packets are fixture-backed, no-LLM-safe, and derived from the TraceEvent stream/projection only; ActiveGraph is still not used to control tau2 lifecycle or task state.
+- **Current phase:** Phase 5 dry-run reactive-manager replay/fork/diff planning for the locally vendored tau2-bench baseline.
+- **Not implemented yet:** live ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 5 adds dry-run-only replay/fork/diff planning over fixture artifacts; ActiveGraph is still not used to control tau2 lifecycle or task state.
 - Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
 
 ## Vendored upstream provenance
@@ -26,13 +26,16 @@ activegraph-tau2-bench/
   docs/trace_only.md
   docs/activegraph_trace_only.md
   docs/state_packets.md
+  docs/reactive_manager_dry_run.md
   experiments/trace_only/
   experiments/activegraph_trace/
   experiments/state_packets/
+  experiments/reactive_manager/
   scripts/run_smoke_baseline.py
   scripts/run_trace_smoke.py
   scripts/run_activegraph_trace_smoke.py
   scripts/run_state_packet_smoke.py
+  scripts/run_reactive_manager_dry_run.py
   runs/                         # generated smoke output
   vendor/tau2-bench/            # vendored upstream benchmark source
 ```
@@ -46,6 +49,7 @@ python scripts/run_smoke_baseline.py
 python scripts/run_trace_smoke.py
 python scripts/run_activegraph_trace_smoke.py
 python scripts/run_state_packet_smoke.py
+python scripts/run_reactive_manager_dry_run.py
 ```
 
 For upstream tau2 development/runtime work, use the vendored upstream project environment:
@@ -61,10 +65,10 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. These smoke commands:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. These smoke commands:
 
 - never require API keys;
-- never calls paid LLM APIs;
+- never call paid LLM APIs;
 - does not run `tau2 run`;
 - does not instantiate LLM agents or call user simulator generation;
 - does not run auto-review or NL-assertion evaluators;
@@ -168,6 +172,39 @@ runs/<timestamp>/
 
 The state-packet path is still observational only. Packets are derived from `events.jsonl` and `activegraph_trace.json`; they do not implement reactive manager behavior, do not let ActiveGraph control tau2 lifecycle or task state, do not mutate tau2 behavior, do not run `tau2 run`, call model-backed agents, or require LLM/API keys. See `docs/state_packets.md` for schema, mapping, hash-chain validation, and Phase 5 handoff notes.
 
+
+## Phase 5 reactive-manager dry-run planning command
+
+```bash
+python scripts/run_reactive_manager_dry_run.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+reactive_manager_dry_run_passed
+```
+
+This command writes Phase 2-compatible trace events, preserves the Phase 3 ActiveGraph projection, preserves the Phase 4 state-packet hash chain, and adds dry-run manager planning artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The reactive-manager dry run is still not live reactive control. It only reads fixture-backed artifacts and writes deterministic replay/fork/diff plans. It does not execute replay or fork steps, does not let ActiveGraph control tau2 lifecycle or task state, does not feed state packets back into tau2, does not mutate tau2 behavior, does not run `tau2 run`, and does not call model-backed agents or LLM/API services. See `docs/reactive_manager_dry_run.md` for schemas, validation rules, boundaries, and future-phase handoff notes.
+
 ## Smoke output location
 
 Each smoke run creates a timestamped directory:
@@ -179,8 +216,8 @@ runs/<timestamp>/
   final_state.json
 ```
 
-`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2, Phase 3, and Phase 4 smokes also write `events.jsonl`; Phase 3 and Phase 4 write `activegraph_trace.json`; Phase 4 additionally writes `state_packets.jsonl` and `state_packet_index.json`.
+`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2, Phase 3, Phase 4, and Phase 5 smokes also write `events.jsonl`; Phase 3, Phase 4, and Phase 5 write `activegraph_trace.json`; Phase 4 and Phase 5 write `state_packets.jsonl` and `state_packet_index.json`; Phase 5 additionally writes `manager_plan.json`, `manager_decisions.jsonl`, `replay_plan.json`, `fork_plan.json`, and `diff_report.json`.
 
 ## Source map
 
-See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary. See `docs/state_packets.md` for the Phase 4 state-packet schema and validation boundary.
+See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary. See `docs/state_packets.md` for the Phase 4 state-packet schema and validation boundary. See `docs/reactive_manager_dry_run.md` for the Phase 5 dry-run replay/fork/diff planning boundary.
