@@ -4,8 +4,8 @@ This repository evaluates future **ActiveGraph.ai** integrations against the off
 
 ## Current phase boundary
 
-- **Current phase:** Phase 3 ActiveGraph trace-only adapter smoke for the locally vendored tau2-bench baseline.
-- **Not implemented yet:** ActiveGraph state packets, reactive manager behavior, and real tau2 runtime tracing. Phase 3 trace smoke is fixture-backed and no-LLM-safe; ActiveGraph is used only as a trace/log projection substrate.
+- **Current phase:** Phase 4 ActiveGraph state-packet serialization smoke for the locally vendored tau2-bench baseline.
+- **Not implemented yet:** ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 4 state packets are fixture-backed, no-LLM-safe, and derived from the TraceEvent stream/projection only; ActiveGraph is still not used to control tau2 lifecycle or task state.
 - Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
 
 ## Vendored upstream provenance
@@ -25,11 +25,14 @@ activegraph-tau2-bench/
   docs/source_map.md
   docs/trace_only.md
   docs/activegraph_trace_only.md
+  docs/state_packets.md
   experiments/trace_only/
   experiments/activegraph_trace/
+  experiments/state_packets/
   scripts/run_smoke_baseline.py
   scripts/run_trace_smoke.py
   scripts/run_activegraph_trace_smoke.py
+  scripts/run_state_packet_smoke.py
   runs/                         # generated smoke output
   vendor/tau2-bench/            # vendored upstream benchmark source
 ```
@@ -42,6 +45,7 @@ For local repository smoke checks, no tau2 install or API key is required:
 python scripts/run_smoke_baseline.py
 python scripts/run_trace_smoke.py
 python scripts/run_activegraph_trace_smoke.py
+python scripts/run_state_packet_smoke.py
 ```
 
 For upstream tau2 development/runtime work, use the vendored upstream project environment:
@@ -57,7 +61,7 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. These smoke commands:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. These smoke commands:
 
 - never require API keys;
 - never calls paid LLM APIs;
@@ -136,6 +140,34 @@ runs/<timestamp>/
 
 The ActiveGraph path is trace-only. It does not create state packets, implement reactive manager behavior, mutate tau2 behavior, run `tau2 run`, call model-backed agents, or require real LLM/API keys. When no ActiveGraph dependency is available, it uses the deterministic local adapter seam in `experiments/activegraph_trace/` and records `activegraph_unavailable` as availability metadata. See `docs/activegraph_trace_only.md` for mapping details and Phase 4 handoff notes.
 
+
+## Phase 4 ActiveGraph state-packet smoke command
+
+```bash
+python scripts/run_state_packet_smoke.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+state_packet_smoke_passed
+```
+
+This command writes Phase 2-compatible trace events, preserves the Phase 3 ActiveGraph projection, and adds deterministic state-packet artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The state-packet path is still observational only. Packets are derived from `events.jsonl` and `activegraph_trace.json`; they do not implement reactive manager behavior, do not let ActiveGraph control tau2 lifecycle or task state, do not mutate tau2 behavior, do not run `tau2 run`, call model-backed agents, or require LLM/API keys. See `docs/state_packets.md` for schema, mapping, hash-chain validation, and Phase 5 handoff notes.
+
 ## Smoke output location
 
 Each smoke run creates a timestamped directory:
@@ -147,8 +179,8 @@ runs/<timestamp>/
   final_state.json
 ```
 
-`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2 and Phase 3 trace smokes also write `events.jsonl`; Phase 3 additionally writes `activegraph_trace.json`.
+`raw.log` contains command/check details, `summary.md` is a human-readable summary, and `final_state.json` records the machine-readable final state and check results. Phase 2, Phase 3, and Phase 4 smokes also write `events.jsonl`; Phase 3 and Phase 4 write `activegraph_trace.json`; Phase 4 additionally writes `state_packets.jsonl` and `state_packet_index.json`.
 
 ## Source map
 
-See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary.
+See `docs/source_map.md` for exact local source paths and function/class names covering CLI entrypoints, run/batch flow, half-duplex interfaces, orchestrator turn loop, user simulator, environment/tool dispatch, domain data loading, task/evaluation models, artifacts, determinism controls, no-LLM smoke candidates, and observability hook candidates. See `docs/trace_only.md` for the Phase 2 event schema and fixture-backed trace smoke details. See `docs/activegraph_trace_only.md` for the Phase 3 ActiveGraph trace-only adapter boundary. See `docs/state_packets.md` for the Phase 4 state-packet schema and validation boundary.
