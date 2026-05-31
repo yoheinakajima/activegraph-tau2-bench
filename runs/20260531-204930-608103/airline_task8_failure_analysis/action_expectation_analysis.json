@@ -1,0 +1,326 @@
+{
+  "actions": [
+    {
+      "action_id": "8_0",
+      "action_match": true,
+      "action_reward": 1.0,
+      "argument_comparison_for_first_call": {
+        "arguments_match_exactly": true,
+        "field_comparison": {
+          "user_id": {
+            "expected": "sophia_silva_7557",
+            "match": true,
+            "observed": "sophia_silva_7557"
+          }
+        },
+        "passenger_count_expected": null,
+        "passenger_count_observed": null,
+        "payment_total_expected": null,
+        "payment_total_observed": null
+      },
+      "expected_arguments": {
+        "user_id": "sophia_silva_7557"
+      },
+      "name": "get_user_details",
+      "observed_arguments": [
+        {
+          "user_id": "sophia_silva_7557"
+        }
+      ],
+      "observed_call_event_ids": [
+        "rt-000025-57183b67"
+      ],
+      "observed_result_event_ids": [
+        "rt-000029-8e3bcc26"
+      ],
+      "tool_type": "read"
+    },
+    {
+      "action_id": "8_1",
+      "action_match": true,
+      "action_reward": 1.0,
+      "argument_comparison_for_first_call": {
+        "arguments_match_exactly": false,
+        "field_comparison": {
+          "reservation_id": {
+            "expected": "WUNA5K",
+            "match": false,
+            "observed": "NM1VX1"
+          }
+        },
+        "passenger_count_expected": null,
+        "passenger_count_observed": null,
+        "payment_total_expected": null,
+        "payment_total_observed": null
+      },
+      "expected_arguments": {
+        "reservation_id": "WUNA5K"
+      },
+      "name": "get_reservation_details",
+      "observed_arguments": [
+        {
+          "reservation_id": "NM1VX1"
+        },
+        {
+          "reservation_id": "KC18K6"
+        },
+        {
+          "reservation_id": "S61CZX"
+        },
+        {
+          "reservation_id": "H8Q05L"
+        },
+        {
+          "reservation_id": "WUNA5K"
+        }
+      ],
+      "observed_call_event_ids": [
+        "rt-000036-08eacd05",
+        "rt-000047-5f72cfb2",
+        "rt-000058-981d60e4",
+        "rt-000069-3ccc0e7a",
+        "rt-000080-4a47f2e3"
+      ],
+      "observed_result_event_ids": [
+        "rt-000040-7d6b9b01",
+        "rt-000051-3354ef87",
+        "rt-000062-9a6c4eed",
+        "rt-000073-6df5dcbf",
+        "rt-000084-3a8806d9"
+      ],
+      "tool_type": "read"
+    },
+    {
+      "action_id": "8_2",
+      "action_match": true,
+      "action_reward": 1.0,
+      "argument_comparison_for_first_call": {
+        "arguments_match_exactly": true,
+        "field_comparison": {
+          "date": {
+            "expected": "2024-05-26",
+            "match": true,
+            "observed": "2024-05-26"
+          },
+          "destination": {
+            "expected": "PHL",
+            "match": true,
+            "observed": "PHL"
+          },
+          "origin": {
+            "expected": "ORD",
+            "match": true,
+            "observed": "ORD"
+          }
+        },
+        "passenger_count_expected": null,
+        "passenger_count_observed": null,
+        "payment_total_expected": null,
+        "payment_total_observed": null
+      },
+      "expected_arguments": {
+        "date": "2024-05-26",
+        "destination": "PHL",
+        "origin": "ORD"
+      },
+      "name": "search_direct_flight",
+      "observed_arguments": [
+        {
+          "date": "2024-05-26",
+          "destination": "PHL",
+          "origin": "ORD"
+        }
+      ],
+      "observed_call_event_ids": [
+        "rt-000107-9f97a55c"
+      ],
+      "observed_result_event_ids": [
+        "rt-000111-7f5b5e29"
+      ],
+      "tool_type": "read"
+    },
+    {
+      "action_id": "8_3",
+      "action_match": false,
+      "action_reward": 0.0,
+      "argument_comparison_for_first_call": {
+        "arguments_match_exactly": false,
+        "field_comparison": {
+          "cabin": {
+            "expected": "economy",
+            "match": true,
+            "observed": "economy"
+          },
+          "destination": {
+            "expected": "PHL",
+            "match": true,
+            "observed": "PHL"
+          },
+          "flight_type": {
+            "expected": "one_way",
+            "match": true,
+            "observed": "one_way"
+          },
+          "flights": {
+            "expected": [
+              {
+                "date": "2024-05-26",
+                "flight_number": "HAT271"
+              }
+            ],
+            "match": true,
+            "observed": [
+              {
+                "date": "2024-05-26",
+                "flight_number": "HAT271"
+              }
+            ]
+          },
+          "insurance": {
+            "expected": "no",
+            "match": true,
+            "observed": "no"
+          },
+          "nonfree_baggages": {
+            "expected": 0,
+            "match": true,
+            "observed": 0
+          },
+          "origin": {
+            "expected": "ORD",
+            "match": true,
+            "observed": "ORD"
+          },
+          "passengers": {
+            "expected": [
+              {
+                "dob": "1957-10-05",
+                "first_name": "Sophia",
+                "last_name": "Silva"
+              },
+              {
+                "dob": "2001-04-12",
+                "first_name": "Kevin",
+                "last_name": "Smith"
+              }
+            ],
+            "match": false,
+            "observed": [
+              {
+                "dob": "1957-10-05",
+                "first_name": "Sophia",
+                "last_name": "Silva"
+              }
+            ]
+          },
+          "payment_methods": {
+            "expected": [
+              {
+                "amount": 348,
+                "payment_id": "certificate_8045380"
+              }
+            ],
+            "match": false,
+            "observed": [
+              {
+                "amount": 174,
+                "payment_id": "certificate_8045380"
+              }
+            ]
+          },
+          "total_baggages": {
+            "expected": 0,
+            "match": true,
+            "observed": 0
+          },
+          "user_id": {
+            "expected": "sophia_silva_7557",
+            "match": true,
+            "observed": "sophia_silva_7557"
+          }
+        },
+        "passenger_count_expected": 2,
+        "passenger_count_observed": 1,
+        "payment_total_expected": 348,
+        "payment_total_observed": 174
+      },
+      "expected_arguments": {
+        "cabin": "economy",
+        "destination": "PHL",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-26",
+            "flight_number": "HAT271"
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "ORD",
+        "passengers": [
+          {
+            "dob": "1957-10-05",
+            "first_name": "Sophia",
+            "last_name": "Silva"
+          },
+          {
+            "dob": "2001-04-12",
+            "first_name": "Kevin",
+            "last_name": "Smith"
+          }
+        ],
+        "payment_methods": [
+          {
+            "amount": 348,
+            "payment_id": "certificate_8045380"
+          }
+        ],
+        "total_baggages": 0,
+        "user_id": "sophia_silva_7557"
+      },
+      "name": "book_reservation",
+      "observed_arguments": [
+        {
+          "cabin": "economy",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_methods": [
+            {
+              "amount": 174,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        }
+      ],
+      "observed_call_event_ids": [
+        "rt-000134-411e1a12"
+      ],
+      "observed_result_event_ids": [
+        "rt-000154-28f1c6d6"
+      ],
+      "tool_type": "write"
+    }
+  ],
+  "read_actions_matched": 3,
+  "read_actions_total": 3,
+  "write_actions_matched": 0,
+  "write_actions_total": 1
+}
