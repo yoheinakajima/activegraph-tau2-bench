@@ -71,6 +71,12 @@ SMOKES = [
         "display_command": "python scripts/run_external_readiness_contracts.py",
         "expected_statuses": ["external_readiness_contracts_passed"],
     },
+    {
+        "name": "operator_incident_readiness",
+        "command": [sys.executable, "scripts/run_operator_incident_readiness.py"],
+        "display_command": "python scripts/run_operator_incident_readiness.py",
+        "expected_statuses": ["operator_incident_readiness_passed"],
+    },
 ]
 
 

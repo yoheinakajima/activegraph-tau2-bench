@@ -4,8 +4,8 @@ This repository evaluates future **ActiveGraph.ai** integrations against the off
 
 ## Current phase boundary
 
-- **Current phase:** Phase 5 dry-run reactive-manager replay/fork/diff planning for the locally vendored tau2-bench baseline.
-- **Not implemented yet:** live ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 5 adds dry-run-only replay/fork/diff planning over fixture artifacts; ActiveGraph is still not used to control tau2 lifecycle or task state.
+- **Current phase:** Phase 10 design-only operator authorization and incident-response readiness for the locally vendored tau2-bench baseline.
+- **Not implemented yet:** live ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 10 adds mock-contract operator approval, revocation, incident rollback/recovery planning, and incident audit anchoring while preserving `live_ready=false`; ActiveGraph is still not used to control tau2 lifecycle or task state.
 - Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
 
 ## Vendored upstream provenance
@@ -50,6 +50,8 @@ python scripts/run_trace_smoke.py
 python scripts/run_activegraph_trace_smoke.py
 python scripts/run_state_packet_smoke.py
 python scripts/run_reactive_manager_dry_run.py
+python scripts/run_operator_incident_readiness.py
+python scripts/run_all_smokes.py  # preferred compact validation command
 ```
 
 For upstream tau2 development/runtime work, use the vendored upstream project environment:
@@ -65,7 +67,7 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. These smoke commands:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. Later readiness phases through Phase 10 add design-only contracts for live opt-in, audit readiness, external audit/vault readiness, and operator/incident readiness while preserving fail-closed live execution. These smoke commands:
 
 - never require API keys;
 - never call paid LLM APIs;
@@ -382,7 +384,59 @@ runs/<timestamp>/
 
 The external readiness smoke is design-only. It defines future external audit-store and vault resolver interfaces, validates deterministic mock contracts for append-only/read-back/hash-chain/source-artifact audit anchoring, rejects unsafe vault references including raw secrets and environment/file lookups, and intentionally preserves `live_ready=false`, `external_audit_store_live_ready=false`, `vault_integration_live_ready=false`, and live execution unavailable/fail-closed. It does not implement a real external service or vault, execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/external_audit_vault_readiness.md` for schemas, contracts, failure modes, and future-phase requirements.
 
+## Phase 10 operator authorization and incident-response readiness smoke command
+
+```bash
+python scripts/run_operator_incident_readiness.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+operator_incident_readiness_passed
+```
+
+This command regenerates/preserves the Phase 9 fixture-backed artifacts and adds design-only operator authorization and incident-response readiness artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  events.jsonl
+  activegraph_trace.json
+  state_packets.jsonl
+  state_packet_index.json
+  manager_plan.json
+  manager_decisions.jsonl
+  replay_plan.json
+  fork_plan.json
+  diff_report.json
+  contract_decisions.jsonl
+  contract_report.json
+  live_opt_in_decisions.jsonl
+  live_readiness_report.json
+  live_manager_proposal.json
+  audit_log.jsonl
+  audit_integrity_report.json
+  credential_policy_report.json
+  sandbox_policy_report.json
+  live_readiness_audit_report.json
+  external_audit_store_contracts.json
+  vault_integration_contracts.json
+  external_readiness_report.json
+  operator_authorization_requests.json
+  operator_authorization_decisions.jsonl
+  incident_response_plans.json
+  incident_response_decisions.jsonl
+  operator_incident_readiness_report.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The operator/incident readiness smoke is design-only. It validates future operator authorization, revocation, expiration, incident declaration, rollback/recovery planning, and incident audit/source anchoring shapes while intentionally preserving `live_ready=false`, `operator_authorization_live_ready=false`, `incident_response_live_ready=false`, rollback execution unavailable, and live execution unavailable/fail-closed. It does not execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/operator_incident_readiness.md` for schemas, validation rules, failure modes, and future-phase requirements.
+
 ## Compact aggregate smoke command
+
+Preferred compact validation command:
 
 ```bash
 python scripts/run_all_smokes.py
