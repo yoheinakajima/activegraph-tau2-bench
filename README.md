@@ -96,6 +96,20 @@ python scripts/project_baseline_trace_to_activegraph.py \
 
 The projector writes `activegraph_baseline_projection.json`, `activegraph_baseline_events.jsonl`, `activegraph_baseline_state_packets.jsonl`, `activegraph_baseline_state_packet_index.json`, `activegraph_projection_summary.md`, `activegraph_projection_final_state.json`, and `raw.log` under `<baseline-run-dir>/activegraph_projection/`. The expected canonical-run status is `activegraph_baseline_projection_completed_with_gaps` because the real baseline artifacts do not serialize tick-level or effect-timeline details. See [ActiveGraph projection from a real tau2 baseline trace](docs/activegraph_baseline_projection.md) for schema, packet validation, and boundary details.
 
+### Fixture vs real ActiveGraph projection comparison
+
+Compare a fixture-backed ActiveGraph smoke projection against the offline real-baseline ActiveGraph projection without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/run_activegraph_trace_smoke.py
+python scripts/run_state_packet_smoke.py
+python scripts/compare_activegraph_projection_vs_baseline.py \
+  --fixture-run-dir <runs/state-packet-smoke-dir> \
+  --baseline-run-dir runs/20260531-042306-420109
+```
+
+Use the `run_state_packet_smoke.py` output directory as the fixture run because it contains `events.jsonl`, `activegraph_trace.json`, `state_packets.jsonl`, and `state_packet_index.json`. The comparator writes `activegraph_projection_comparison_report.json`, `activegraph_projection_comparison_summary.md`, `graph_alignment.json`, `packet_alignment.json`, `provenance_alignment.json`, `coverage_gaps.json`, `final_state.json`, and `raw.log` under `<baseline-run-dir>/activegraph_projection_comparison/`. The expected canonical status is `activegraph_projection_comparison_completed_with_expected_gaps`. See [Fixture vs real ActiveGraph projection comparison](docs/activegraph_projection_comparison.md) for comparison dimensions, expected fixture-vs-real differences, known gaps, and no-rerun/no-API boundaries.
+
 ### Fixture vs real baseline trace comparison
 
 Compare a no-LLM fixture trace smoke run against an already-extracted real tau2 baseline trace without rerunning tau2 or calling APIs:
