@@ -1,0 +1,63 @@
+{
+  "activegraph_control_added": false,
+  "activegraph_controlled_tau2": false,
+  "completion_status": "completed",
+  "event_counts": {
+    "postrun_extracted": 12,
+    "short_runtime": 30,
+    "successful_runtime": 44
+  },
+  "generated_at_utc": "2026-05-31T16:08:11.847106Z",
+  "llm_api_calls_made_by_analysis": false,
+  "metrics": {
+    "action_checks_total": 1,
+    "agent_cost": 0.0004524,
+    "agent_errors": 0,
+    "db_match": true,
+    "db_reward": 1.0,
+    "duration_seconds": 5.363996084081009,
+    "message_count": 6,
+    "message_roles": [
+      "assistant",
+      "user",
+      "assistant",
+      "tool",
+      "assistant",
+      "user"
+    ],
+    "normal_stop": true,
+    "reward": 1.0,
+    "run_info": {
+      "max_steps": 6,
+      "num_trials": 1,
+      "provider_model": "openai/gpt-4.1-mini"
+    },
+    "simulation_id": "361c8c4c-8d28-477e-98f4-78135159ec5f",
+    "task_id": "create_task_1",
+    "termination_reason": "user_stop",
+    "tool_calls_from_messages": [
+      {
+        "arguments": {
+          "title": "Important Meeting",
+          "user_id": "user_1"
+        },
+        "id": "call_V2Qv5Haz9j6gtTSEN1dXeYdz",
+        "name": "create_task",
+        "requestor": "assistant",
+        "turn_idx": 2
+      }
+    ],
+    "user_cost": 0.0006651999999999999,
+    "user_errors": 0,
+    "write_actions_matched": 1,
+    "write_actions_total": 1
+  },
+  "model_backed_episode_run_by_analysis": false,
+  "paid_llm_api_calls_made_in_original_successful_run": true,
+  "requires_api_keys": false,
+  "state_packets_fed_back_to_tau2": false,
+  "status": "successful_runtime_trace_analysis_passed",
+  "tau2_executed_in_original_successful_run": true,
+  "tau2_rerun_performed_by_analysis": false,
+  "vendor_tau2_bench_mutated_by_analysis": false
+}
