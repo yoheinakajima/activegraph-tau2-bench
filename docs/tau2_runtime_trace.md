@@ -52,7 +52,23 @@ python scripts/run_tau2_runtime_traced_baseline.py \
   --yes-i-understand-this-may-call-paid-apis
 ```
 
-This command is intentionally opt-in and is **not** included in `python scripts/run_all_smokes.py`. It refuses to run without provider/model configuration and the explicit paid-API acknowledgement flag. It also keeps the mock domain as the default and limits the first traced baseline to one task and concurrency one.
+This command is intentionally opt-in and is **not** included in `python scripts/run_all_smokes.py`. It refuses to run without provider/model configuration and the explicit paid-API acknowledgement flag. It also keeps the mock domain as the default and requires concurrency one. Task selection is recorded in `runtime_trace_final_state.json` as `task_selection_mode`: explicit task IDs use `explicit_task_id`, numeric task indexes use `numeric_task_index`, `--num-tasks N` without `--task-id` uses `num_tasks`, and omitting both task selectors uses `default_task_id` with `create_task_1` for safe one-task behavior.
+
+### Full mock-domain traced run
+
+To trace ten mock-domain tasks manually, omit `--task-id` and pass `--num-tasks 10`:
+
+```bash
+python scripts/run_tau2_runtime_traced_baseline.py \
+  --provider openai \
+  --model gpt-4.1-mini \
+  --domain mock \
+  --num-tasks 10 \
+  --max-steps 10 \
+  --yes-i-understand-this-may-call-paid-apis
+```
+
+This may call paid model APIs. Do not run it unless you have intentionally configured provider credentials and accepted the cost/rate-limit implications.
 
 Refusal/success status values are:
 

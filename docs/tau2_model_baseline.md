@@ -53,7 +53,28 @@ cd vendor/tau2-bench && uv run tau2 run \
   --task-ids <task_id_or_index>
 ```
 
-If `--task-id` is omitted, it uses `--num-tasks 1` instead. Numeric `--task-id` values are resolved locally as zero-based indexes into the selected domain's `tasks.json` before tau2 is launched, so `--task-id 0` maps to the first real task ID such as `create_task_1` for the mock domain. Out-of-range numeric values fail during wrapper preflight with a clear local error.
+Task selection is explicit and recorded in `final_state.json` as `task_selection_mode`:
+
+- Passing `--task-id <id>` runs exactly that task and passes `--task-ids <id>` to tau2 (`explicit_task_id`).
+- Passing numeric `--task-id <index>` resolves the zero-based index locally from the selected domain's `tasks.json`, so `--task-id 0` maps to the first real task ID such as `create_task_1` for the mock domain (`numeric_task_index`). Out-of-range numeric values fail during wrapper preflight with a clear local error.
+- Omitting `--task-id` while passing `--num-tasks N` lets tau2 select `N` tasks and passes `--num-tasks N` without `--task-ids` (`num_tasks`).
+- Omitting both task selectors defaults to `--task-id create_task_1` for safe one-task behavior (`default_task_id`).
+
+### Full mock-domain run
+
+To run ten mock-domain tasks manually, omit `--task-id` and pass `--num-tasks 10`:
+
+```bash
+python scripts/run_tau2_model_baseline.py \
+  --provider openai \
+  --model gpt-4.1-mini \
+  --domain mock \
+  --num-tasks 10 \
+  --max-steps 10 \
+  --yes-i-understand-this-may-call-paid-apis
+```
+
+This may call paid model APIs. Do not run it unless you have intentionally configured provider credentials and accepted the cost/rate-limit implications.
 
 ## Required env vars by provider
 

@@ -29,6 +29,7 @@ REFUSED_INVALID_TASK_ID_STATUS = "tau2_model_baseline_refused_invalid_task_id"
 DEFAULT_DOMAIN = "mock"
 DEFAULT_MAX_STEPS = 5
 DEFAULT_NUM_TASKS = 1
+DEFAULT_TASK_ID = "create_task_1"
 DEFAULT_CONCURRENCY = 1
 DEFAULT_TIMEOUT_SECONDS = 900
 
@@ -98,9 +99,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--provider", help="LiteLLM/tau2 provider prefix, for example openai or anthropic.")
     parser.add_argument("--model", help="Model name, for example gpt-4.1-mini. Combined as <provider>/<model> for tau2.")
     parser.add_argument("--domain", default=DEFAULT_DOMAIN, help="tau2 domain to run. Defaults to mock.")
-    parser.add_argument("--task-id", help="Single tau2 task ID or index to run. If omitted, tau2 receives --num-tasks 1.")
+    parser.add_argument(
+        "--task-id",
+        help=(
+            "Single tau2 task ID or zero-based numeric index to run. "
+            f"If omitted with no --num-tasks, defaults to {DEFAULT_TASK_ID}."
+        ),
+    )
     parser.add_argument("--max-steps", type=int, default=DEFAULT_MAX_STEPS, help=f"Maximum tau2 text-mode steps. Default: {DEFAULT_MAX_STEPS}.")
-    parser.add_argument("--num-tasks", type=int, default=DEFAULT_NUM_TASKS, help=f"Number of tasks when --task-id is omitted. Default: {DEFAULT_NUM_TASKS}.")
+    parser.add_argument(
+        "--num-tasks",
+        type=int,
+        help=(
+            "Number of tasks to let tau2 select when --task-id is omitted. "
+            f"If both task selectors are omitted, the wrapper defaults to --task-id {DEFAULT_TASK_ID}."
+        ),
+    )
     parser.add_argument("--concurrency", type=int, default=DEFAULT_CONCURRENCY, help=f"tau2 --max-concurrency. Default: {DEFAULT_CONCURRENCY}.")
     parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS, help=f"Wrapper subprocess timeout. Default: {DEFAULT_TIMEOUT_SECONDS}.")
     parser.add_argument(
@@ -206,6 +220,18 @@ def resolve_task_id_arg(task_id: str | None, domain: str) -> tuple[str | None, s
     return resolved, f"numeric --task-id {cleaned} resolved to {resolved!r} for domain {domain!r}"
 
 
+def apply_task_selection(args: argparse.Namespace) -> tuple[str, str | None]:
+    """Normalize wrapper task selection before building the tau2 command."""
+    if args.task_id is not None:
+        original_task_id = str(args.task_id).strip()
+        args.task_id, note = resolve_task_id_arg(args.task_id, args.domain)
+        return ("numeric_task_index" if original_task_id.isdigit() else "explicit_task_id"), note
+    if args.num_tasks is not None:
+        return "num_tasks", None
+    args.task_id = DEFAULT_TASK_ID
+    return "default_task_id", f"no task selector supplied; defaulted to {DEFAULT_TASK_ID!r}"
+
+
 def build_tau2_command(args: argparse.Namespace, tau2_output_dir: pathlib.Path) -> list[str]:
     llm_name = provider_model_name(args.provider, args.model)
     command = [
@@ -270,6 +296,7 @@ def write_artifacts(
     returncode: int | None = None,
     reason: str | None = None,
     task_id_resolution_note: str | None = None,
+    task_selection_mode: str | None = None,
 ) -> None:
     final_state = {
         "status": status,
@@ -282,6 +309,7 @@ def write_artifacts(
         "domain": args.domain,
         "task_id": args.task_id,
         "task_id_resolution_note": task_id_resolution_note,
+        "task_selection_mode": task_selection_mode,
         "num_tasks": args.num_tasks,
         "max_steps": args.max_steps,
         "concurrency": args.concurrency,
@@ -311,6 +339,7 @@ def write_artifacts(
         f"- domain: `{args.domain}`",
         f"- task_id: `{args.task_id}`",
         f"- task_id resolution: {task_id_resolution_note or 'n/a'}",
+        f"- task selection mode: `{task_selection_mode}`",
         f"- num_tasks: `{args.num_tasks}`",
         f"- max_steps: `{args.max_steps}`",
         f"- concurrency: `{args.concurrency}`",
@@ -360,6 +389,7 @@ def main() -> int:
     returncode: int | None = None
     copied_artifacts: list[dict[str, str]] = []
     task_id_resolution_note: str | None = None
+    task_selection_mode: str | None = None
 
     if not args.yes_i_understand_this_may_call_paid_apis:
         status = REFUSED_MISSING_ACK_STATUS
@@ -376,12 +406,12 @@ def main() -> int:
     elif args.concurrency != DEFAULT_CONCURRENCY:
         status = FAILED_STATUS
         reason = "this first baseline wrapper only permits concurrency=1"
-    elif args.num_tasks != DEFAULT_NUM_TASKS and args.task_id is None:
+    elif args.num_tasks is not None and args.num_tasks < 1:
         status = FAILED_STATUS
-        reason = "this first baseline wrapper only permits one task"
+        reason = "--num-tasks must be at least 1"
     else:
         try:
-            args.task_id, task_id_resolution_note = resolve_task_id_arg(args.task_id, args.domain)
+            task_selection_mode, task_id_resolution_note = apply_task_selection(args)
         except ValueError as exc:
             status = REFUSED_INVALID_TASK_ID_STATUS
             reason = str(exc)
@@ -417,6 +447,15 @@ def main() -> int:
             status = PASSED_STATUS if completed.returncode == 0 else FAILED_STATUS
             reason = "tau2 completed successfully" if completed.returncode == 0 else "tau2 exited non-zero"
 
+    if command is None and args.provider and args.model and status != REFUSED_INVALID_TASK_ID_STATUS:
+        try:
+            if task_selection_mode is None:
+                task_selection_mode, task_id_resolution_note = apply_task_selection(args)
+            command = build_tau2_command(args, tau2_output_dir)
+        except ValueError as exc:
+            status = REFUSED_INVALID_TASK_ID_STATUS
+            reason = str(exc)
+
     if not raw_log.exists():
         raw_lines = [
             f"status={status}",
@@ -441,6 +480,7 @@ def main() -> int:
         returncode=returncode,
         reason=reason,
         task_id_resolution_note=task_id_resolution_note,
+        task_selection_mode=task_selection_mode,
     )
     print(rel(out_dir))
     print(status)
