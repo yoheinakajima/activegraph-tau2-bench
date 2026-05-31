@@ -32,6 +32,7 @@ READY_STATUS = "tau2_runtime_traced_baseline_ready_not_run"
 DEFAULT_DOMAIN = "mock"
 DEFAULT_MAX_STEPS = 2
 DEFAULT_NUM_TASKS = 1
+DEFAULT_TASK_ID = "create_task_1"
 DEFAULT_CONCURRENCY = 1
 DEFAULT_TIMEOUT_SECONDS = 900
 
@@ -65,9 +66,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--provider", help="LiteLLM/tau2 provider prefix, for example openai or anthropic.")
     parser.add_argument("--model", help="Model name. Combined as <provider>/<model> unless already prefixed.")
     parser.add_argument("--domain", default=DEFAULT_DOMAIN, help="tau2 domain to run. Defaults to mock.")
-    parser.add_argument("--task-id", default="create_task_1", help="Single tau2 task ID or zero-based numeric index. Defaults to create_task_1.")
+    parser.add_argument(
+        "--task-id",
+        help=(
+            "Single tau2 task ID or zero-based numeric index. "
+            f"If omitted with no --num-tasks, defaults to {DEFAULT_TASK_ID}."
+        ),
+    )
     parser.add_argument("--max-steps", type=int, default=DEFAULT_MAX_STEPS, help=f"Maximum tau2 text-mode steps. Default: {DEFAULT_MAX_STEPS}.")
-    parser.add_argument("--num-tasks", type=int, default=DEFAULT_NUM_TASKS, help=f"Number of tasks when --task-id is omitted. Default: {DEFAULT_NUM_TASKS}.")
+    parser.add_argument(
+        "--num-tasks",
+        type=int,
+        help=(
+            "Number of tasks to let tau2 select when --task-id is omitted. "
+            f"If both task selectors are omitted, the wrapper defaults to --task-id {DEFAULT_TASK_ID}."
+        ),
+    )
     parser.add_argument("--concurrency", type=int, default=DEFAULT_CONCURRENCY, help=f"tau2 --max-concurrency. Default: {DEFAULT_CONCURRENCY}.")
     parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS, help=f"Wrapper subprocess timeout. Default: {DEFAULT_TIMEOUT_SECONDS}.")
     parser.add_argument("--allow-non-mock-domain", action="store_true", help="Second explicit override required for any domain other than mock.")
@@ -138,6 +152,18 @@ def resolve_task_id_arg(task_id: str | None, domain: str) -> tuple[str | None, s
     return task_ids[index], f"numeric --task-id {cleaned} resolved to {task_ids[index]!r}"
 
 
+def apply_task_selection(args: argparse.Namespace) -> tuple[str, str | None]:
+    """Normalize wrapper task selection before building the tau2 command."""
+    if args.task_id is not None:
+        original_task_id = str(args.task_id).strip()
+        args.task_id, note = resolve_task_id_arg(args.task_id, args.domain)
+        return ("numeric_task_index" if original_task_id.isdigit() else "explicit_task_id"), note
+    if args.num_tasks is not None:
+        return "num_tasks", None
+    args.task_id = DEFAULT_TASK_ID
+    return "default_task_id", f"no task selector supplied; defaulted to {DEFAULT_TASK_ID!r}"
+
+
 def build_tau2_command(args: argparse.Namespace, tau2_output_dir: pathlib.Path) -> list[str]:
     llm_name = provider_model_name(args.provider, args.model)
     command = [
@@ -186,14 +212,46 @@ def copy_tau2_artifacts(tau2_output_dir: pathlib.Path, artifacts_dir: pathlib.Pa
     return copied
 
 
-def write_refusal_artifacts(out_dir: pathlib.Path, status: str, reason: str, args: argparse.Namespace, command: list[str] | None, api_presence: dict[str, bool], provider_env: dict[str, Any]) -> None:
+def task_selection_state(args: argparse.Namespace, task_selection_mode: str | None, task_id_resolution_note: str | None) -> dict[str, Any]:
+    return {
+        "task_id": args.task_id,
+        "task_id_resolution_note": task_id_resolution_note,
+        "task_selection_mode": task_selection_mode,
+        "num_tasks": args.num_tasks,
+    }
+
+
+def update_runtime_final_state(out_dir: pathlib.Path, extra: dict[str, Any]) -> None:
+    path = out_dir / "runtime_trace_final_state.json"
+    if path.is_file():
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    else:
+        payload = {}
+    payload.update(extra)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_refusal_artifacts(out_dir: pathlib.Path, status: str, reason: str, args: argparse.Namespace, command: list[str] | None, api_presence: dict[str, bool], provider_env: dict[str, Any], task_selection_mode: str | None, task_id_resolution_note: str | None) -> None:
     from experiments.tau2_runtime_trace.runtime_trace import RuntimeTraceWriter, inspect_hook_targets, write_final_state, write_hook_map, write_summary
 
     writer = RuntimeTraceWriter(out_dir, phase="runtime_traced_baseline_refusal")
     inspected = inspect_hook_targets()
     writer.record(component="tau2_runtime_trace.wrapper", event_type="traced_baseline_refused", payload={"status": status, "reason": reason, "provider": args.provider, "model_present": bool(args.model)})
     write_hook_map(out_dir, inspected, [], list(inspected.keys()))
-    write_final_state(out_dir, status, writer, extra={"reason": reason, "tau2_executed": False, "api_key_presence": api_presence, "provider_env": provider_env})
+    write_final_state(
+        out_dir,
+        status,
+        writer,
+        extra={
+            "reason": reason,
+            "tau2_executed": False,
+            "api_key_presence": api_presence,
+            "provider_env": provider_env,
+            "tau2_command": command,
+            "tau2_command_display": shell_join(command) if command else None,
+            **task_selection_state(args, task_selection_mode, task_id_resolution_note),
+        },
+    )
     write_summary(out_dir, status, writer, validated=[], deferred=list(inspected.keys()), command=shell_join(command) if command else "not built/refused")
     writer.close()
 
@@ -235,6 +293,8 @@ def main() -> int:
     command: list[str] | None = None
     copied_artifacts: list[dict[str, str]] = []
     returncode: int | None = None
+    task_id_resolution_note: str | None = None
+    task_selection_mode: str | None = None
 
     if not args.provider or not args.model:
         status = REFUSED_MISSING_MODEL_STATUS
@@ -251,12 +311,12 @@ def main() -> int:
     elif args.concurrency != DEFAULT_CONCURRENCY:
         status = FAILED_STATUS
         reason = "runtime traced spike only permits concurrency=1"
-    elif args.num_tasks != DEFAULT_NUM_TASKS and args.task_id is None:
+    elif args.num_tasks is not None and args.num_tasks < 1:
         status = FAILED_STATUS
-        reason = "runtime traced spike only permits one task"
+        reason = "--num-tasks must be at least 1"
     else:
         try:
-            args.task_id, _ = resolve_task_id_arg(args.task_id, args.domain)
+            task_selection_mode, task_id_resolution_note = apply_task_selection(args)
             command = build_tau2_command(args, tau2_output_dir)
         except ValueError as exc:
             status = REFUSED_INVALID_TASK_ID_STATUS
@@ -284,11 +344,31 @@ def main() -> int:
             copied_artifacts = copy_tau2_artifacts(tau2_output_dir, artifacts_dir)
             status = PASSED_STATUS if completed.returncode == 0 else FAILED_STATUS
             reason = "tau2 completed successfully" if completed.returncode == 0 else "tau2 exited non-zero"
+            update_runtime_final_state(
+                out_dir,
+                {
+                    "status": status,
+                    "reason": reason,
+                    "returncode": returncode,
+                    "tau2_command": command,
+                    "tau2_command_display": shell_join(command),
+                    "tau2_output_path": rel(tau2_output_dir),
+                    "copied_tau2_artifacts": copied_artifacts,
+                    **task_selection_state(args, task_selection_mode, task_id_resolution_note),
+                },
+            )
 
     if returncode is None:
-        command = command or (build_tau2_command(args, tau2_output_dir) if args.provider and args.model else None)
+        if command is None and args.provider and args.model and status != REFUSED_INVALID_TASK_ID_STATUS:
+            try:
+                if task_selection_mode is None:
+                    task_selection_mode, task_id_resolution_note = apply_task_selection(args)
+                command = build_tau2_command(args, tau2_output_dir)
+            except ValueError as exc:
+                status = REFUSED_INVALID_TASK_ID_STATUS
+                reason = str(exc)
         raw_log.write_text(f"status={status}\nreason={reason}\noutput_dir={rel(out_dir)}\ntau2_executed=false\napi_key_values_printed=false\n", encoding="utf-8")
-        write_refusal_artifacts(out_dir, status, reason or "refused", args, command, api_presence, provider_env)
+        write_refusal_artifacts(out_dir, status, reason or "refused", args, command, api_presence, provider_env, task_selection_mode, task_id_resolution_note)
 
     write_wrapper_summary(out_dir, status, reason, args, command, api_presence, provider_env, copied_artifacts, returncode)
     print(rel(out_dir))
