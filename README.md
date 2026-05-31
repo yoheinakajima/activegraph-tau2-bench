@@ -84,6 +84,19 @@ python scripts/extract_tau2_baseline_trace.py --run-dir <runs/...>
 
 The extractor writes `baseline_trace.jsonl`, `baseline_trace_summary.md`, `baseline_trace_final_state.json`, and `baseline_artifact_index.json` under `<runs/...>/extracted_trace/`. See [Post-run tau2 baseline trace extraction](docs/tau2_baseline_trace_extraction.md) for schema details and no-LLM/no-rerun boundaries.
 
+### Fixture vs real baseline trace comparison
+
+Compare a no-LLM fixture trace smoke run against an already-extracted real tau2 baseline trace without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/run_trace_smoke.py
+python scripts/compare_fixture_vs_baseline_trace.py \
+  --fixture-run-dir <runs/...> \
+  --baseline-run-dir runs/20260531-042306-420109
+```
+
+The comparator writes `trace_comparison_report.json`, `trace_comparison_summary.md`, `event_type_alignment.json`, `schema_field_alignment.json`, `coverage_gaps.json`, `final_state.json`, and `raw.log` under `<baseline-run-dir>/trace_comparison/` by default. See [Fixture vs real baseline trace comparison](docs/fixture_vs_baseline_trace_comparison.md) for comparison dimensions, expected gaps, and no-LLM/no-rerun boundaries.
+
 ## Smoke commands
 
 The aggregate command runs the completed no-LLM smoke suite:
