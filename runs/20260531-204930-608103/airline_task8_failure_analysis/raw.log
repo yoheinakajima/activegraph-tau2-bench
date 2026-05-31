@@ -125,7 +125,7 @@ To review the simulations, run: tau2 view
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 --- offline airline task 8 failure analysis ---
-generated_at_utc=2026-05-31T21:00:01.739593Z
+generated_at_utc=2026-05-31T21:08:27.437303Z
 status=airline_task8_failure_analysis_passed
 tau2_rerun_performed_by_analysis=false
 model_backed_episode_run_by_analysis=false

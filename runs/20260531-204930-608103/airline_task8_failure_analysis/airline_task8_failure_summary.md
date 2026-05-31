@@ -2,7 +2,7 @@
 
 - Status: `airline_task8_failure_analysis_passed`
 - Runtime run inspected: `runs/20260531-204930-608103`
-- Generated: `2026-05-31T21:00:01.739593Z`
+- Generated: `2026-05-31T21:08:27.437303Z`
 - Analysis boundary: offline artifacts only; no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, no vendor mutation.
 
 ## Conclusion

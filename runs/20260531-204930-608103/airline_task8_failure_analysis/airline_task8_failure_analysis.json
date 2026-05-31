@@ -816,7 +816,7 @@
       "status": "available"
     }
   },
-  "generated_at_utc": "2026-05-31T21:00:01.739593Z",
+  "generated_at_utc": "2026-05-31T21:08:27.437303Z",
   "inputs": {
     "airline db": {
       "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
