@@ -96,6 +96,11 @@ def _validate_outputs(package: dict[str, Any], manifests: dict[str, Any], out_di
         errors.append("auditor_handoff_package llm_api_calls_made was not false")
     if package.get("vendor_tau2_bench_modified") is not False:
         errors.append("auditor_handoff_package vendor_tau2_bench_modified was not false")
+    source_package = package.get("source_human_review_package", {})
+    if source_package.get("status") != HUMAN_REVIEW_PACKAGE_PASS_STATUS:
+        errors.append("source_human_review_package did not report a passing Phase 11 status")
+    if source_package.get("live_ready") is not False:
+        errors.append("source_human_review_package live_ready was not false")
     statement = package.get("non_approval_statement", "")
     if "does not approve" not in statement or "live_ready remains false" not in statement:
         errors.append("non_approval_statement missing no-approval/live_ready wording")
