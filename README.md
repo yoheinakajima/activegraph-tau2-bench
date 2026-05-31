@@ -84,6 +84,18 @@ python scripts/extract_tau2_baseline_trace.py --run-dir <runs/...>
 
 The extractor writes `baseline_trace.jsonl`, `baseline_trace_summary.md`, `baseline_trace_final_state.json`, and `baseline_artifact_index.json` under `<runs/...>/extracted_trace/`. See [Post-run tau2 baseline trace extraction](docs/tau2_baseline_trace_extraction.md) for schema details and no-LLM/no-rerun boundaries.
 
+
+### Offline ActiveGraph projection from a real baseline trace
+
+Project an already-extracted real tau2 baseline trace into offline ActiveGraph-style graph and state-packet artifacts without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/project_baseline_trace_to_activegraph.py \
+  --baseline-run-dir runs/20260531-042306-420109
+```
+
+The projector writes `activegraph_baseline_projection.json`, `activegraph_baseline_events.jsonl`, `activegraph_baseline_state_packets.jsonl`, `activegraph_baseline_state_packet_index.json`, `activegraph_projection_summary.md`, `activegraph_projection_final_state.json`, and `raw.log` under `<baseline-run-dir>/activegraph_projection/`. The expected canonical-run status is `activegraph_baseline_projection_completed_with_gaps` because the real baseline artifacts do not serialize tick-level or effect-timeline details. See [ActiveGraph projection from a real tau2 baseline trace](docs/activegraph_baseline_projection.md) for schema, packet validation, and boundary details.
+
 ### Fixture vs real baseline trace comparison
 
 Compare a no-LLM fixture trace smoke run against an already-extracted real tau2 baseline trace without rerunning tau2 or calling APIs:
