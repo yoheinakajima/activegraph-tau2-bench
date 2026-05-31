@@ -1,0 +1,88 @@
+{
+  "allow_non_mock_domain": false,
+  "api_key_presence": {
+    "ANTHROPIC_API_KEY": true,
+    "AWS_ACCESS_KEY_ID": false,
+    "AWS_SECRET_ACCESS_KEY": false,
+    "AZURE_OPENAI_API_KEY": false,
+    "COHERE_API_KEY": false,
+    "DEEPSEEK_API_KEY": false,
+    "FIREWORKS_API_KEY": false,
+    "GEMINI_API_KEY": false,
+    "GOOGLE_API_KEY": false,
+    "GOOGLE_APPLICATION_CREDENTIALS": false,
+    "GOOGLE_CLOUD_PROJECT": false,
+    "GROQ_API_KEY": false,
+    "MISTRAL_API_KEY": false,
+    "OPENAI_API_KEY": true,
+    "OPENROUTER_API_KEY": false,
+    "PERPLEXITYAI_API_KEY": false,
+    "PERPLEXITY_API_KEY": false,
+    "TOGETHER_API_KEY": false,
+    "XAI_API_KEY": false
+  },
+  "concurrency": 1,
+  "copied_tau2_artifacts": [
+    {
+      "copy": "runs/20260531-042306-420109/tau2_artifacts/results.json",
+      "source": "runs/20260531-042306-420109/tau2_output/results.json"
+    }
+  ],
+  "domain": "mock",
+  "max_steps": 2,
+  "model": "gpt-4.1-mini",
+  "num_tasks": 1,
+  "paid_api_acknowledged": true,
+  "provider": "openai",
+  "provider_env": {
+    "known_provider": true,
+    "required_env_vars": [
+      "OPENAI_API_KEY"
+    ],
+    "satisfied": true
+  },
+  "reason": "tau2 completed successfully",
+  "returncode": 0,
+  "source_inspection_files": [
+    "vendor/tau2-bench/docs/cli-reference.md",
+    "vendor/tau2-bench/docs/running_simulations.md",
+    "vendor/tau2-bench/src/tau2/cli.py",
+    "vendor/tau2-bench/src/tau2/run.py"
+  ],
+  "status": "tau2_model_baseline_passed",
+  "task_id": "create_task_1",
+  "tau2_command": [
+    "uv",
+    "run",
+    "tau2",
+    "run",
+    "--domain",
+    "mock",
+    "--agent",
+    "llm_agent",
+    "--agent-llm",
+    "openai/gpt-4.1-mini",
+    "--user",
+    "user_simulator",
+    "--user-llm",
+    "openai/gpt-4.1-mini",
+    "--num-trials",
+    "1",
+    "--max-steps",
+    "2",
+    "--max-concurrency",
+    "1",
+    "--save-to",
+    "/Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-042306-420109/tau2_output",
+    "--log-level",
+    "INFO",
+    "--task-ids",
+    "create_task_1"
+  ],
+  "tau2_command_display": "uv run tau2 run --domain mock --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 2 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-042306-420109/tau2_output --log-level INFO --task-ids create_task_1",
+  "tau2_cwd": "vendor/tau2-bench",
+  "tau2_data_dir": "vendor/tau2-bench/data",
+  "tau2_model_name": "openai/gpt-4.1-mini",
+  "tau2_output_path": "runs/20260531-042306-420109/tau2_output",
+  "timestamp_utc": "2026-05-31T04:23:12.547131+00:00"
+}
