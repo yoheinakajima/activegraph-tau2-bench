@@ -98,18 +98,18 @@ python scripts/run_tau2_runtime_traced_baseline.py \
 See [tau2 runtime trace-only instrumentation](docs/tau2_runtime_trace.md) for hook coverage, artifacts, status values, and no-control/no-vendor-mutation boundaries.
 
 
-### Successful runtime trace analysis
+### Runtime trace outcome analysis
 
-Analyze the successful max_steps=6 runtime-traced tau2 baseline against the prior short runtime trace and post-run extraction without rerunning tau2 or calling APIs:
+Analyze any already-produced runtime-traced tau2 baseline outcome against a reference success run and the post-run extracted baseline without rerunning tau2 or calling APIs:
 
 ```bash
-python scripts/analyze_successful_runtime_trace.py \
-  --successful-runtime-run-dir runs/20260531-155904-128551 \
-  --short-runtime-run-dir runs/20260531-153843-240865 \
+python scripts/analyze_runtime_trace_outcome.py \
+  --runtime-run-dir runs/20260531-170618-525260 \
+  --reference-success-run-dir runs/20260531-155904-128551 \
   --postrun-baseline-dir runs/20260531-042306-420109
 ```
 
-The analyzer writes `successful_runtime_trace_analysis.json`, `successful_runtime_trace_summary.md`, `runtime_event_coverage.json`, `completion_path.json`, comparison JSON files, `final_state.json`, and `raw.log` under `runs/20260531-155904-128551/runtime_success_analysis/`. It is offline-only: no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, no vendored tau2 mutation, and no ActiveGraph control. See [Successful runtime-traced tau2 baseline analysis](docs/successful_runtime_trace_analysis.md) for event-count comparisons, completion-path details, metrics, and remaining gaps.
+The analyzer writes `runtime_outcome_analysis.json`, `runtime_outcome_summary.md`, `completion_or_failure_path.json`, `metric_classification.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/runtime_outcome_analysis/`. It classifies `success`, `failed_no_write`, `failed_partial_progress`, `failed_max_steps`, and `failed_unknown` using reward, DB checks, write-action checks, stop reason, live write dispatches, state-hash changes, and tool result payloads. It is offline-only: no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, no vendored tau2 mutation, and no ActiveGraph control. The legacy `scripts/analyze_successful_runtime_trace.py` command remains as a compatibility wrapper. See [Runtime trace outcome analysis](docs/runtime_trace_outcome_analysis.md) for details.
 
 ### Runtime DB mutation analysis
 

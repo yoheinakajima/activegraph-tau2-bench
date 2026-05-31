@@ -20,11 +20,15 @@ MISSING_STATUS = "runtime_db_mutation_analysis_inputs_missing"
 REQUIRED_ARTIFACTS = {
     "runtime_events": pathlib.Path("runtime_events.jsonl"),
     "tau2_results": pathlib.Path("tau2_output/results.json"),
-    "completion_path": pathlib.Path("runtime_success_analysis/completion_path.json"),
-    "successful_runtime_trace_analysis": pathlib.Path(
-        "runtime_success_analysis/successful_runtime_trace_analysis.json"
-    ),
-    "runtime_success_final_state": pathlib.Path("runtime_success_analysis/final_state.json"),
+}
+
+OPTIONAL_ARTIFACTS = {
+    "runtime_outcome_completion_path": pathlib.Path("runtime_outcome_analysis/completion_or_failure_path.json"),
+    "runtime_outcome_analysis": pathlib.Path("runtime_outcome_analysis/runtime_outcome_analysis.json"),
+    "runtime_outcome_final_state": pathlib.Path("runtime_outcome_analysis/final_state.json"),
+    "legacy_completion_path": pathlib.Path("runtime_success_analysis/completion_path.json"),
+    "legacy_successful_runtime_trace_analysis": pathlib.Path("runtime_success_analysis/successful_runtime_trace_analysis.json"),
+    "legacy_runtime_success_final_state": pathlib.Path("runtime_success_analysis/final_state.json"),
 }
 
 
@@ -73,6 +77,12 @@ def load_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
 
 def write_json(path: pathlib.Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def load_json_optional(path: pathlib.Path) -> Any | None:
+    if not path.is_file():
+        return None
+    return load_json(path)
 
 
 def payload(event: dict[str, Any]) -> dict[str, Any]:
@@ -251,9 +261,19 @@ def build_analysis(run_dir: pathlib.Path) -> tuple[dict[str, Any], list[dict[str
 
     events = load_jsonl(run_dir / REQUIRED_ARTIFACTS["runtime_events"])
     results = load_json(run_dir / REQUIRED_ARTIFACTS["tau2_results"])
-    completion_path = load_json(run_dir / REQUIRED_ARTIFACTS["completion_path"])
-    success_analysis = load_json(run_dir / REQUIRED_ARTIFACTS["successful_runtime_trace_analysis"])
-    success_final_state = load_json(run_dir / REQUIRED_ARTIFACTS["runtime_success_final_state"])
+    completion_path = (
+        load_json_optional(run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_completion_path"])
+        or load_json_optional(run_dir / OPTIONAL_ARTIFACTS["legacy_completion_path"])
+        or {}
+    )
+    outcome_analysis = load_json_optional(run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_analysis"]) or {}
+    legacy_success_analysis = load_json_optional(run_dir / OPTIONAL_ARTIFACTS["legacy_successful_runtime_trace_analysis"]) or {}
+    runtime_analysis = outcome_analysis or legacy_success_analysis
+    analysis_final_state = (
+        load_json_optional(run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_final_state"])
+        or load_json_optional(run_dir / OPTIONAL_ARTIFACTS["legacy_runtime_success_final_state"])
+        or {}
+    )
 
     evaluation_start_sequence = next(
         (int(event["_sequence"]) for event in events if event.get("event_type") == "evaluation_start"), None
@@ -352,8 +372,8 @@ def build_analysis(run_dir: pathlib.Path) -> tuple[dict[str, Any], list[dict[str
         "action_checks": write_checks,
         "termination_reason": first_simulation(results).get("termination_reason"),
         "normal_stop": first_simulation(results).get("termination_reason") == "user_stop",
-        "agent_errors": success_final_state.get("metrics", {}).get("agent_errors"),
-        "user_errors": success_final_state.get("metrics", {}).get("user_errors"),
+        "agent_errors": analysis_final_state.get("metrics", {}).get("agent_errors", 0 if first_simulation(results) else None),
+        "user_errors": analysis_final_state.get("metrics", {}).get("user_errors", 0 if first_simulation(results) else None),
     }
 
     limitations = []
@@ -374,15 +394,16 @@ def build_analysis(run_dir: pathlib.Path) -> tuple[dict[str, Any], list[dict[str
     summary = {
         "status": status,
         "runtime_run_dir": rel(run_dir),
-        "source_artifacts": source_artifact_index(run_dir, REQUIRED_ARTIFACTS),
+        "source_artifacts": {**source_artifact_index(run_dir, REQUIRED_ARTIFACTS), **source_artifact_index(run_dir, OPTIONAL_ARTIFACTS)},
         "inspected_runtime_event_count": len(events),
         "detected_write_count": len(detected_writes),
         "detected_write_tools": write_tool_names,
         "detected_writes": detected_writes,
         "evaluation_replay_write_event_count": len(evaluation_replay_events),
         "confirmation": confirmations,
-        "completion_path_status": completion_path.get("status") if isinstance(completion_path, dict) else None,
-        "successful_runtime_trace_analysis_status": success_analysis.get("status") if isinstance(success_analysis, dict) else None,
+        "completion_or_failure_path_status": completion_path.get("status") if isinstance(completion_path, dict) else None,
+        "runtime_outcome_task_outcome": outcome_analysis.get("task_outcome") if isinstance(outcome_analysis, dict) else None,
+        "runtime_trace_analysis_status": runtime_analysis.get("status") if isinstance(runtime_analysis, dict) else None,
         "confidence": confidence,
         "limitations": limitations,
         "offline_boundaries": {
@@ -410,9 +431,30 @@ def build_analysis(run_dir: pathlib.Path) -> tuple[dict[str, Any], list[dict[str
         "evaluation_replay_event_ids": [event["event_id"] for event in evaluation_replay_events],
         "confirmation_sources": {
             "reward_db_action": rel(run_dir / REQUIRED_ARTIFACTS["tau2_results"]),
-            "completion_path": rel(run_dir / REQUIRED_ARTIFACTS["completion_path"]),
-            "success_final_state": rel(run_dir / REQUIRED_ARTIFACTS["runtime_success_final_state"]),
-            "success_analysis": rel(run_dir / REQUIRED_ARTIFACTS["successful_runtime_trace_analysis"]),
+            "completion_or_failure_path": rel(
+                run_dir
+                / (
+                    OPTIONAL_ARTIFACTS["runtime_outcome_completion_path"]
+                    if (run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_completion_path"]).is_file()
+                    else OPTIONAL_ARTIFACTS["legacy_completion_path"]
+                )
+            ),
+            "runtime_analysis_final_state": rel(
+                run_dir
+                / (
+                    OPTIONAL_ARTIFACTS["runtime_outcome_final_state"]
+                    if (run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_final_state"]).is_file()
+                    else OPTIONAL_ARTIFACTS["legacy_runtime_success_final_state"]
+                )
+            ),
+            "runtime_trace_analysis": rel(
+                run_dir
+                / (
+                    OPTIONAL_ARTIFACTS["runtime_outcome_analysis"]
+                    if (run_dir / OPTIONAL_ARTIFACTS["runtime_outcome_analysis"]).is_file()
+                    else OPTIONAL_ARTIFACTS["legacy_successful_runtime_trace_analysis"]
+                )
+            ),
         },
         "field_paths_used": [
             "runtime_events.jsonl[*].event_id",
@@ -428,7 +470,8 @@ def build_analysis(run_dir: pathlib.Path) -> tuple[dict[str, Any], list[dict[str
             "tau2_output/results.json.simulations[0].reward_info.reward",
             "tau2_output/results.json.simulations[0].reward_info.db_check",
             "tau2_output/results.json.simulations[0].reward_info.action_checks",
-            "runtime_success_analysis/final_state.json.metrics",
+            "runtime_outcome_analysis/final_state.json.metrics",
+            "runtime_success_analysis/final_state.json.metrics (legacy fallback)",
         ],
     }
 
@@ -525,7 +568,7 @@ This report is an offline deterministic projection from existing runtime-trace a
 - Tool message response content.
 - State hash before/after fields.
 - tau2 reward, DB check, and write action checks from `tau2_output/results.json`.
-- Existing successful runtime-trace analysis final metrics.
+- Existing runtime outcome-analysis final metrics, with legacy successful-runtime metrics as a fallback.
 
 ## Confidence and limitations
 
