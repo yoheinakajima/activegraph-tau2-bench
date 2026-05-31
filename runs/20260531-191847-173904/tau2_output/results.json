@@ -1,0 +1,792 @@
+{
+  "timestamp": "2026-05-31T12:18:49.060259",
+  "info": {
+    "git_commit": "5838d5e82cb6642e0950423161427d9dbd5b879b",
+    "num_trials": 1,
+    "max_steps": 16,
+    "max_errors": 10,
+    "user_info": {
+      "implementation": "user_simulator",
+      "llm": "openai/gpt-4.1-mini",
+      "llm_args": {
+        "temperature": 0.0
+      },
+      "global_simulation_guidelines": "# User Simulation Guidelines\nYou are playing the role of a customer contacting a customer service representative. \nYour goal is to simulate realistic customer interactions while following specific scenario instructions.\n\n## Core Principles\n- Generate one message at a time, maintaining natural conversation flow.\n- Strictly follow the scenario instructions you have received.\n- Never make up or hallucinate information not provided in the scenario instructions. Information that is not provided in the scenario instructions should be considered unknown or unavailable.\n- Avoid repeating the exact instructions verbatim. Use paraphrasing and natural language to convey the same information\n- Disclose information progressively. Wait for the agent to ask for specific information before providing it.\n\n## Task Completion\n- The goal is to continue the conversation until the task is complete.\n- If the instruction goal is satisified, generate the '###STOP###' token to end the conversation.\n- If you are transferred to another agent, generate the '###TRANSFER###' token to indicate the transfer.\n- If you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation, generate the '###OUT-OF-SCOPE###' token to end the conversation.\nRemember: The goal is to create realistic, natural conversations while strictly adhering to the provided instructions and maintaining character consistency.\n",
+      "voice_settings": null,
+      "persona_config": null
+    },
+    "agent_info": {
+      "implementation": "llm_agent",
+      "llm": "openai/gpt-4.1-mini",
+      "llm_args": {
+        "temperature": 0.0
+      },
+      "voice_settings": null
+    },
+    "environment_info": {
+      "domain_name": "mock",
+      "policy": "# Mock Domain Policy\n\n1. Each task must have a title\n2. Task status can only be \"pending\" or \"completed\"\n3. Only existing users can create tasks \n4. You are not allowed to delete tasks. You should transfer the a human agent.\n5. If the user asks for a compliment, compliment them",
+      "tool_defs": null
+    },
+    "seed": 300,
+    "text_streaming_config": {
+      "chunk_by": "words",
+      "chunk_size": 1
+    },
+    "speech_complexity": null,
+    "audio_native_config": null,
+    "retrieval_config": null,
+    "retrieval_config_kwargs": null
+  },
+  "tasks": [
+    {
+      "id": "update_task_with_user_tools",
+      "description": {
+        "purpose": "Test user tool calling with check_notifications and dismiss_notification",
+        "relevant_policies": null,
+        "notes": "The user checks their notification inbox, sees a task assigned to them, asks the agent to mark it completed, then dismisses the notification."
+      },
+      "user_scenario": {
+        "persona": "Professional and direct communicator who writes in a clear and concise style",
+        "instructions": "You just received a notification about a task. First, use the check_notifications tool to see your notifications. You will see that task_1 ('Test task') has been assigned to you. Tell the agent you have completed this task and ask them to update the status to completed. After the agent confirms, use dismiss_notification to dismiss the notification 'notif_1'."
+      },
+      "ticket": "User checks their notifications, sees task_1 was assigned, and asks the agent to mark task_1 as completed.",
+      "initial_state": {
+        "initialization_data": null,
+        "initialization_actions": [
+          {
+            "env_type": "user",
+            "func_name": "add_notification",
+            "arguments": {
+              "notification_id": "notif_1",
+              "message": "Task 'Test task' has been assigned to you.",
+              "task_id": "task_1"
+            }
+          }
+        ],
+        "message_history": null
+      },
+      "evaluation_criteria": {
+        "actions": [
+          {
+            "action_id": "update_1",
+            "requestor": "assistant",
+            "name": "update_task_status",
+            "arguments": {
+              "task_id": "task_1",
+              "status": "completed"
+            },
+            "info": "Update the task status to completed",
+            "compare_args": null
+          }
+        ],
+        "env_assertions": [
+          {
+            "env_type": "user",
+            "func_name": "assert_notification_status",
+            "arguments": {
+              "notification_id": "notif_1",
+              "expected_status": "read"
+            },
+            "assert_value": true,
+            "message": null
+          }
+        ],
+        "communicate_info": null,
+        "nl_assertions": [
+          "The agent confirmed the task status was updated successfully"
+        ],
+        "reward_basis": [
+          "DB",
+          "ACTION",
+          "ENV_ASSERTION"
+        ]
+      },
+      "issues": null,
+      "required_documents": null,
+      "user_tools": null
+    }
+  ],
+  "simulations": [
+    {
+      "id": "c28804d3-264c-4ebb-a624-63a6cd6256e6",
+      "task_id": "update_task_with_user_tools",
+      "timestamp": "2026-05-31T12:18:54.825466",
+      "start_time": "2026-05-31T12:18:49.069561",
+      "end_time": "2026-05-31T12:18:54.825297",
+      "duration": 5.755034624948166,
+      "termination_reason": "user_stop",
+      "agent_cost": 0.0006827999999999999,
+      "user_cost": 0.0014311999999999999,
+      "reward_info": {
+        "reward": 0.0,
+        "db_check": {
+          "db_match": false,
+          "db_reward": 0.0
+        },
+        "env_assertions": [
+          {
+            "env_assertion": {
+              "env_type": "user",
+              "func_name": "assert_notification_status",
+              "arguments": {
+                "notification_id": "notif_1",
+                "expected_status": "read"
+              },
+              "assert_value": true,
+              "message": null
+            },
+            "met": true,
+            "reward": 1.0
+          }
+        ],
+        "action_checks": [
+          {
+            "action": {
+              "action_id": "update_1",
+              "requestor": "assistant",
+              "name": "update_task_status",
+              "arguments": {
+                "task_id": "task_1",
+                "status": "completed"
+              },
+              "info": "Update the task status to completed",
+              "compare_args": null
+            },
+            "action_match": true,
+            "action_reward": 1.0,
+            "tool_type": "write"
+          }
+        ],
+        "nl_assertions": null,
+        "communicate_checks": null,
+        "reward_basis": [
+          "DB",
+          "ACTION",
+          "ENV_ASSERTION"
+        ],
+        "reward_breakdown": {
+          "DB": 0.0,
+          "ENV_ASSERTION": 1.0,
+          "ACTION": 1.0
+        },
+        "info": {
+          "env": null,
+          "nl": null,
+          "communicate": {
+            "note": "No communicate_info to evaluate"
+          },
+          "action": null
+        }
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Hi! How can I help you today?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 0,
+          "timestamp": "2026-05-31T12:18:49.069937",
+          "cost": 0.0,
+          "usage": null,
+          "raw_data": null,
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "role": "user",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_a58sj5r5hCXQ1yB8D1jG7ujk",
+              "name": "check_notifications",
+              "arguments": {},
+              "requestor": "user"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 1,
+          "timestamp": "2026-05-31T12:18:49.949995",
+          "cost": 0.000302,
+          "usage": {
+            "completion_tokens": 10,
+            "prompt_tokens": 715
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyL3zJRo20H6QYOFcKMMvl1FaFa",
+            "created": 1780255129,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_4c00819d9a",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{}",
+                        "name": "check_notifications"
+                      },
+                      "id": "call_a58sj5r5hCXQ1yB8D1jG7ujk",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 10,
+              "prompt_tokens": 715,
+              "total_tokens": 725,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_a58sj5r5hCXQ1yB8D1jG7ujk",
+          "role": "tool",
+          "content": "[{\"notification_id\": \"notif_1\", \"message\": \"Task 'Test task' has been assigned to you.\", \"status\": \"unread\", \"task_id\": \"task_1\"}]",
+          "requestor": "user",
+          "error": false,
+          "turn_idx": 2,
+          "timestamp": "2026-05-31T12:18:49.951568"
+        },
+        {
+          "role": "user",
+          "content": "I have received a notification that the task \"Test task\" has been assigned to me. I have completed this task. Could you please update the status to completed?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 3,
+          "timestamp": "2026-05-31T12:18:50.704781",
+          "cost": 0.00036439999999999997,
+          "usage": {
+            "completion_tokens": 34,
+            "prompt_tokens": 775
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyM4xaA0v3zlyuK5Ul3MNlHGXFP",
+            "created": 1780255130,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_4c00819d9a",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "I have received a notification that the task \"Test task\" has been assigned to me. I have completed this task. Could you please update the status to completed?",
+                  "role": "assistant",
+                  "tool_calls": null,
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 34,
+              "prompt_tokens": 775,
+              "total_tokens": 809,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_WOofnOvr2k1Yjx86IZbtuVQQ",
+              "name": "get_users",
+              "arguments": {},
+              "requestor": "assistant"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 4,
+          "timestamp": "2026-05-31T12:18:51.324944",
+          "cost": 0.0001928,
+          "usage": {
+            "completion_tokens": 10,
+            "prompt_tokens": 442
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyNk1YlkBKdtjnKgkNEsh7ZQ1Ec",
+            "created": 1780255131,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_d9eab662e2",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{}",
+                        "name": "get_users"
+                      },
+                      "id": "call_WOofnOvr2k1Yjx86IZbtuVQQ",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 10,
+              "prompt_tokens": 442,
+              "total_tokens": 452,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.6160470830509439,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_WOofnOvr2k1Yjx86IZbtuVQQ",
+          "role": "tool",
+          "content": "[{\"user_id\": \"user_1\", \"name\": \"Test User\", \"tasks\": [\"task_1\"]}]",
+          "requestor": "assistant",
+          "error": false,
+          "turn_idx": 5,
+          "timestamp": "2026-05-31T12:18:51.325755"
+        },
+        {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_jgp0Pw7V42mJqSYfMO9bFtdj",
+              "name": "update_task_status",
+              "arguments": {
+                "task_id": "task_1",
+                "status": "completed"
+              },
+              "requestor": "assistant"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 6,
+          "timestamp": "2026-05-31T12:18:52.263974",
+          "cost": 0.0002296,
+          "usage": {
+            "completion_tokens": 22,
+            "prompt_tokens": 486
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyNQ4iRm7UjwdvWqNbjn0N1m0EQ",
+            "created": 1780255131,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_d9eab662e2",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{\"task_id\":\"task_1\",\"status\":\"completed\"}",
+                        "name": "update_task_status"
+                      },
+                      "id": "call_jgp0Pw7V42mJqSYfMO9bFtdj",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 22,
+              "prompt_tokens": 486,
+              "total_tokens": 508,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.93737629102543,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_jgp0Pw7V42mJqSYfMO9bFtdj",
+          "role": "tool",
+          "content": "{\"task_id\": \"task_1\", \"title\": \"Test task\", \"description\": \"A test task\", \"status\": \"completed\"}",
+          "requestor": "assistant",
+          "error": false,
+          "turn_idx": 7,
+          "timestamp": "2026-05-31T12:18:52.265030"
+        },
+        {
+          "role": "assistant",
+          "content": "The status of the task \"Test task\" has been updated to completed. Is there anything else I can assist you with?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 8,
+          "timestamp": "2026-05-31T12:18:52.918950",
+          "cost": 0.0002604,
+          "usage": {
+            "completion_tokens": 26,
+            "prompt_tokens": 547
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyOvJiMlzyp8NK4KWclhr4wRmH8",
+            "created": 1780255132,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_d9eab662e2",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "The status of the task \"Test task\" has been updated to completed. Is there anything else I can assist you with?",
+                  "role": "assistant",
+                  "tool_calls": null,
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 26,
+              "prompt_tokens": 547,
+              "total_tokens": 573,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.6529322089627385,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "role": "user",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_g8E5GASrHUDIh9i2qdaPBKYN",
+              "name": "dismiss_notification",
+              "arguments": {
+                "notification_id": "notif_1"
+              },
+              "requestor": "user"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 9,
+          "timestamp": "2026-05-31T12:18:54.014046",
+          "cost": 0.0003636,
+          "usage": {
+            "completion_tokens": 17,
+            "prompt_tokens": 841
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyPdsQpsDGVZ9HLU7ByXCDzMJTf",
+            "created": 1780255133,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_4c00819d9a",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{\"notification_id\":\"notif_1\"}",
+                        "name": "dismiss_notification"
+                      },
+                      "id": "call_g8E5GASrHUDIh9i2qdaPBKYN",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 17,
+              "prompt_tokens": 841,
+              "total_tokens": 858,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_g8E5GASrHUDIh9i2qdaPBKYN",
+          "role": "tool",
+          "content": "Notification notif_1 dismissed",
+          "requestor": "user",
+          "error": false,
+          "turn_idx": 10,
+          "timestamp": "2026-05-31T12:18:54.016313"
+        },
+        {
+          "role": "user",
+          "content": "The notification related to the task has been dismissed. If you need any further assistance, please let me know. Otherwise, have a great day! ###STOP###",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 11,
+          "timestamp": "2026-05-31T12:18:54.823027",
+          "cost": 0.00040119999999999994,
+          "usage": {
+            "completion_tokens": 33,
+            "prompt_tokens": 871
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlfyQXgRhidlcmniHFRZ4eeXPnxzJ",
+            "created": 1780255134,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_4c00819d9a",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "The notification related to the task has been dismissed. If you need any further assistance, please let me know. Otherwise, have a great day! ###STOP###",
+                  "role": "assistant",
+                  "tool_calls": null,
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 33,
+              "prompt_tokens": 871,
+              "total_tokens": 904,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        }
+      ],
+      "ticks": null,
+      "trial": 0,
+      "seed": 626729,
+      "mode": "half_duplex",
+      "speech_environment": null,
+      "review": null,
+      "user_only_review": null,
+      "info": null,
+      "auth_classification": null,
+      "hallucination_retries_used": 0,
+      "hallucination_check": null,
+      "provider_session_id": null,
+      "policy": "# Mock Domain Policy\n\n1. Each task must have a title\n2. Task status can only be \"pending\" or \"completed\"\n3. Only existing users can create tasks \n4. You are not allowed to delete tasks. You should transfer the a human agent.\n5. If the user asks for a compliment, compliment them",
+      "effect_timeline": null
+    }
+  ],
+  "simulation_index": null
+}
