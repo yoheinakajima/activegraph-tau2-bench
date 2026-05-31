@@ -58,6 +58,22 @@ python scripts/run_tau2_real_smoke.py
 
 This command avoids LLM/API calls and does not require API keys. It checks the local vendored tau2-bench install/import/CLI/data/test behavior where available, including safe commands such as `tau2 --help`, `tau2 run --help`, `tau2 check-data`, and `tau2 intro`, plus a small no-LLM mock-domain test subset when dependencies are installed. It does not run model-backed tau2 benchmark episodes. Outputs are written to ignored `runs/<timestamp>/` directories with `raw.log`, `summary.md`, `final_state.json`, and `domain_probe.json`. See [Real tau2 local smoke](docs/tau2_real_smoke.md) for details.
 
+## Explicit opt-in tau2 model baseline
+
+A real model-backed tau2 baseline is available as an explicit, paid-API opt-in command. It is **not** included in `python scripts/run_all_smokes.py` and does not integrate ActiveGraph into tau2 execution.
+
+```bash
+python scripts/run_tau2_model_baseline.py \
+  --provider <provider> \
+  --model <model> \
+  --domain mock \
+  --task-id <task_id_or_index> \
+  --max-steps 2 \
+  --yes-i-understand-this-may-call-paid-apis
+```
+
+The wrapper refuses to run without provider/model configuration and the paid-API acknowledgement flag, reports only API-key presence booleans, and writes artifacts under ignored `runs/<timestamp>/` directories. See [Explicit opt-in tau2 model baseline](docs/tau2_model_baseline.md) for setup, outputs, and troubleshooting.
+
 ## Smoke commands
 
 The aggregate command runs the completed no-LLM smoke suite:
