@@ -6,6 +6,7 @@ import datetime as dt
 import json
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -198,6 +199,28 @@ def file_domain_probe() -> dict[str, Any]:
     probe["tools_exists"] = tools_path.exists()
     probe["tools_size_bytes"] = tools_path.stat().st_size if tools_path.exists() else 0
     return probe
+
+
+def pytest_unavailable(completed: subprocess.CompletedProcess[str]) -> bool:
+    output = (completed.stdout or "").lower()
+    unavailable_markers = [
+        "no module named pytest",
+        "pytest: command not found",
+        "no such command",
+        "no executable found",
+        "executable not found",
+        "failed to spawn",
+    ]
+    return completed.returncode != 0 and any(marker in output for marker in unavailable_markers)
+
+
+def parse_pytest_counts(output: str) -> dict[str, int]:
+    counts = {"passed": 0, "skipped": 0}
+    for name in counts:
+        match = re.search(rf"(\d+)\s+{name}", output)
+        if match:
+            counts[name] = int(match.group(1))
+    return counts
 
 
 def write_json(path: pathlib.Path, data: Any) -> None:
@@ -444,17 +467,79 @@ def main() -> int:
     final_state["state"] = DATA_STATUS
 
     pytest_env = env.copy()
-    venv_site = VENDOR_DIR / ".venv" / "lib" / f"python{sys.version_info.major}.{sys.version_info.minor}" / "site-packages"
-    pytest_paths = [str(VENDOR_DIR / "src")]
-    if venv_site.exists():
-        pytest_paths.append(str(venv_site))
-    pytest_env["PYTHONPATH"] = os.pathsep.join(pytest_paths + ([pytest_env["PYTHONPATH"]] if pytest_env.get("PYTHONPATH") else []))
-    pytest_base = [sys.executable, "-m", "pytest"]
-    final_state["environment"]["pytest_execution_prefix"] = f"{sys.executable} -m pytest with PYTHONPATH={pytest_env['PYTHONPATH']}"
-    completed = run_command(pytest_base + ["--collect-only", "-q", *NO_LLM_TESTS], cwd=VENDOR_DIR, env=pytest_env, timeout=120, output_file=out_dir / "pytest_collect.log")
+    if final_state["environment"].get("uv_sync_succeeded") and uv_path:
+        src_path = str(VENDOR_DIR / "src")
+        venv_site = VENDOR_DIR / ".venv" / "lib" / f"python{sys.version_info.major}.{sys.version_info.minor}" / "site-packages"
+        pytest_paths = [src_path]
+        if venv_site.exists():
+            pytest_paths.append(str(venv_site))
+        pytest_env["PYTHONPATH"] = os.pathsep.join(
+            pytest_paths + ([pytest_env["PYTHONPATH"]] if pytest_env.get("PYTHONPATH") else [])
+        )
+        pytest_base = [uv_path, "run", "pytest"]
+        final_state["environment"]["pytest_execution_prefix"] = f"uv run pytest with PYTHONPATH={pytest_env['PYTHONPATH']}"
+    else:
+        pytest_probe = run_command([sys.executable, "-m", "pytest", "--version"], cwd=REPO_ROOT, env=pytest_env, timeout=30)
+        recorder.command("wrapper pytest availability probe", pytest_probe)
+        if pytest_probe.returncode != 0:
+            final_state["checks"]["pytest_collect"] = {
+                "ok": False,
+                "returncode": pytest_probe.returncode,
+                "ran": False,
+                "skipped": True,
+                "reason": "pytest_unavailable_in_wrapper_python",
+            }
+            final_state["checks"]["pytest_no_llm"] = {
+                "ok": False,
+                "returncode": pytest_probe.returncode,
+                "ran": False,
+                "skipped": True,
+                "reason": "pytest_unavailable_in_wrapper_python",
+                "tests": NO_LLM_TESTS,
+            }
+            final_state["environment"]["pytest_execution_prefix"] = None
+            final_state["status_history"] = [SOURCE_ONLY_STATUS, IMPORT_STATUS, CLI_STATUS, DATA_STATUS]
+            write_json(out_dir / "domain_probe.json", domain_probe)
+            final_state["domain_probe"] = domain_probe
+            write_json(out_dir / "final_state.json", final_state)
+            write_summary(out_dir, final_state)
+            recorder.log(final_state["state"])
+            recorder.flush()
+            return 0
+        src_path = str(VENDOR_DIR / "src")
+        pytest_env["PYTHONPATH"] = src_path + os.pathsep + pytest_env.get("PYTHONPATH", "")
+        pytest_base = [sys.executable, "-m", "pytest"]
+        final_state["environment"]["pytest_execution_prefix"] = f"{sys.executable} -m pytest with PYTHONPATH={pytest_env['PYTHONPATH']}"
+
+    pytest_collect_cmd = pytest_base + ["--collect-only", "-q", *NO_LLM_TESTS]
+    completed = run_command(pytest_collect_cmd, cwd=VENDOR_DIR, env=pytest_env, timeout=120, output_file=out_dir / "pytest_collect.log")
     recorder.command("pytest collect no-LLM subset", completed)
-    final_state["checks"]["pytest_collect"] = {"ok": completed.returncode == 0, "returncode": completed.returncode, "ran": True, "artifact": rel(out_dir / "pytest_collect.log")}
+    final_state["checks"]["pytest_collect"] = {
+        "ok": completed.returncode == 0,
+        "returncode": completed.returncode,
+        "ran": True,
+        "command": " ".join(pytest_collect_cmd),
+        "artifact": rel(out_dir / "pytest_collect.log"),
+    }
     if completed.returncode != 0:
+        if pytest_unavailable(completed):
+            final_state["checks"]["pytest_collect"].update({"skipped": True, "reason": "pytest_unavailable"})
+            final_state["checks"]["pytest_no_llm"] = {
+                "ok": False,
+                "returncode": None,
+                "ran": False,
+                "skipped": True,
+                "reason": "pytest_unavailable",
+                "tests": NO_LLM_TESTS,
+            }
+            final_state["status_history"] = [SOURCE_ONLY_STATUS, IMPORT_STATUS, CLI_STATUS, DATA_STATUS]
+            write_json(out_dir / "domain_probe.json", domain_probe)
+            final_state["domain_probe"] = domain_probe
+            write_json(out_dir / "final_state.json", final_state)
+            write_summary(out_dir, final_state)
+            recorder.log(final_state["state"])
+            recorder.flush()
+            return 0
         final_state["state"] = FAILED_STATUS
         write_json(out_dir / "domain_probe.json", domain_probe)
         write_json(out_dir / "final_state.json", final_state)
@@ -463,10 +548,31 @@ def main() -> int:
         recorder.flush()
         return 1
 
-    completed = run_command(pytest_base + ["-q", *NO_LLM_TESTS], cwd=VENDOR_DIR, env=pytest_env, timeout=180, output_file=out_dir / "pytest_no_llm.log")
+    pytest_no_llm_cmd = pytest_base + ["-q", *NO_LLM_TESTS]
+    completed = run_command(pytest_no_llm_cmd, cwd=VENDOR_DIR, env=pytest_env, timeout=180, output_file=out_dir / "pytest_no_llm.log")
     recorder.command("pytest no-LLM subset", completed)
-    final_state["checks"]["pytest_no_llm"] = {"ok": completed.returncode == 0, "returncode": completed.returncode, "ran": True, "tests": NO_LLM_TESTS, "artifact": rel(out_dir / "pytest_no_llm.log")}
+    pytest_counts = parse_pytest_counts(completed.stdout)
+    final_state["checks"]["pytest_no_llm"] = {
+        "ok": completed.returncode == 0,
+        "returncode": completed.returncode,
+        "ran": True,
+        "command": " ".join(pytest_no_llm_cmd),
+        "tests": NO_LLM_TESTS,
+        "passed_count": pytest_counts["passed"],
+        "skipped_count": pytest_counts["skipped"],
+        "artifact": rel(out_dir / "pytest_no_llm.log"),
+    }
     if completed.returncode != 0:
+        if pytest_unavailable(completed):
+            final_state["checks"]["pytest_no_llm"].update({"skipped": True, "reason": "pytest_unavailable"})
+            final_state["status_history"] = [SOURCE_ONLY_STATUS, IMPORT_STATUS, CLI_STATUS, DATA_STATUS]
+            write_json(out_dir / "domain_probe.json", domain_probe)
+            final_state["domain_probe"] = domain_probe
+            write_json(out_dir / "final_state.json", final_state)
+            write_summary(out_dir, final_state)
+            recorder.log(final_state["state"])
+            recorder.flush()
+            return 0
         final_state["state"] = FAILED_STATUS
         write_json(out_dir / "domain_probe.json", domain_probe)
         write_json(out_dir / "final_state.json", final_state)
