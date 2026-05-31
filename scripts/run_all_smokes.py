@@ -89,6 +89,20 @@ SMOKES = [
         "display_command": "python scripts/run_auditor_handoff_package.py",
         "expected_statuses": ["auditor_handoff_package_passed"],
     },
+    {
+        "name": "tau2_real",
+        "command": [sys.executable, "scripts/run_tau2_real_smoke.py"],
+        "display_command": "python scripts/run_tau2_real_smoke.py",
+        "expected_statuses": [
+            "tau2_real_smoke_source_only_passed",
+            "tau2_real_smoke_import_passed",
+            "tau2_real_smoke_cli_passed",
+            "tau2_real_smoke_data_check_passed",
+            "tau2_real_smoke_tests_passed",
+            "tau2_real_smoke_passed",
+        ],
+        "warning_statuses": ["tau2_real_smoke_source_only_passed"],
+    },
 ]
 
 
@@ -137,7 +151,7 @@ Run directory: `{final_state['output_dir']}`
 
 Expected aggregate status: `{PASS_STATUS}`
 
-Boundary: this aggregator only invokes existing no-LLM smoke commands and records their outputs. It does not change smoke behavior, execute tau2 control flow, or call LLM/API services.
+Boundary: this aggregator invokes local no-LLM smoke commands and records their outputs. It does not execute paid model calls or model-backed tau2 benchmark episodes. The `tau2_real` smoke may report `tau2_real_smoke_source_only_passed` as a warning-level minimum when local dependency installation is unavailable; stronger import/CLI/data/test/pass statuses indicate progressively more real vendored tau2 behavior ran.
 """
     write(out_dir / "aggregate_summary.md", content)
 
@@ -195,7 +209,9 @@ def main() -> int:
             "output_dir": output_dir,
             "status": status,
             "expected_statuses": smoke["expected_statuses"],
+            "warning_statuses": smoke.get("warning_statuses", []),
             "expected_status_observed": expected,
+            "warning_status_observed": status in smoke.get("warning_statuses", []),
             "passed": completed.returncode == 0 and expected and output_dir is not None,
         }
         results.append(result)
@@ -224,6 +240,7 @@ def main() -> int:
         "results": results,
         "expected_status_missing_count": sum(1 for result in results if not result["expected_status_observed"]),
         "failed_smoke_count": sum(1 for result in results if not result["passed"]),
+        "warning_smoke_count": sum(1 for result in results if result.get("warning_status_observed")),
         "live_ready": False,
         "live_execution_available": False,
         "live_execution_unavailable_fail_closed": True,

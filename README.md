@@ -47,6 +47,17 @@ cat vendor/tau2-bench.UPSTREAM_COMMIT
 git status --short -- vendor/tau2-bench vendor/tau2-bench.UPSTREAM_COMMIT
 ```
 
+
+## Real tau2 local smoke
+
+Run the first non-fixture tau2 operational check with:
+
+```bash
+python scripts/run_tau2_real_smoke.py
+```
+
+This command avoids LLM/API calls and does not require API keys. It checks the local vendored tau2-bench install/import/CLI/data/test behavior where available, including safe commands such as `tau2 --help`, `tau2 run --help`, `tau2 check-data`, and `tau2 intro`, plus a small no-LLM mock-domain test subset when dependencies are installed. It does not run model-backed tau2 benchmark episodes. Outputs are written to ignored `runs/<timestamp>/` directories with `raw.log`, `summary.md`, `final_state.json`, and `domain_probe.json`. See [Real tau2 local smoke](docs/tau2_real_smoke.md) for details.
+
 ## Smoke commands
 
 The aggregate command runs the completed no-LLM smoke suite:
