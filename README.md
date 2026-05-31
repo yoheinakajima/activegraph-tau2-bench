@@ -113,6 +113,18 @@ python scripts/analyze_runtime_trace_outcome.py \
 
 The analyzer writes `runtime_outcome_analysis.json`, `runtime_outcome_summary.md`, `completion_or_failure_path.json`, `metric_classification.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/runtime_outcome_analysis/`. It classifies `success`, `failed_no_write`, `failed_partial_progress`, `failed_max_steps`, and `failed_unknown` using reward, DB checks, write-action checks, stop reason, live write dispatches, state-hash changes, and tool result payloads. It is offline-only: no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, no vendored tau2 mutation, and no ActiveGraph control. The legacy `scripts/analyze_successful_runtime_trace.py` command remains as a compatibility wrapper. See [Runtime trace outcome analysis](docs/runtime_trace_outcome_analysis.md) for details.
 
+### Full mock runtime baseline analysis
+
+Analyze the committed 10-task full mock runtime-traced baseline offline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_full_mock_runtime_baseline.py \
+  --runtime-run-dir runs/20260531-184109-726391
+```
+
+The analyzer writes `full_mock_baseline_analysis.json`, `full_mock_baseline_summary.md`, `task_outcomes.json`, `failure_analysis.json`, `runtime_event_coverage.json`, `mutation_summary.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/full_mock_analysis/`. It reports benchmark pass rate, average reward, per-task outcomes, DB/action/write checks, termination reasons, costs where available, runtime event coverage, mutation evidence, and inferable failure causes. See [Full mock runtime baseline analysis](docs/full_mock_runtime_baseline_analysis.md) for details.
+
+
 ### Runtime DB mutation analysis
 
 Project the available DB mutation evidence from the successful runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
