@@ -1,0 +1,79 @@
+{
+  "files_inspected": [
+    {
+      "contributed_events": true,
+      "event_count": 3,
+      "notes": [],
+      "parser": "json",
+      "path": "runs/20260531-042306-420109/final_state.json",
+      "relative_path": "final_state.json",
+      "sha256": "sha256:6e9975fd32deed3b2cdb52c75ddcad3326dd9a5b1af59b35b809af3e1bbd0d76",
+      "size_bytes": 2620
+    },
+    {
+      "contributed_events": false,
+      "event_count": 0,
+      "notes": [],
+      "parser": "tau2_wrapper_raw_log_text",
+      "path": "runs/20260531-042306-420109/raw.log",
+      "relative_path": "raw.log",
+      "sha256": "sha256:406e144eaf8da309e3653835af87d9e7fcdd2c3b26337d78e8fc3ac92c47a83f",
+      "size_bytes": 8487
+    },
+    {
+      "contributed_events": false,
+      "event_count": 0,
+      "notes": [],
+      "parser": "markdown_metadata",
+      "path": "runs/20260531-042306-420109/summary.md",
+      "relative_path": "summary.md",
+      "sha256": "sha256:874b2e7746310866c9d1cd8003fd0fab47ba49c620e75bc1b7ff3119581f1e25",
+      "size_bytes": 1622
+    },
+    {
+      "contributed_events": false,
+      "event_count": 0,
+      "notes": [
+        "copy of tau2_output/results.json; indexed but not parsed for duplicate events"
+      ],
+      "parser": "json",
+      "path": "runs/20260531-042306-420109/tau2_artifacts/results.json",
+      "relative_path": "tau2_artifacts/results.json",
+      "sha256": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174",
+      "size_bytes": 11954
+    },
+    {
+      "contributed_events": true,
+      "event_count": 9,
+      "notes": [],
+      "parser": "json",
+      "path": "runs/20260531-042306-420109/tau2_output/results.json",
+      "relative_path": "tau2_output/results.json",
+      "sha256": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174",
+      "size_bytes": 11954
+    }
+  ],
+  "fixture_backed": false,
+  "generated_at_utc": "2026-05-31T05:11:05.419945Z",
+  "llm_api_calls_made_by_extractor": false,
+  "missing_or_unsupported_artifact_notes": [
+    "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+  ],
+  "phase": "real_tau2_model_baseline_extracted",
+  "source_run_directory": "runs/20260531-042306-420109",
+  "supported_tau2_formats": [
+    "wrapper final_state.json object",
+    "wrapper summary.md markdown",
+    "wrapper raw.log text",
+    "tau2 results.json object with tasks[] and simulations[].messages[]"
+  ],
+  "tau2_rerun": false,
+  "trace_mode": "post_run_extraction",
+  "unsupported_tau2_formats_observed": []
+}
