@@ -77,6 +77,12 @@ SMOKES = [
         "display_command": "python scripts/run_operator_incident_readiness.py",
         "expected_statuses": ["operator_incident_readiness_passed"],
     },
+    {
+        "name": "human_review_package",
+        "command": [sys.executable, "scripts/run_human_review_package.py"],
+        "display_command": "python scripts/run_human_review_package.py",
+        "expected_statuses": ["human_review_package_passed"],
+    },
 ]
 
 
