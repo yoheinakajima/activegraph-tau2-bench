@@ -1,0 +1,39 @@
+{
+  "activegraph_control_added": false,
+  "activegraph_controlled_tau2": false,
+  "agent_errors": 0,
+  "confidence": "high",
+  "db_match": true,
+  "db_reward": 1.0,
+  "detected_write_count": 1,
+  "detected_write_tools": [
+    "create_task"
+  ],
+  "inferred_mutations": [
+    {
+      "object_id": "task_2",
+      "object_status": "pending",
+      "object_title": "Important Meeting",
+      "operation": "create",
+      "target": "task created",
+      "target_type": "task",
+      "user_id": "user_1"
+    }
+  ],
+  "limitations": [
+    "No full before/after DB snapshot artifact is available; the projection uses tool-call evidence, tool-result payloads, state-hash transition evidence, and tau2 reward/DB/action checks.",
+    "Evaluation-phase tool replay events are retained as confirmation evidence but are not counted as additional live runtime writes."
+  ],
+  "llm_api_calls_made_by_analysis": false,
+  "model_backed_episode_run_by_analysis": false,
+  "normal_stop": true,
+  "requires_api_keys": false,
+  "reward": 1.0,
+  "runtime_run_dir": "runs/20260531-155904-128551",
+  "status": "runtime_db_mutation_analysis_passed",
+  "tau2_rerun_performed_by_analysis": false,
+  "user_errors": 0,
+  "vendor_tau2_bench_mutated_by_analysis": false,
+  "write_actions_matched": 1,
+  "write_actions_total": 1
+}

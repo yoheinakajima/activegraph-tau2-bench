@@ -1,0 +1,158 @@
+{
+  "completion_path_status": "completed",
+  "confidence": "high",
+  "confirmation": {
+    "action_checks": [
+      {
+        "action": {
+          "action_id": "create_1",
+          "arguments": {
+            "title": "Important Meeting",
+            "user_id": "user_1"
+          },
+          "compare_args": null,
+          "info": "Create a new task for the meeting",
+          "name": "create_task",
+          "requestor": "assistant"
+        },
+        "action_match": true,
+        "action_reward": 1.0,
+        "tool_type": "write"
+      }
+    ],
+    "agent_errors": 0,
+    "db_match": true,
+    "db_reward": 1.0,
+    "normal_stop": true,
+    "reward": 1.0,
+    "termination_reason": "user_stop",
+    "user_errors": 0,
+    "write_actions_matched": 1,
+    "write_actions_total": 1
+  },
+  "detected_write_count": 1,
+  "detected_write_tools": [
+    "create_task"
+  ],
+  "detected_writes": [
+    {
+      "arguments": {
+        "title": "Important Meeting",
+        "user_id": "user_1"
+      },
+      "evidence": {
+        "message_observed": {
+          "event_id": "rt-000022-dd3fd6ad",
+          "event_type": "message_observed",
+          "line": 22,
+          "source_artifact": "runtime_events.jsonl"
+        },
+        "tool_call_requested": {
+          "event_id": "rt-000017-a849e96c",
+          "event_type": "tool_call_requested",
+          "line": 17,
+          "source_artifact": "runtime_events.jsonl"
+        },
+        "tool_dispatch_end": {
+          "event_id": "rt-000021-70c08500",
+          "event_type": "tool_dispatch_end",
+          "line": 21,
+          "source_artifact": "runtime_events.jsonl"
+        },
+        "tool_dispatch_start": {
+          "event_id": "rt-000018-b219c7b2",
+          "event_type": "tool_dispatch_start",
+          "line": 18,
+          "source_artifact": "runtime_events.jsonl"
+        },
+        "toolkit_dispatch_end": {
+          "event_id": "rt-000020-e252b298",
+          "event_type": "toolkit_dispatch_end",
+          "line": 20,
+          "source_artifact": "runtime_events.jsonl"
+        },
+        "toolkit_dispatch_start": {
+          "event_id": "rt-000019-0f04d991",
+          "event_type": "toolkit_dispatch_start",
+          "line": 19,
+          "source_artifact": "runtime_events.jsonl"
+        }
+      },
+      "evidence_event_ids": [
+        "rt-000017-a849e96c",
+        "rt-000018-b219c7b2",
+        "rt-000019-0f04d991",
+        "rt-000020-e252b298",
+        "rt-000021-70c08500",
+        "rt-000022-dd3fd6ad"
+      ],
+      "inferred_mutation": {
+        "object_id": "task_2",
+        "object_status": "pending",
+        "object_title": "Important Meeting",
+        "operation": "create",
+        "target": "task created",
+        "target_type": "task",
+        "user_id": "user_1"
+      },
+      "requestor": "assistant",
+      "state_hash_after": "3b82583d5c026d816c5a32430fb3ab8d42b72ec2b91cd5cafaab817e0e05b00c",
+      "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "state_hash_changed": true,
+      "status": "ok",
+      "tool_name": "create_task",
+      "tool_result_payload": {
+        "description": null,
+        "status": "pending",
+        "task_id": "task_2",
+        "title": "Important Meeting"
+      },
+      "write_index": 1
+    }
+  ],
+  "evaluation_replay_write_event_count": 6,
+  "inspected_runtime_event_count": 44,
+  "limitations": [
+    "No full before/after DB snapshot artifact is available; the projection uses tool-call evidence, tool-result payloads, state-hash transition evidence, and tau2 reward/DB/action checks.",
+    "Evaluation-phase tool replay events are retained as confirmation evidence but are not counted as additional live runtime writes."
+  ],
+  "offline_boundaries": {
+    "activegraph_control_added": false,
+    "activegraph_controlled_tau2": false,
+    "llm_api_calls_made_by_analysis": false,
+    "model_backed_episode_run_by_analysis": false,
+    "requires_api_keys": false,
+    "tau2_rerun_performed_by_analysis": false,
+    "vendor_tau2_bench_mutated_by_analysis": false
+  },
+  "runtime_run_dir": "runs/20260531-155904-128551",
+  "source_artifacts": {
+    "completion_path": {
+      "bytes": 10132,
+      "path": "runs/20260531-155904-128551/runtime_success_analysis/completion_path.json",
+      "present": true
+    },
+    "runtime_events": {
+      "bytes": 58773,
+      "path": "runs/20260531-155904-128551/runtime_events.jsonl",
+      "present": true
+    },
+    "runtime_success_final_state": {
+      "bytes": 1759,
+      "path": "runs/20260531-155904-128551/runtime_success_analysis/final_state.json",
+      "present": true
+    },
+    "successful_runtime_trace_analysis": {
+      "bytes": 41874,
+      "path": "runs/20260531-155904-128551/runtime_success_analysis/successful_runtime_trace_analysis.json",
+      "present": true
+    },
+    "tau2_results": {
+      "bytes": 17551,
+      "path": "runs/20260531-155904-128551/tau2_output/results.json",
+      "present": true
+    }
+  },
+  "status": "runtime_db_mutation_analysis_passed",
+  "successful_runtime_trace_analysis_status": "successful_runtime_trace_analysis_passed"
+}

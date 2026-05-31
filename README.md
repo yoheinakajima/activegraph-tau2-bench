@@ -111,6 +111,17 @@ python scripts/analyze_successful_runtime_trace.py \
 
 The analyzer writes `successful_runtime_trace_analysis.json`, `successful_runtime_trace_summary.md`, `runtime_event_coverage.json`, `completion_path.json`, comparison JSON files, `final_state.json`, and `raw.log` under `runs/20260531-155904-128551/runtime_success_analysis/`. It is offline-only: no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, no vendored tau2 mutation, and no ActiveGraph control. See [Successful runtime-traced tau2 baseline analysis](docs/successful_runtime_trace_analysis.md) for event-count comparisons, completion-path details, metrics, and remaining gaps.
 
+### Runtime DB mutation analysis
+
+Project the available DB mutation evidence from the successful runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_runtime_db_mutation.py \
+  --runtime-run-dir runs/20260531-155904-128551
+```
+
+The analyzer writes `db_mutation_summary.json`, `db_mutation_summary.md`, `mutation_events.jsonl`, `mutation_evidence_index.json`, `final_state.json`, and `raw.log` under `runs/20260531-155904-128551/db_mutation_analysis/`. It reports the detected `create_task` write, tool arguments/result payload, state-hash transition, inferred `task_2` creation, reward/DB/action confirmation, confidence, and the limitation that no full before/after DB snapshot is available. See [Runtime DB mutation analysis](docs/runtime_db_mutation_analysis.md) for details.
+
 ### Runtime vs post-run trace comparison
 
 Compare the paid runtime-traced tau2 baseline against the earlier post-run extracted baseline trace without rerunning tau2 or calling APIs:
