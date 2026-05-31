@@ -5,7 +5,8 @@ A local, no-LLM readiness harness for evaluating future **ActiveGraph.ai** integ
 ## Current status
 
 - **Current milestone:** Phase 13 consolidation, milestone report, and CI-lite validation.
-- **Preferred validation:** `python scripts/run_all_smokes.py` → `aggregate_status=all_smokes_passed`.
+- **Fast unit validation:** `python -m unittest discover -s tests`.
+- **Preferred smoke validation:** `python scripts/run_all_smokes.py` → `aggregate_status=all_smokes_passed`.
 - **Live execution:** unavailable and fail-closed; `live_ready=false` remains intentional.
 - **LLM/API calls in smokes:** none. The local smoke commands do not require API keys and do not call paid model services.
 - **tau2 control:** ActiveGraph does not control tau2 lifecycle or task state, and state packets are not fed back into tau2 execution.
@@ -17,6 +18,7 @@ A local, no-LLM readiness harness for evaluating future **ActiveGraph.ai** integ
 python3.12 -m venv .venv
 source .venv/bin/activate
 python scripts/check_repo_health.py
+python -m unittest discover -s tests
 python scripts/run_all_smokes.py
 ```
 
@@ -183,15 +185,21 @@ python scripts/compare_fixture_vs_baseline_trace.py \
 
 The comparator writes `trace_comparison_report.json`, `trace_comparison_summary.md`, `event_type_alignment.json`, `schema_field_alignment.json`, `coverage_gaps.json`, `final_state.json`, and `raw.log` under `<baseline-run-dir>/trace_comparison/` by default. See [Fixture vs real baseline trace comparison](docs/fixture_vs_baseline_trace_comparison.md) for comparison dimensions, expected gaps, and no-LLM/no-rerun boundaries.
 
-## Smoke commands
+## Validation commands
 
-The aggregate command runs the completed no-LLM smoke suite:
+Use standard-library test discovery for the fastest unit-level check, including runtime trace outcome classification coverage:
+
+```bash
+python -m unittest discover -s tests
+```
+
+Use the aggregate command for the completed no-LLM smoke suite:
 
 ```bash
 python scripts/run_all_smokes.py
 ```
 
-Individual smoke scripts remain available in `scripts/` for targeted review, but the aggregate command is the compact validation path.
+Individual smoke scripts remain available in `scripts/` for targeted review, but the aggregate command is the compact full-harness validation path.
 
 ## Artifact locations
 

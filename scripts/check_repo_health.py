@@ -18,6 +18,7 @@ REQUIRED_FILES = [
     ".gitignore",
     "vendor/tau2-bench.UPSTREAM_COMMIT",
     "scripts/run_all_smokes.py",
+    "tests/test_runtime_trace_outcome_classification.py",
     "docs/source_map.md",
     "docs/trace_only.md",
     "docs/activegraph_trace_only.md",
