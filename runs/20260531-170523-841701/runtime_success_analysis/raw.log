@@ -1,0 +1,8 @@
+[2026-05-31T17:06:08.587486Z] status=successful_runtime_trace_analysis_completed_with_gaps
+offline_analysis=true
+tau2_rerun_performed_by_analysis=false
+model_backed_episode_run_by_analysis=false
+llm_api_calls_made_by_analysis=false
+requires_api_keys=false
+vendor_tau2_bench_mutated_by_analysis=false
+event_counts=successful:44 short:30 postrun:12

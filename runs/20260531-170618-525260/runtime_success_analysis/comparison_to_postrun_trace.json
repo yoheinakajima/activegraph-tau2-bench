@@ -1,0 +1,73 @@
+{
+  "event_count_difference": {
+    "delta": 32,
+    "postrun_extracted": 12,
+    "successful_runtime": 44
+  },
+  "family_coverage_delta": {
+    "configuration": {
+      "comparison": 1,
+      "delta": -1,
+      "successful": 0
+    },
+    "evaluation": {
+      "comparison": 1,
+      "delta": 1,
+      "successful": 2
+    },
+    "message_generation": {
+      "comparison": 0,
+      "delta": 2,
+      "successful": 2
+    },
+    "message_observed": {
+      "comparison": 4,
+      "delta": 2,
+      "successful": 6
+    },
+    "orchestrator_lifecycle": {
+      "comparison": 0,
+      "delta": 2,
+      "successful": 2
+    },
+    "result_persistence": {
+      "comparison": 1,
+      "delta": 1,
+      "successful": 2
+    },
+    "run_lifecycle": {
+      "comparison": 2,
+      "delta": 2,
+      "successful": 4
+    },
+    "simulation_lifecycle": {
+      "comparison": 1,
+      "delta": 3,
+      "successful": 4
+    },
+    "tool_execution": {
+      "comparison": 2,
+      "delta": 8,
+      "successful": 10
+    },
+    "turn_lifecycle": {
+      "comparison": 0,
+      "delta": 12,
+      "successful": 12
+    }
+  },
+  "postrun_limitations_carried_forward": [
+    "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+  ],
+  "runtime_coverage_improvements": [
+    "Runtime trace captures bootstrap, batch, simulation, orchestrator, and per-turn lifecycle boundaries that post-run extraction reconstructs only coarsely or not at all.",
+    "Runtime trace records live tool dispatch start/end, low-level toolkit dispatch, state hashes before/after tool execution, and evaluation-phase tool replay.",
+    "Runtime trace records generation start/end boundaries for the user simulator and distinguishes user_response, agent_response, and tool message observation events."
+  ]
+}

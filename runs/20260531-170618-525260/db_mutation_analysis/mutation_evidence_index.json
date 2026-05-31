@@ -1,0 +1,61 @@
+{
+  "confirmation_sources": {
+    "completion_path": "runs/20260531-170618-525260/runtime_success_analysis/completion_path.json",
+    "reward_db_action": "runs/20260531-170618-525260/tau2_output/results.json",
+    "success_analysis": "runs/20260531-170618-525260/runtime_success_analysis/successful_runtime_trace_analysis.json",
+    "success_final_state": "runs/20260531-170618-525260/runtime_success_analysis/final_state.json"
+  },
+  "evaluation_replay_event_ids": [],
+  "field_paths_used": [
+    "runtime_events.jsonl[*].event_id",
+    "runtime_events.jsonl[*].event_type",
+    "runtime_events.jsonl[*].tool_name",
+    "runtime_events.jsonl[*].state_hash",
+    "runtime_events.jsonl[*].payload.runtime_trace.arguments",
+    "runtime_events.jsonl[*].payload.runtime_trace.kwargs",
+    "runtime_events.jsonl[*].payload.runtime_trace.result",
+    "runtime_events.jsonl[*].payload.runtime_trace.response.raw.content",
+    "runtime_events.jsonl[*].payload.runtime_trace.state_hash_before",
+    "runtime_events.jsonl[*].payload.runtime_trace.state_hash_after",
+    "tau2_output/results.json.simulations[0].reward_info.reward",
+    "tau2_output/results.json.simulations[0].reward_info.db_check",
+    "tau2_output/results.json.simulations[0].reward_info.action_checks",
+    "runtime_success_analysis/final_state.json.metrics"
+  ],
+  "runtime_run_dir": "runs/20260531-170618-525260",
+  "source_artifacts": {
+    "completion_path": {
+      "bytes": 10344,
+      "path": "runs/20260531-170618-525260/runtime_success_analysis/completion_path.json",
+      "present": true
+    },
+    "runtime_events": {
+      "bytes": 48019,
+      "path": "runs/20260531-170618-525260/runtime_events.jsonl",
+      "present": true
+    },
+    "runtime_success_final_state": {
+      "bytes": 1979,
+      "path": "runs/20260531-170618-525260/runtime_success_analysis/final_state.json",
+      "present": true
+    },
+    "successful_runtime_trace_analysis": {
+      "bytes": 41429,
+      "path": "runs/20260531-170618-525260/runtime_success_analysis/successful_runtime_trace_analysis.json",
+      "present": true
+    },
+    "tau2_results": {
+      "bytes": 17874,
+      "path": "runs/20260531-170618-525260/tau2_output/results.json",
+      "present": true
+    }
+  },
+  "write_tool_event_ids": [
+    "rt-000028-04976199",
+    "rt-000029-bbe20e21",
+    "rt-000030-1afbda10",
+    "rt-000031-93889267",
+    "rt-000032-98d0aa63",
+    "rt-000033-01789a0e"
+  ]
+}

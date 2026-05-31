@@ -1,0 +1,12 @@
+runtime DB mutation analysis
+runtime_run_dir=runs/20260531-170523-841701
+status=runtime_db_mutation_analysis_completed_with_gaps
+runtime_events=48
+detected_write_count=0
+detected_write_tools=update_task_status
+reward=0.0
+db_match=False
+write_actions=0/1
+tau2_rerun_performed_by_analysis=false
+llm_api_calls_made_by_analysis=false
+vendor_tau2_bench_mutated_by_analysis=false

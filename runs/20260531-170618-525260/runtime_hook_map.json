@@ -1,0 +1,153 @@
+{
+  "deferred_hooks": [],
+  "generated_at": "2026-05-31T17:06:25.155947+00:00",
+  "hooks": {
+    "agent_base_generate_contract": {
+      "error": null,
+      "events": "base contract only; concrete agent responses observed via orchestrator_step",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.agent.base_agent",
+      "path": "vendor/tau2-bench/src/tau2/agent/base_agent.py",
+      "qualname": "HalfDuplexAgent.generate_next_message",
+      "signature": "(self, message: ~InputMessageType, state: ~StateType) -> tuple[~OutputMessageType, ~StateType]"
+    },
+    "batch_run_simulation_alias": {
+      "error": null,
+      "events": "batch module alias for Layer 1 simulation execution/evaluation envelope",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.runner.batch",
+      "path": "vendor/tau2-bench/src/tau2/runner/batch.py",
+      "qualname": "run_simulation",
+      "signature": "(orchestrator: Union[tau2.orchestrator.orchestrator.Orchestrator, tau2.orchestrator.full_duplex_orchestrator.FullDuplexOrchestrator], *, evaluation_type: tau2.evaluator.evaluator.EvaluationType = <EvaluationType.ALL: 'all'>, env_kwargs: Optional[dict] = None) -> tau2.data_model.simulation.SimulationRun"
+    },
+    "batch_run_single_task": {
+      "error": null,
+      "events": "simulation task start/end wrapper context",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.runner.batch",
+      "path": "vendor/tau2-bench/src/tau2/runner/batch.py",
+      "qualname": "run_single_task",
+      "signature": "(config: Union[tau2.data_model.simulation.TextRunConfig, tau2.data_model.simulation.VoiceRunConfig], task: tau2.data_model.tasks.Task, *, seed: Optional[int] = None, evaluation_type: tau2.evaluator.evaluator.EvaluationType = <EvaluationType.ALL: 'all'>, save_dir: Optional[pathlib.Path] = None, user_voice_settings: Optional[tau2.data_model.voice.VoiceSettings] = None, user_persona_config: Optional[tau2.data_model.persona.PersonaConfig] = None, verbose_logs: bool = False, audio_debug: bool = False, audio_taps: bool = False, auto_review: bool = False, review_mode: str = 'full', hallucination_feedback: Optional[str] = None) -> tau2.data_model.simulation.SimulationRun"
+    },
+    "batch_run_tasks": {
+      "error": null,
+      "events": "run/batch start/end and result persistence intent",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.runner.batch",
+      "path": "vendor/tau2-bench/src/tau2/runner/batch.py",
+      "qualname": "run_tasks",
+      "signature": "(config: Union[tau2.data_model.simulation.TextRunConfig, tau2.data_model.simulation.VoiceRunConfig], tasks: list[tau2.data_model.tasks.Task], *, save_path: Optional[pathlib.Path] = None, save_dir: Optional[pathlib.Path] = None, evaluation_type: tau2.evaluator.evaluator.EvaluationType = <EvaluationType.ALL: 'all'>, console_display: bool = True, results_format: str = 'json') -> tau2.data_model.simulation.Results"
+    },
+    "environment_get_response": {
+      "error": null,
+      "events": "tool dispatch start/end and state hash before/after tool",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.environment.environment",
+      "path": "vendor/tau2-bench/src/tau2/environment/environment.py",
+      "qualname": "Environment.get_response",
+      "signature": "(self, message: tau2.data_model.message.ToolCall) -> tau2.data_model.message.ToolMessage"
+    },
+    "evaluator_evaluate_simulation": {
+      "error": null,
+      "events": "evaluation start/end and reward/check summary",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.evaluator.evaluator",
+      "path": "vendor/tau2-bench/src/tau2/evaluator/evaluator.py",
+      "qualname": "evaluate_simulation",
+      "signature": "(simulation: tau2.data_model.simulation.SimulationRun, task: tau2.data_model.tasks.Task, evaluation_type: tau2.evaluator.evaluator.EvaluationType, solo_mode: bool, domain: str, mode: tau2.orchestrator.modes.CommunicationMode = <CommunicationMode.HALF_DUPLEX: 'half_duplex'>, env_kwargs: dict = None) -> tau2.data_model.simulation.RewardInfo"
+    },
+    "layer1_run_simulation": {
+      "error": null,
+      "events": "simulation execution/evaluation envelope",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.runner.simulation",
+      "path": "vendor/tau2-bench/src/tau2/runner/simulation.py",
+      "qualname": "run_simulation",
+      "signature": "(orchestrator: Union[tau2.orchestrator.orchestrator.Orchestrator, tau2.orchestrator.full_duplex_orchestrator.FullDuplexOrchestrator], *, evaluation_type: tau2.evaluator.evaluator.EvaluationType = <EvaluationType.ALL: 'all'>, env_kwargs: Optional[dict] = None) -> tau2.data_model.simulation.SimulationRun"
+    },
+    "orchestrator_run": {
+      "error": null,
+      "events": "orchestrator run start/end",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.orchestrator.orchestrator",
+      "path": "vendor/tau2-bench/src/tau2/orchestrator/orchestrator.py",
+      "qualname": "Orchestrator.run",
+      "signature": "(self) -> tau2.data_model.simulation.SimulationRun"
+    },
+    "orchestrator_step": {
+      "error": null,
+      "events": "turn start/end, message observed, agent/user responses, tool-call requests",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.orchestrator.orchestrator",
+      "path": "vendor/tau2-bench/src/tau2/orchestrator/orchestrator.py",
+      "qualname": "Orchestrator.step",
+      "signature": "(self)"
+    },
+    "simulation_evaluate_alias": {
+      "error": null,
+      "events": "simulation module alias for evaluation start/end",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.runner.simulation",
+      "path": "vendor/tau2-bench/src/tau2/runner/simulation.py",
+      "qualname": "evaluate_simulation",
+      "signature": "(simulation: tau2.data_model.simulation.SimulationRun, task: tau2.data_model.tasks.Task, evaluation_type: tau2.evaluator.evaluator.EvaluationType, solo_mode: bool, domain: str, mode: tau2.orchestrator.modes.CommunicationMode = <CommunicationMode.HALF_DUPLEX: 'half_duplex'>, env_kwargs: dict = None) -> tau2.data_model.simulation.RewardInfo"
+    },
+    "simulation_model_dump": {
+      "error": null,
+      "events": "result persistence start/end",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.data_model.simulation",
+      "path": "vendor/tau2-bench/src/tau2/data_model/simulation.py",
+      "qualname": "Results.save",
+      "signature": "(self, path: pathlib.Path, format: Literal['json', 'dir'] = 'json') -> None"
+    },
+    "toolkit_use_tool": {
+      "error": null,
+      "events": "low-level toolkit dispatch start/end",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.environment.toolkit",
+      "path": "vendor/tau2-bench/src/tau2/environment/toolkit.py",
+      "qualname": "ToolKitBase.use_tool",
+      "signature": "(self, tool_name: str, **kwargs) -> str"
+    },
+    "user_simulator_generate_contract": {
+      "error": null,
+      "events": "user response start/end when concrete class method is present",
+      "exists": true,
+      "imported": true,
+      "module": "tau2.user.user_simulator",
+      "path": "vendor/tau2-bench/src/tau2/user/user_simulator.py",
+      "qualname": "UserSimulator.generate_next_message",
+      "signature": "(self, message: tau2.data_model.message.AssistantMessage | tau2.data_model.message.ToolMessage | tau2.data_model.message.MultiToolMessage, state: ~UserStateType) -> Tuple[tau2.data_model.message.UserMessage, ~UserStateType]"
+    }
+  },
+  "repo_root": "/Users/yoheinakajima/activegraph-tau2-bench",
+  "schema": "tau2_runtime_hook_map.v1",
+  "validated_hooks": [
+    "agent_base_generate_contract",
+    "batch_run_simulation_alias",
+    "batch_run_single_task",
+    "batch_run_tasks",
+    "environment_get_response",
+    "evaluator_evaluate_simulation",
+    "layer1_run_simulation",
+    "orchestrator_run",
+    "orchestrator_step",
+    "simulation_evaluate_alias",
+    "simulation_model_dump",
+    "toolkit_use_tool",
+    "user_simulator_generate_contract"
+  ]
+}

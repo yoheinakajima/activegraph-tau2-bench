@@ -1,0 +1,57 @@
+{
+  "confirmation_sources": {
+    "completion_path": "runs/20260531-170523-841701/runtime_success_analysis/completion_path.json",
+    "reward_db_action": "runs/20260531-170523-841701/tau2_output/results.json",
+    "success_analysis": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_analysis.json",
+    "success_final_state": "runs/20260531-170523-841701/runtime_success_analysis/final_state.json"
+  },
+  "evaluation_replay_event_ids": [
+    "rt-000042-4e462ab1",
+    "rt-000043-3acdd63a"
+  ],
+  "field_paths_used": [
+    "runtime_events.jsonl[*].event_id",
+    "runtime_events.jsonl[*].event_type",
+    "runtime_events.jsonl[*].tool_name",
+    "runtime_events.jsonl[*].state_hash",
+    "runtime_events.jsonl[*].payload.runtime_trace.arguments",
+    "runtime_events.jsonl[*].payload.runtime_trace.kwargs",
+    "runtime_events.jsonl[*].payload.runtime_trace.result",
+    "runtime_events.jsonl[*].payload.runtime_trace.response.raw.content",
+    "runtime_events.jsonl[*].payload.runtime_trace.state_hash_before",
+    "runtime_events.jsonl[*].payload.runtime_trace.state_hash_after",
+    "tau2_output/results.json.simulations[0].reward_info.reward",
+    "tau2_output/results.json.simulations[0].reward_info.db_check",
+    "tau2_output/results.json.simulations[0].reward_info.action_checks",
+    "runtime_success_analysis/final_state.json.metrics"
+  ],
+  "runtime_run_dir": "runs/20260531-170523-841701",
+  "source_artifacts": {
+    "completion_path": {
+      "bytes": 10090,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/completion_path.json",
+      "present": true
+    },
+    "runtime_events": {
+      "bytes": 79924,
+      "path": "runs/20260531-170523-841701/runtime_events.jsonl",
+      "present": true
+    },
+    "runtime_success_final_state": {
+      "bytes": 1890,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/final_state.json",
+      "present": true
+    },
+    "successful_runtime_trace_analysis": {
+      "bytes": 39477,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_analysis.json",
+      "present": true
+    },
+    "tau2_results": {
+      "bytes": 21980,
+      "path": "runs/20260531-170523-841701/tau2_output/results.json",
+      "present": true
+    }
+  },
+  "write_tool_event_ids": []
+}

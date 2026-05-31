@@ -1,0 +1,1172 @@
+{
+  "analysis_boundaries": {
+    "activegraph_control_added": false,
+    "llm_api_calls_made_by_analysis": false,
+    "model_backed_episode_run_by_analysis": false,
+    "requires_api_keys": false,
+    "tau2_rerun_performed_by_analysis": false,
+    "vendor_tau2_bench_mutated_by_analysis": false
+  },
+  "artifact_reporting_inconsistencies": [
+    {
+      "artifact": "runtime_trace_summary.md",
+      "issue": "Summary embeds an absolute local macOS path for runtime_events/command output.",
+      "resolution": "Flagged in analysis; generated reports use repository-relative paths.",
+      "severity": "reporting_only"
+    },
+    {
+      "artifact": "runtime_trace_summary.md",
+      "issue": "Boolean rendering uses Python title-case True while related summaries use JSON lower-case true.",
+      "resolution": "Flagged in analysis; generated JSON uses boolean true/false and Markdown normalizes the value.",
+      "severity": "reporting_only"
+    },
+    {
+      "artifact": "runtime_hook_map.json",
+      "issue": "Hook map records the source machine's absolute repo_root.",
+      "resolution": "Flagged in analysis; no vendored code or source artifact was mutated.",
+      "severity": "reporting_only"
+    }
+  ],
+  "comparison_to_postrun_trace": {
+    "event_count_difference": {
+      "delta": 36,
+      "postrun_extracted": 12,
+      "successful_runtime": 48
+    },
+    "family_coverage_delta": {
+      "configuration": {
+        "comparison": 1,
+        "delta": -1,
+        "successful": 0
+      },
+      "evaluation": {
+        "comparison": 1,
+        "delta": 1,
+        "successful": 2
+      },
+      "message_generation": {
+        "comparison": 0,
+        "delta": 6,
+        "successful": 6
+      },
+      "message_observed": {
+        "comparison": 4,
+        "delta": 3,
+        "successful": 7
+      },
+      "orchestrator_lifecycle": {
+        "comparison": 0,
+        "delta": 2,
+        "successful": 2
+      },
+      "result_persistence": {
+        "comparison": 1,
+        "delta": 1,
+        "successful": 2
+      },
+      "run_lifecycle": {
+        "comparison": 2,
+        "delta": 2,
+        "successful": 4
+      },
+      "simulation_lifecycle": {
+        "comparison": 1,
+        "delta": 3,
+        "successful": 4
+      },
+      "tool_execution": {
+        "comparison": 2,
+        "delta": 5,
+        "successful": 7
+      },
+      "turn_lifecycle": {
+        "comparison": 0,
+        "delta": 14,
+        "successful": 14
+      }
+    },
+    "postrun_limitations_carried_forward": [
+      "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+    ],
+    "runtime_coverage_improvements": [
+      "Runtime trace captures bootstrap, batch, simulation, orchestrator, and per-turn lifecycle boundaries that post-run extraction reconstructs only coarsely or not at all.",
+      "Runtime trace records live tool dispatch start/end, low-level toolkit dispatch, state hashes before/after tool execution, and evaluation-phase tool replay.",
+      "Runtime trace records generation start/end boundaries for the user simulator and distinguishes user_response, agent_response, and tool message observation events."
+    ]
+  },
+  "comparison_to_short_run": {
+    "additional_success_events": {
+      "agent_response": 2,
+      "toolkit_dispatch_end": 1,
+      "toolkit_dispatch_start": 1,
+      "turn_end": 4,
+      "turn_start": 4,
+      "user_generate_end": 2,
+      "user_generate_start": 2,
+      "user_response": 2
+    },
+    "completion_delta": {
+      "short_db_match": null,
+      "short_reward": 0.0,
+      "short_termination_reason": "max_steps",
+      "short_write_actions": "0/0",
+      "successful_db_match": false,
+      "successful_reward": 0.0,
+      "successful_termination_reason": "user_stop",
+      "successful_write_actions": "0/1"
+    },
+    "event_count_difference": {
+      "delta": 18,
+      "short_runtime": 30,
+      "successful_runtime": 48
+    },
+    "event_type_count_delta": {
+      "agent_response": {
+        "comparison": 1,
+        "delta": 2,
+        "successful": 3
+      },
+      "batch_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "batch_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "evaluation_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "evaluation_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "message_observed": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "orchestrator_run_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "orchestrator_run_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "result_persistence_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "result_persistence_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "simulation_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "simulation_execution_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "simulation_execution_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "simulation_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "tool_call_requested": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "tool_dispatch_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "tool_dispatch_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "toolkit_dispatch_end": {
+        "comparison": 1,
+        "delta": 1,
+        "successful": 2
+      },
+      "toolkit_dispatch_start": {
+        "comparison": 1,
+        "delta": 1,
+        "successful": 2
+      },
+      "trace_bootstrap_end": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "trace_bootstrap_start": {
+        "comparison": 1,
+        "delta": 0,
+        "successful": 1
+      },
+      "turn_end": {
+        "comparison": 3,
+        "delta": 4,
+        "successful": 7
+      },
+      "turn_start": {
+        "comparison": 3,
+        "delta": 4,
+        "successful": 7
+      },
+      "user_generate_end": {
+        "comparison": 1,
+        "delta": 2,
+        "successful": 3
+      },
+      "user_generate_start": {
+        "comparison": 1,
+        "delta": 2,
+        "successful": 3
+      },
+      "user_response": {
+        "comparison": 1,
+        "delta": 2,
+        "successful": 3
+      }
+    },
+    "interpretation": [
+      "The max_steps=6 run adds two turn envelopes, a second user generation/response, a second assistant response, and extra create_task evaluation replay/low-level toolkit events.",
+      "The short run stops at max_steps after requesting/observing get_users, so reward/action/db metrics remain unavailable or zero."
+    ]
+  },
+  "completion_path": {
+    "events": [
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Hi! How can I help you today?",
+        "event_id": "rt-000008-c833423e",
+        "event_type": "turn_start",
+        "role": "assistant",
+        "sequence": 8,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 0
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Hello! I would like to update the status of a task. Could you please mark task_1 as completed?",
+        "event_id": "rt-000011-7229af96",
+        "event_type": "user_response",
+        "role": "user",
+        "sequence": 11,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 0
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Hello! I would like to update the status of a task. Could you please mark task_1 as completed?",
+        "event_id": "rt-000013-bc34ceac",
+        "event_type": "turn_start",
+        "role": "user",
+        "sequence": 13,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 1
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Could you please provide me with your user ID so I can verify your access and update the task status for you?",
+        "event_id": "rt-000014-be11ea43",
+        "event_type": "agent_response",
+        "role": "assistant",
+        "sequence": 14,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 1
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Could you please provide me with your user ID so I can verify your access and update the task status for you?",
+        "event_id": "rt-000016-66b82433",
+        "event_type": "turn_start",
+        "role": "assistant",
+        "sequence": 16,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 2
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "I don't have a user ID to provide. Could you please proceed with marking task_1 as completed?",
+        "event_id": "rt-000019-654deefb",
+        "event_type": "user_response",
+        "role": "user",
+        "sequence": 19,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 2
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "I don't have a user ID to provide. Could you please proceed with marking task_1 as completed?",
+        "event_id": "rt-000021-1734c609",
+        "event_type": "turn_start",
+        "role": "user",
+        "sequence": 21,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 3
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "None",
+        "event_id": "rt-000022-a3807cff",
+        "event_type": "agent_response",
+        "role": "assistant",
+        "sequence": 22,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 3
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "None",
+        "event_id": "rt-000024-61608892",
+        "event_type": "turn_start",
+        "role": "assistant",
+        "sequence": 24,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 4
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": null,
+        "event_id": "rt-000025-67056549",
+        "event_type": "tool_call_requested",
+        "role": null,
+        "sequence": 25,
+        "state_hash": null,
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": 4
+      },
+      {
+        "component": "tau2.environment",
+        "content_preview": null,
+        "event_id": "rt-000026-fac16d08",
+        "event_type": "tool_dispatch_start",
+        "role": null,
+        "sequence": 26,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.environment.toolkit",
+        "content_preview": null,
+        "event_id": "rt-000027-fc7b6e89",
+        "event_type": "toolkit_dispatch_start",
+        "role": null,
+        "sequence": 27,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.environment.toolkit",
+        "content_preview": null,
+        "event_id": "rt-000028-06895bd6",
+        "event_type": "toolkit_dispatch_end",
+        "role": null,
+        "sequence": 28,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.environment",
+        "content_preview": "Transfer successful",
+        "event_id": "rt-000029-0fd991a2",
+        "event_type": "tool_dispatch_end",
+        "role": "tool",
+        "sequence": 29,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Transfer successful",
+        "event_id": "rt-000030-e26141a5",
+        "event_type": "message_observed",
+        "role": "tool",
+        "sequence": 30,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 4
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "Transfer successful",
+        "event_id": "rt-000032-3ae800e1",
+        "event_type": "turn_start",
+        "role": "tool",
+        "sequence": 32,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 5
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "I have transferred you to a human agent who can assist you further with updating the task status without a user ID. Is there anything else I can help you with?",
+        "event_id": "rt-000033-0d331496",
+        "event_type": "agent_response",
+        "role": "assistant",
+        "sequence": 33,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 5
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "I have transferred you to a human agent who can assist you further with updating the task status without a user ID. Is there anything else I can help you with?",
+        "event_id": "rt-000035-7f05b381",
+        "event_type": "turn_start",
+        "role": "assistant",
+        "sequence": 35,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 6
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": "###TRANSFER###",
+        "event_id": "rt-000038-a11acd25",
+        "event_type": "user_response",
+        "role": "user",
+        "sequence": 38,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": null,
+        "turn_index": 6
+      },
+      {
+        "component": "tau2.orchestrator",
+        "content_preview": null,
+        "event_id": "rt-000040-ff3787ff",
+        "event_type": "orchestrator_run_end",
+        "role": null,
+        "sequence": 40,
+        "state_hash": null,
+        "status": "ok",
+        "tool_name": null,
+        "turn_index": null
+      },
+      {
+        "component": "tau2.evaluator",
+        "content_preview": null,
+        "event_id": "rt-000041-fc2f28fe",
+        "event_type": "evaluation_start",
+        "role": null,
+        "sequence": 41,
+        "state_hash": null,
+        "status": null,
+        "tool_name": null,
+        "turn_index": null
+      },
+      {
+        "component": "tau2.environment.toolkit",
+        "content_preview": null,
+        "event_id": "rt-000042-4e462ab1",
+        "event_type": "toolkit_dispatch_start",
+        "role": null,
+        "sequence": 42,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": null,
+        "tool_name": "update_task_status",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.environment.toolkit",
+        "content_preview": null,
+        "event_id": "rt-000043-3acdd63a",
+        "event_type": "toolkit_dispatch_end",
+        "role": null,
+        "sequence": 43,
+        "state_hash": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+        "status": "ok",
+        "tool_name": "update_task_status",
+        "turn_index": null
+      },
+      {
+        "component": "tau2.evaluator",
+        "content_preview": null,
+        "event_id": "rt-000044-b174fe5b",
+        "event_type": "evaluation_end",
+        "role": null,
+        "sequence": 44,
+        "state_hash": null,
+        "status": "ok",
+        "tool_name": null,
+        "turn_index": null
+      }
+    ],
+    "status": "not_completed",
+    "summary": [
+      "assistant greeting",
+      "user asks to create Important Meeting for user_1",
+      "assistant requests create_task with title/user_id",
+      "environment/toolkit returns task_2 and state hash changes",
+      "assistant confirms completion",
+      "user emits normal stop",
+      "evaluation observes reward=1, db_match=true, write action matched"
+    ]
+  },
+  "generated_at_utc": "2026-05-31T17:06:08.587486Z",
+  "input_hashes": {
+    "postrun_events_path": "sha256:49d6eb4520786a0cca57d7f96361436b6187d3f01876d81a2e33314f809a7f91",
+    "postrun_results_path": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174",
+    "short_results_path": "sha256:ae88ce74383e90c7c1f387791cf54372affd0318c98adc5ea84aa52fda8cc874",
+    "short_runtime_events_path": "sha256:bb63e2fa5f30a66b17b1db96b460b4492905dd99f7f55d5778618ea854b5e3b9",
+    "successful_results_path": "sha256:f3f25e490f599f65c839ddae3031c5b8be3fd96cbcd8240c607e013ebc510d55",
+    "successful_runtime_events_path": "sha256:2fecc85a5dfdf6cc1bb081d02f12fef8cec36c73b685d0fe0413c7c2c5995dde"
+  },
+  "inputs": {
+    "postrun_baseline_dir": "runs/20260531-042306-420109",
+    "postrun_events_path": "runs/20260531-042306-420109/extracted_trace/baseline_trace.jsonl",
+    "postrun_results_path": "runs/20260531-042306-420109/tau2_artifacts/results.json",
+    "short_results_path": "runs/20260531-153843-240865/tau2_artifacts/results.json",
+    "short_runtime_events_path": "runs/20260531-153843-240865/runtime_events.jsonl",
+    "short_runtime_run_dir": "runs/20260531-153843-240865",
+    "successful_results_path": "runs/20260531-170523-841701/tau2_artifacts/results.json",
+    "successful_runtime_events_path": "runs/20260531-170523-841701/runtime_events.jsonl",
+    "successful_runtime_run_dir": "runs/20260531-170523-841701"
+  },
+  "outputs": {
+    "comparison_to_postrun_trace": "runs/20260531-170523-841701/runtime_success_analysis/comparison_to_postrun_trace.json",
+    "comparison_to_short_run": "runs/20260531-170523-841701/runtime_success_analysis/comparison_to_short_run.json",
+    "completion_path": "runs/20260531-170523-841701/runtime_success_analysis/completion_path.json",
+    "final_state": "runs/20260531-170523-841701/runtime_success_analysis/final_state.json",
+    "output_dir": "runs/20260531-170523-841701/runtime_success_analysis",
+    "raw_log": "runs/20260531-170523-841701/runtime_success_analysis/raw.log",
+    "runtime_event_coverage": "runs/20260531-170523-841701/runtime_success_analysis/runtime_event_coverage.json",
+    "successful_runtime_trace_analysis": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_analysis.json",
+    "successful_runtime_trace_summary": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_summary.md"
+  },
+  "postrun_trace": {
+    "event_count": 12,
+    "event_counts": {
+      "baseline.config.loaded": 1,
+      "baseline.evaluation.observed": 1,
+      "baseline.message.observed": 4,
+      "baseline.result.persisted": 1,
+      "baseline.run.completed": 1,
+      "baseline.run.started": 1,
+      "baseline.task.started": 1,
+      "baseline.tool.completed": 1,
+      "baseline.tool.requested": 1
+    },
+    "event_families": {
+      "configuration": 1,
+      "evaluation": 1,
+      "message_observed": 4,
+      "result_persistence": 1,
+      "run_lifecycle": 2,
+      "simulation_lifecycle": 1,
+      "tool_execution": 2
+    },
+    "final_state_flags": {
+      "fixture_backed": false,
+      "llm_api_calls_made_by_extractor": false,
+      "status": "tau2_baseline_trace_extraction_passed",
+      "tau2_rerun": false
+    },
+    "limitations": [
+      "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+    ],
+    "results": {
+      "action_checks_total": 0,
+      "agent_cost": 0.00019240000000000001,
+      "agent_errors": 0,
+      "db_match": null,
+      "db_reward": null,
+      "duration_seconds": 2.4565756249940023,
+      "message_count": 4,
+      "message_roles": [
+        "assistant",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "normal_stop": false,
+      "reward": 0.0,
+      "run_info": {
+        "max_steps": 2,
+        "num_trials": 1,
+        "provider_model": "openai/gpt-4.1-mini"
+      },
+      "simulation_id": "119def6a-5e46-4609-8c5b-11bca149b307",
+      "task_id": "create_task_1",
+      "termination_reason": "max_steps",
+      "tool_calls_from_messages": [
+        {
+          "arguments": {},
+          "id": "call_l0e8jLSv6OoxjCNiRp4kcVJ0",
+          "name": "get_users",
+          "requestor": "assistant",
+          "turn_idx": 2
+        }
+      ],
+      "user_cost": 0.0003268,
+      "user_errors": 0,
+      "write_actions_matched": 0,
+      "write_actions_total": 0
+    },
+    "run_dir": "runs/20260531-042306-420109",
+    "tool_names": {
+      "get_users": 1
+    }
+  },
+  "runtime_event_coverage": {
+    "deferred_runtime_hooks": [],
+    "event_types_only_in_short_run": [],
+    "families_missing_from_postrun_but_present_at_runtime": [
+      "message_generation",
+      "orchestrator_lifecycle",
+      "turn_lifecycle"
+    ],
+    "families_observed_in_postrun_extraction": [
+      "configuration",
+      "evaluation",
+      "message_observed",
+      "result_persistence",
+      "run_lifecycle",
+      "simulation_lifecycle",
+      "tool_execution"
+    ],
+    "families_observed_in_successful_runtime": [
+      "evaluation",
+      "message_generation",
+      "message_observed",
+      "orchestrator_lifecycle",
+      "result_persistence",
+      "run_lifecycle",
+      "simulation_lifecycle",
+      "tool_execution",
+      "turn_lifecycle"
+    ],
+    "remaining_instrumentation_gaps": [
+      "Runtime events are observation-only and do not feed ActiveGraph state packets back into tau2.",
+      "The trace does not expose a full serialized DB diff; DB success is inferred from state hashes, tool result content, and reward/db_check artifacts.",
+      "Evaluation invokes create_task again, so analysis must distinguish task-time mutation from evaluator replay/check execution.",
+      "No fixture-backed ActiveGraph projection is part of the live tau2 control path; fixture artifacts remain offline comparison aids only."
+    ],
+    "runtime_event_types_added_over_short_run": [
+      "agent_response",
+      "toolkit_dispatch_end",
+      "toolkit_dispatch_start",
+      "turn_end",
+      "turn_start",
+      "user_generate_end",
+      "user_generate_start",
+      "user_response"
+    ],
+    "runtime_event_types_observed": [
+      "agent_response",
+      "batch_end",
+      "batch_start",
+      "evaluation_end",
+      "evaluation_start",
+      "message_observed",
+      "orchestrator_run_end",
+      "orchestrator_run_start",
+      "result_persistence_end",
+      "result_persistence_start",
+      "simulation_end",
+      "simulation_execution_end",
+      "simulation_execution_start",
+      "simulation_start",
+      "tool_call_requested",
+      "tool_dispatch_end",
+      "tool_dispatch_start",
+      "toolkit_dispatch_end",
+      "toolkit_dispatch_start",
+      "trace_bootstrap_end",
+      "trace_bootstrap_start",
+      "turn_end",
+      "turn_start",
+      "user_generate_end",
+      "user_generate_start",
+      "user_response"
+    ],
+    "validated_runtime_hooks": [
+      "agent_base_generate_contract",
+      "batch_run_simulation_alias",
+      "batch_run_single_task",
+      "batch_run_tasks",
+      "environment_get_response",
+      "evaluator_evaluate_simulation",
+      "layer1_run_simulation",
+      "orchestrator_run",
+      "orchestrator_step",
+      "simulation_evaluate_alias",
+      "simulation_model_dump",
+      "toolkit_use_tool",
+      "user_simulator_generate_contract"
+    ]
+  },
+  "short_runtime": {
+    "event_count": 30,
+    "event_counts": {
+      "agent_response": 1,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 1,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 1,
+      "tool_dispatch_end": 1,
+      "tool_dispatch_start": 1,
+      "toolkit_dispatch_end": 1,
+      "toolkit_dispatch_start": 1,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 3,
+      "turn_start": 3,
+      "user_generate_end": 1,
+      "user_generate_start": 1,
+      "user_response": 1
+    },
+    "event_families": {
+      "evaluation": 2,
+      "message_generation": 2,
+      "message_observed": 3,
+      "orchestrator_lifecycle": 2,
+      "result_persistence": 2,
+      "run_lifecycle": 4,
+      "simulation_lifecycle": 4,
+      "tool_execution": 5,
+      "turn_lifecycle": 6
+    },
+    "final_state_flags": {
+      "activegraph_controlled_tau2": false,
+      "paid_llm_api_calls_made_in_original_run": true,
+      "returncode": 0,
+      "state_packets_fed_back_to_tau2": false,
+      "status": "tau2_runtime_traced_baseline_passed",
+      "tau2_executed": true
+    },
+    "message_roles_observed": {
+      "assistant": 4,
+      "tool": 1,
+      "user": 2
+    },
+    "results": {
+      "action_checks_total": 0,
+      "agent_cost": 0.00019240000000000001,
+      "agent_errors": 0,
+      "db_match": null,
+      "db_reward": null,
+      "duration_seconds": 2.112794041982852,
+      "message_count": 4,
+      "message_roles": [
+        "assistant",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "normal_stop": false,
+      "reward": 0.0,
+      "run_info": {
+        "max_steps": 2,
+        "num_trials": 1,
+        "provider_model": "openai/gpt-4.1-mini"
+      },
+      "simulation_id": "f5bf44f9-9545-4b4b-8755-eacac8fcd51b",
+      "task_id": "create_task_1",
+      "termination_reason": "max_steps",
+      "tool_calls_from_messages": [
+        {
+          "arguments": {},
+          "id": "call_Sd2bXPrfKg0i9733LYoj0MG5",
+          "name": "get_users",
+          "requestor": "assistant",
+          "turn_idx": 2
+        }
+      ],
+      "user_cost": 0.0003268,
+      "user_errors": 0,
+      "write_actions_matched": 0,
+      "write_actions_total": 0
+    },
+    "run_dir": "runs/20260531-153843-240865",
+    "tool_events": [
+      {
+        "arguments": {},
+        "event_id": "rt-000017-4b9a1bf1",
+        "event_type": "tool_call_requested",
+        "response_preview": null,
+        "result": null,
+        "sequence": 17,
+        "state_hash": null,
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "get_users",
+        "turn_index": 2
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000018-61876b03",
+        "event_type": "tool_dispatch_start",
+        "response_preview": null,
+        "result": null,
+        "sequence": 18,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "get_users",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000019-575c418f",
+        "event_type": "toolkit_dispatch_start",
+        "response_preview": null,
+        "result": null,
+        "sequence": 19,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "get_users",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000020-873851eb",
+        "event_type": "toolkit_dispatch_end",
+        "response_preview": null,
+        "result": [
+          {
+            "name": "Test User",
+            "tasks": [
+              "task_1"
+            ],
+            "user_id": "user_1"
+          }
+        ],
+        "sequence": 20,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "get_users",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000021-b8b975f1",
+        "event_type": "tool_dispatch_end",
+        "response_preview": "[{\"user_id\": \"user_1\", \"name\": \"Test User\", \"tasks\": [\"task_1\"]}]",
+        "result": null,
+        "sequence": 21,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "get_users",
+        "turn_index": null
+      }
+    ],
+    "tool_names": {
+      "get_users": 5
+    },
+    "turn_indexes": [
+      0,
+      1,
+      2
+    ]
+  },
+  "status": "successful_runtime_trace_analysis_completed_with_gaps",
+  "successful_runtime": {
+    "event_count": 48,
+    "event_counts": {
+      "agent_response": 3,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 1,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 1,
+      "tool_dispatch_end": 1,
+      "tool_dispatch_start": 1,
+      "toolkit_dispatch_end": 2,
+      "toolkit_dispatch_start": 2,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 7,
+      "turn_start": 7,
+      "user_generate_end": 3,
+      "user_generate_start": 3,
+      "user_response": 3
+    },
+    "event_families": {
+      "evaluation": 2,
+      "message_generation": 6,
+      "message_observed": 7,
+      "orchestrator_lifecycle": 2,
+      "result_persistence": 2,
+      "run_lifecycle": 4,
+      "simulation_lifecycle": 4,
+      "tool_execution": 7,
+      "turn_lifecycle": 14
+    },
+    "final_state_flags": {
+      "activegraph_controlled_tau2": false,
+      "paid_llm_api_calls_made_in_original_run": true,
+      "returncode": 0,
+      "state_packets_fed_back_to_tau2": false,
+      "status": "tau2_runtime_traced_baseline_passed",
+      "tau2_executed": true
+    },
+    "message_roles_observed": {
+      "assistant": 10,
+      "tool": 2,
+      "user": 5
+    },
+    "results": {
+      "action_checks_total": 1,
+      "agent_cost": 0.0007359999999999999,
+      "agent_errors": 0,
+      "db_match": false,
+      "db_reward": 0.0,
+      "duration_seconds": 6.030361792072654,
+      "message_count": 8,
+      "message_roles": [
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "tool",
+        "assistant",
+        "user"
+      ],
+      "normal_stop": true,
+      "reward": 0.0,
+      "run_info": {
+        "max_steps": 10,
+        "num_trials": 1,
+        "provider_model": "openai/gpt-4.1-mini"
+      },
+      "simulation_id": "3c9867de-8a85-40b0-a088-e103b5369ef0",
+      "task_id": "update_task_1",
+      "termination_reason": "user_stop",
+      "tool_calls_from_messages": [
+        {
+          "arguments": {
+            "summary": "User wants to update the status of task_1 to completed but does not have a user ID to verify access."
+          },
+          "id": "call_n34zsvYZbHykF0Ezu2TX8smS",
+          "name": "transfer_to_human_agents",
+          "requestor": "assistant",
+          "turn_idx": 4
+        }
+      ],
+      "user_cost": 0.0009387999999999999,
+      "user_errors": 0,
+      "write_actions_matched": 0,
+      "write_actions_total": 1
+    },
+    "run_dir": "runs/20260531-170523-841701",
+    "tool_events": [
+      {
+        "arguments": {
+          "summary": "User wants to update the status of task_1 to completed but does not have a user ID to verify access."
+        },
+        "event_id": "rt-000025-67056549",
+        "event_type": "tool_call_requested",
+        "response_preview": null,
+        "result": null,
+        "sequence": 25,
+        "state_hash": null,
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": 4
+      },
+      {
+        "arguments": {
+          "summary": "User wants to update the status of task_1 to completed but does not have a user ID to verify access."
+        },
+        "event_id": "rt-000026-fac16d08",
+        "event_type": "tool_dispatch_start",
+        "response_preview": null,
+        "result": null,
+        "sequence": 26,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000027-fc7b6e89",
+        "event_type": "toolkit_dispatch_start",
+        "response_preview": null,
+        "result": null,
+        "sequence": 27,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000028-06895bd6",
+        "event_type": "toolkit_dispatch_end",
+        "response_preview": null,
+        "result": "Transfer successful",
+        "sequence": 28,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000029-0fd991a2",
+        "event_type": "tool_dispatch_end",
+        "response_preview": "Transfer successful",
+        "result": null,
+        "sequence": 29,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "transfer_to_human_agents",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000042-4e462ab1",
+        "event_type": "toolkit_dispatch_start",
+        "response_preview": null,
+        "result": null,
+        "sequence": 42,
+        "state_hash": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "tool_name": "update_task_status",
+        "turn_index": null
+      },
+      {
+        "arguments": null,
+        "event_id": "rt-000043-3acdd63a",
+        "event_type": "toolkit_dispatch_end",
+        "response_preview": null,
+        "result": {
+          "description": "A test task",
+          "status": "completed",
+          "task_id": "task_1",
+          "title": "Test task"
+        },
+        "sequence": 43,
+        "state_hash": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+        "state_hash_after": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+        "state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+        "status": "ok",
+        "tool_name": "update_task_status",
+        "turn_index": null
+      }
+    ],
+    "tool_names": {
+      "transfer_to_human_agents": 5,
+      "update_task_status": 2
+    },
+    "turn_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  }
+}

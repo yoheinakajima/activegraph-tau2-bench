@@ -1,0 +1,88 @@
+{
+  "deferred_runtime_hooks": [],
+  "event_types_only_in_short_run": [],
+  "families_missing_from_postrun_but_present_at_runtime": [
+    "message_generation",
+    "orchestrator_lifecycle",
+    "turn_lifecycle"
+  ],
+  "families_observed_in_postrun_extraction": [
+    "configuration",
+    "evaluation",
+    "message_observed",
+    "result_persistence",
+    "run_lifecycle",
+    "simulation_lifecycle",
+    "tool_execution"
+  ],
+  "families_observed_in_successful_runtime": [
+    "evaluation",
+    "message_generation",
+    "message_observed",
+    "orchestrator_lifecycle",
+    "result_persistence",
+    "run_lifecycle",
+    "simulation_lifecycle",
+    "tool_execution",
+    "turn_lifecycle"
+  ],
+  "remaining_instrumentation_gaps": [
+    "Runtime events are observation-only and do not feed ActiveGraph state packets back into tau2.",
+    "The trace does not expose a full serialized DB diff; DB success is inferred from state hashes, tool result content, and reward/db_check artifacts.",
+    "Evaluation invokes create_task again, so analysis must distinguish task-time mutation from evaluator replay/check execution.",
+    "No fixture-backed ActiveGraph projection is part of the live tau2 control path; fixture artifacts remain offline comparison aids only."
+  ],
+  "runtime_event_types_added_over_short_run": [
+    "agent_response",
+    "toolkit_dispatch_end",
+    "toolkit_dispatch_start",
+    "turn_end",
+    "turn_start",
+    "user_generate_end",
+    "user_generate_start",
+    "user_response"
+  ],
+  "runtime_event_types_observed": [
+    "agent_response",
+    "batch_end",
+    "batch_start",
+    "evaluation_end",
+    "evaluation_start",
+    "message_observed",
+    "orchestrator_run_end",
+    "orchestrator_run_start",
+    "result_persistence_end",
+    "result_persistence_start",
+    "simulation_end",
+    "simulation_execution_end",
+    "simulation_execution_start",
+    "simulation_start",
+    "tool_call_requested",
+    "tool_dispatch_end",
+    "tool_dispatch_start",
+    "toolkit_dispatch_end",
+    "toolkit_dispatch_start",
+    "trace_bootstrap_end",
+    "trace_bootstrap_start",
+    "turn_end",
+    "turn_start",
+    "user_generate_end",
+    "user_generate_start",
+    "user_response"
+  ],
+  "validated_runtime_hooks": [
+    "agent_base_generate_contract",
+    "batch_run_simulation_alias",
+    "batch_run_single_task",
+    "batch_run_tasks",
+    "environment_get_response",
+    "evaluator_evaluate_simulation",
+    "layer1_run_simulation",
+    "orchestrator_run",
+    "orchestrator_step",
+    "simulation_evaluate_alias",
+    "simulation_model_dump",
+    "toolkit_use_tool",
+    "user_simulator_generate_contract"
+  ]
+}

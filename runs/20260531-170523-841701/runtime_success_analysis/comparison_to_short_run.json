@@ -1,0 +1,163 @@
+{
+  "additional_success_events": {
+    "agent_response": 2,
+    "toolkit_dispatch_end": 1,
+    "toolkit_dispatch_start": 1,
+    "turn_end": 4,
+    "turn_start": 4,
+    "user_generate_end": 2,
+    "user_generate_start": 2,
+    "user_response": 2
+  },
+  "completion_delta": {
+    "short_db_match": null,
+    "short_reward": 0.0,
+    "short_termination_reason": "max_steps",
+    "short_write_actions": "0/0",
+    "successful_db_match": false,
+    "successful_reward": 0.0,
+    "successful_termination_reason": "user_stop",
+    "successful_write_actions": "0/1"
+  },
+  "event_count_difference": {
+    "delta": 18,
+    "short_runtime": 30,
+    "successful_runtime": 48
+  },
+  "event_type_count_delta": {
+    "agent_response": {
+      "comparison": 1,
+      "delta": 2,
+      "successful": 3
+    },
+    "batch_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "batch_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "evaluation_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "evaluation_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "message_observed": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "orchestrator_run_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "orchestrator_run_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "result_persistence_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "result_persistence_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "simulation_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "simulation_execution_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "simulation_execution_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "simulation_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "tool_call_requested": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "tool_dispatch_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "tool_dispatch_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "toolkit_dispatch_end": {
+      "comparison": 1,
+      "delta": 1,
+      "successful": 2
+    },
+    "toolkit_dispatch_start": {
+      "comparison": 1,
+      "delta": 1,
+      "successful": 2
+    },
+    "trace_bootstrap_end": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "trace_bootstrap_start": {
+      "comparison": 1,
+      "delta": 0,
+      "successful": 1
+    },
+    "turn_end": {
+      "comparison": 3,
+      "delta": 4,
+      "successful": 7
+    },
+    "turn_start": {
+      "comparison": 3,
+      "delta": 4,
+      "successful": 7
+    },
+    "user_generate_end": {
+      "comparison": 1,
+      "delta": 2,
+      "successful": 3
+    },
+    "user_generate_start": {
+      "comparison": 1,
+      "delta": 2,
+      "successful": 3
+    },
+    "user_response": {
+      "comparison": 1,
+      "delta": 2,
+      "successful": 3
+    }
+  },
+  "interpretation": [
+    "The max_steps=6 run adds two turn envelopes, a second user generation/response, a second assistant response, and extra create_task evaluation replay/low-level toolkit events.",
+    "The short run stops at max_steps after requesting/observing get_users, so reward/action/db metrics remain unavailable or zero."
+  ]
+}

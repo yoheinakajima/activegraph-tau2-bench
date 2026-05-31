@@ -1,0 +1,84 @@
+{
+  "completion_path_status": "not_completed",
+  "confidence": "medium",
+  "confirmation": {
+    "action_checks": [
+      {
+        "action": {
+          "action_id": "update_1",
+          "arguments": {
+            "status": "completed",
+            "task_id": "task_1"
+          },
+          "compare_args": null,
+          "info": "Update the task status to completed",
+          "name": "update_task_status",
+          "requestor": "assistant"
+        },
+        "action_match": false,
+        "action_reward": 0.0,
+        "tool_type": "write"
+      }
+    ],
+    "agent_errors": 0,
+    "db_match": false,
+    "db_reward": 0.0,
+    "normal_stop": true,
+    "reward": 0.0,
+    "termination_reason": "user_stop",
+    "user_errors": 0,
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  },
+  "detected_write_count": 0,
+  "detected_write_tools": [
+    "update_task_status"
+  ],
+  "detected_writes": [],
+  "evaluation_replay_write_event_count": 2,
+  "inspected_runtime_event_count": 48,
+  "limitations": [
+    "No full before/after DB snapshot artifact is available; the projection uses tool-call evidence, tool-result payloads, state-hash transition evidence, and tau2 reward/DB/action checks.",
+    "Evaluation-phase tool replay events are retained as confirmation evidence but are not counted as additional live runtime writes.",
+    "No live runtime write tool dispatch was detected before evaluation_start."
+  ],
+  "offline_boundaries": {
+    "activegraph_control_added": false,
+    "activegraph_controlled_tau2": false,
+    "llm_api_calls_made_by_analysis": false,
+    "model_backed_episode_run_by_analysis": false,
+    "requires_api_keys": false,
+    "tau2_rerun_performed_by_analysis": false,
+    "vendor_tau2_bench_mutated_by_analysis": false
+  },
+  "runtime_run_dir": "runs/20260531-170523-841701",
+  "source_artifacts": {
+    "completion_path": {
+      "bytes": 10090,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/completion_path.json",
+      "present": true
+    },
+    "runtime_events": {
+      "bytes": 79924,
+      "path": "runs/20260531-170523-841701/runtime_events.jsonl",
+      "present": true
+    },
+    "runtime_success_final_state": {
+      "bytes": 1890,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/final_state.json",
+      "present": true
+    },
+    "successful_runtime_trace_analysis": {
+      "bytes": 39477,
+      "path": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_analysis.json",
+      "present": true
+    },
+    "tau2_results": {
+      "bytes": 21980,
+      "path": "runs/20260531-170523-841701/tau2_output/results.json",
+      "present": true
+    }
+  },
+  "status": "runtime_db_mutation_analysis_completed_with_gaps",
+  "successful_runtime_trace_analysis_status": "successful_runtime_trace_analysis_completed_with_gaps"
+}

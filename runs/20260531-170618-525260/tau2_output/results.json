@@ -1,0 +1,479 @@
+{
+  "timestamp": "2026-05-31T10:06:21.212862",
+  "info": {
+    "git_commit": "1352285ea960711189f0d57b9817648dcdb1385f",
+    "num_trials": 1,
+    "max_steps": 6,
+    "max_errors": 10,
+    "user_info": {
+      "implementation": "user_simulator",
+      "llm": "openai/gpt-4.1-mini",
+      "llm_args": {
+        "temperature": 0.0
+      },
+      "global_simulation_guidelines": "# User Simulation Guidelines\nYou are playing the role of a customer contacting a customer service representative. \nYour goal is to simulate realistic customer interactions while following specific scenario instructions.\n\n## Core Principles\n- Generate one message at a time, maintaining natural conversation flow.\n- Strictly follow the scenario instructions you have received.\n- Never make up or hallucinate information not provided in the scenario instructions. Information that is not provided in the scenario instructions should be considered unknown or unavailable.\n- Avoid repeating the exact instructions verbatim. Use paraphrasing and natural language to convey the same information\n- Disclose information progressively. Wait for the agent to ask for specific information before providing it.\n\n## Task Completion\n- The goal is to continue the conversation until the task is complete.\n- If the instruction goal is satisified, generate the '###STOP###' token to end the conversation.\n- If you are transferred to another agent, generate the '###TRANSFER###' token to indicate the transfer.\n- If you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation, generate the '###OUT-OF-SCOPE###' token to end the conversation.\nRemember: The goal is to create realistic, natural conversations while strictly adhering to the provided instructions and maintaining character consistency.\n",
+      "voice_settings": null,
+      "persona_config": null
+    },
+    "agent_info": {
+      "implementation": "llm_agent",
+      "llm": "openai/gpt-4.1-mini",
+      "llm_args": {
+        "temperature": 0.0
+      },
+      "voice_settings": null
+    },
+    "environment_info": {
+      "domain_name": "mock",
+      "policy": "# Mock Domain Policy\n\n1. Each task must have a title\n2. Task status can only be \"pending\" or \"completed\"\n3. Only existing users can create tasks \n4. You are not allowed to delete tasks. You should transfer the a human agent.\n5. If the user asks for a compliment, compliment them",
+      "tool_defs": null
+    },
+    "seed": 300,
+    "text_streaming_config": {
+      "chunk_by": "words",
+      "chunk_size": 1
+    },
+    "speech_complexity": null,
+    "audio_native_config": null,
+    "retrieval_config": null,
+    "retrieval_config_kwargs": null
+  },
+  "tasks": [
+    {
+      "id": "create_task_1_with_env_assertions",
+      "description": {
+        "purpose": "Test the create_task functionality",
+        "relevant_policies": null,
+        "notes": "Basic task creation test with a simple title"
+      },
+      "user_scenario": {
+        "persona": "Professional and direct communicator who writes in a clear and concise style",
+        "instructions": "You are a team member who needs to create a task for an upcoming meeting. Your goal is to create a task to track this important meeting. Create a new task called 'Important Meeting' for user_1."
+      },
+      "ticket": "User needs to create a task for an upcoming meeting. Create a new task called 'Important Meeting' for user_1.",
+      "initial_state": null,
+      "evaluation_criteria": {
+        "actions": [
+          {
+            "action_id": "create_1",
+            "requestor": "assistant",
+            "name": "create_task",
+            "arguments": {
+              "user_id": "user_1",
+              "title": "Important Meeting"
+            },
+            "info": "Create a new task for the meeting",
+            "compare_args": null
+          }
+        ],
+        "env_assertions": [
+          {
+            "env_type": "assistant",
+            "func_name": "assert_task_status",
+            "arguments": {
+              "task_id": "task_2",
+              "expected_status": "pending"
+            },
+            "assert_value": true,
+            "message": null
+          }
+        ],
+        "communicate_info": null,
+        "nl_assertions": [
+          "The agent confirmed the task was created successfully"
+        ],
+        "reward_basis": [
+          "DB",
+          "ENV_ASSERTION"
+        ]
+      },
+      "issues": null,
+      "required_documents": null,
+      "user_tools": null
+    }
+  ],
+  "simulations": [
+    {
+      "id": "a83e72f2-5387-4155-8b42-6a49a8dd52ea",
+      "task_id": "create_task_1_with_env_assertions",
+      "timestamp": "2026-05-31T10:06:25.117585",
+      "start_time": "2026-05-31T10:06:21.224335",
+      "end_time": "2026-05-31T10:06:25.117537",
+      "duration": 3.892375124967657,
+      "termination_reason": "max_steps",
+      "agent_cost": 0.0006864,
+      "user_cost": 0.0003268,
+      "reward_info": {
+        "reward": 0.0,
+        "db_check": null,
+        "env_assertions": null,
+        "action_checks": null,
+        "nl_assertions": null,
+        "communicate_checks": null,
+        "reward_basis": null,
+        "reward_breakdown": null,
+        "info": {
+          "note": "Simulation terminated prematurely. Termination reason: max_steps"
+        }
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Hi! How can I help you today?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 0,
+          "timestamp": "2026-05-31T10:06:21.224708",
+          "cost": 0.0,
+          "usage": null,
+          "raw_data": null,
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "role": "user",
+          "content": "Hello! I need to create a new task called \"Important Meeting\" for user_1 to track an upcoming meeting. Could you please assist me with that?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 1,
+          "timestamp": "2026-05-31T10:06:22.539430",
+          "cost": 0.0003268,
+          "usage": {
+            "completion_tokens": 33,
+            "prompt_tokens": 685
+          },
+          "raw_data": {
+            "id": "chatcmpl-Dldu9hnVKGY9smDoo8MTMb8O1plZL",
+            "created": 1780247181,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_4c00819d9a",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "Hello! I need to create a new task called \"Important Meeting\" for user_1 to track an upcoming meeting. Could you please assist me with that?",
+                  "role": "assistant",
+                  "tool_calls": null,
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 33,
+              "prompt_tokens": 685,
+              "total_tokens": 718,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": null,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_552Qrcs3NbgqPCqYamWMP2p7",
+              "name": "get_users",
+              "arguments": {},
+              "requestor": "assistant"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 2,
+          "timestamp": "2026-05-31T10:06:23.311722",
+          "cost": 0.00019240000000000001,
+          "usage": {
+            "completion_tokens": 10,
+            "prompt_tokens": 441
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlduAgjXwaiZnOQBRIhNKdqPPmxuc",
+            "created": 1780247182,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_21d58a0178",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{}",
+                        "name": "get_users"
+                      },
+                      "id": "call_552Qrcs3NbgqPCqYamWMP2p7",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 10,
+              "prompt_tokens": 441,
+              "total_tokens": 451,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.7681375839747488,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_552Qrcs3NbgqPCqYamWMP2p7",
+          "role": "tool",
+          "content": "[{\"user_id\": \"user_1\", \"name\": \"Test User\", \"tasks\": [\"task_1\"]}]",
+          "requestor": "assistant",
+          "error": false,
+          "turn_idx": 3,
+          "timestamp": "2026-05-31T10:06:23.313990"
+        },
+        {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_nZlpzXdu1M3Z1bzZMISCt4lv",
+              "name": "create_task",
+              "arguments": {
+                "user_id": "user_1",
+                "title": "Important Meeting"
+              },
+              "requestor": "assistant"
+            }
+          ],
+          "is_audio": false,
+          "turn_idx": 4,
+          "timestamp": "2026-05-31T10:06:24.284065",
+          "cost": 0.0002292,
+          "usage": {
+            "completion_tokens": 22,
+            "prompt_tokens": 485
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlduB3aZnb28nCnyIaVICfJfzjRIM",
+            "created": 1780247183,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_21d58a0178",
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "content": null,
+                  "role": "assistant",
+                  "tool_calls": [
+                    {
+                      "function": {
+                        "arguments": "{\"user_id\":\"user_1\",\"title\":\"Important Meeting\"}",
+                        "name": "create_task"
+                      },
+                      "id": "call_nZlpzXdu1M3Z1bzZMISCt4lv",
+                      "type": "function"
+                    }
+                  ],
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 22,
+              "prompt_tokens": 485,
+              "total_tokens": 507,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.968735457980074,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        },
+        {
+          "id": "call_nZlpzXdu1M3Z1bzZMISCt4lv",
+          "role": "tool",
+          "content": "{\"task_id\": \"task_2\", \"title\": \"Important Meeting\", \"description\": null, \"status\": \"pending\"}",
+          "requestor": "assistant",
+          "error": false,
+          "turn_idx": 5,
+          "timestamp": "2026-05-31T10:06:24.286662"
+        },
+        {
+          "role": "assistant",
+          "content": "The task \"Important Meeting\" has been created for user_1 to track the upcoming meeting. Is there anything else you would like to do?",
+          "tool_calls": null,
+          "is_audio": false,
+          "turn_idx": 6,
+          "timestamp": "2026-05-31T10:06:25.115706",
+          "cost": 0.0002648,
+          "usage": {
+            "completion_tokens": 30,
+            "prompt_tokens": 542
+          },
+          "raw_data": {
+            "id": "chatcmpl-DlduCrNuJwvQWUkcUNx2jtkPHZRgT",
+            "created": 1780247184,
+            "model": "gpt-4.1-mini-2025-04-14",
+            "object": "chat.completion",
+            "system_fingerprint": "fp_21d58a0178",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "The task \"Important Meeting\" has been created for user_1 to track the upcoming meeting. Is there anything else you would like to do?",
+                  "role": "assistant",
+                  "tool_calls": null,
+                  "function_call": null,
+                  "provider_specific_fields": {
+                    "refusal": null
+                  },
+                  "annotations": []
+                },
+                "provider_specific_fields": {}
+              }
+            ],
+            "usage": {
+              "completion_tokens": 30,
+              "prompt_tokens": 542,
+              "total_tokens": 572,
+              "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+              },
+              "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+              }
+            },
+            "service_tier": "default"
+          },
+          "generation_time_seconds": 0.8225306669482961,
+          "audio_format": null,
+          "audio_path": null,
+          "audio_script_gold": null,
+          "speech_effects": null,
+          "source_effects": null,
+          "channel_effects": null,
+          "turn_taking_action": null,
+          "utterance_ids": null,
+          "chunk_id": null,
+          "is_final_chunk": true,
+          "source": null,
+          "contains_speech": true
+        }
+      ],
+      "ticks": null,
+      "trial": 0,
+      "seed": 626729,
+      "mode": "half_duplex",
+      "speech_environment": null,
+      "review": null,
+      "user_only_review": null,
+      "info": null,
+      "auth_classification": null,
+      "hallucination_retries_used": 0,
+      "hallucination_check": null,
+      "provider_session_id": null,
+      "policy": "# Mock Domain Policy\n\n1. Each task must have a title\n2. Task status can only be \"pending\" or \"completed\"\n3. Only existing users can create tasks \n4. You are not allowed to delete tasks. You should transfer the a human agent.\n5. If the user asks for a compliment, compliment them",
+      "effect_timeline": null
+    }
+  ],
+  "simulation_index": null
+}

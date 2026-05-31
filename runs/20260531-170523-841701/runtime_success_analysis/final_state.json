@@ -1,0 +1,64 @@
+{
+  "activegraph_control_added": false,
+  "activegraph_controlled_tau2": false,
+  "completion_status": "not_completed",
+  "event_counts": {
+    "postrun_extracted": 12,
+    "short_runtime": 30,
+    "successful_runtime": 48
+  },
+  "generated_at_utc": "2026-05-31T17:06:08.587486Z",
+  "llm_api_calls_made_by_analysis": false,
+  "metrics": {
+    "action_checks_total": 1,
+    "agent_cost": 0.0007359999999999999,
+    "agent_errors": 0,
+    "db_match": false,
+    "db_reward": 0.0,
+    "duration_seconds": 6.030361792072654,
+    "message_count": 8,
+    "message_roles": [
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "tool",
+      "assistant",
+      "user"
+    ],
+    "normal_stop": true,
+    "reward": 0.0,
+    "run_info": {
+      "max_steps": 10,
+      "num_trials": 1,
+      "provider_model": "openai/gpt-4.1-mini"
+    },
+    "simulation_id": "3c9867de-8a85-40b0-a088-e103b5369ef0",
+    "task_id": "update_task_1",
+    "termination_reason": "user_stop",
+    "tool_calls_from_messages": [
+      {
+        "arguments": {
+          "summary": "User wants to update the status of task_1 to completed but does not have a user ID to verify access."
+        },
+        "id": "call_n34zsvYZbHykF0Ezu2TX8smS",
+        "name": "transfer_to_human_agents",
+        "requestor": "assistant",
+        "turn_idx": 4
+      }
+    ],
+    "user_cost": 0.0009387999999999999,
+    "user_errors": 0,
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  },
+  "model_backed_episode_run_by_analysis": false,
+  "paid_llm_api_calls_made_in_original_successful_run": true,
+  "requires_api_keys": false,
+  "state_packets_fed_back_to_tau2": false,
+  "status": "successful_runtime_trace_analysis_completed_with_gaps",
+  "tau2_executed_in_original_successful_run": true,
+  "tau2_rerun_performed_by_analysis": false,
+  "vendor_tau2_bench_mutated_by_analysis": false
+}

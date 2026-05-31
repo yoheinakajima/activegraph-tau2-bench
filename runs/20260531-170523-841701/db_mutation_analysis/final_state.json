@@ -1,0 +1,30 @@
+{
+  "activegraph_control_added": false,
+  "activegraph_controlled_tau2": false,
+  "agent_errors": 0,
+  "confidence": "medium",
+  "db_match": false,
+  "db_reward": 0.0,
+  "detected_write_count": 0,
+  "detected_write_tools": [
+    "update_task_status"
+  ],
+  "inferred_mutations": [],
+  "limitations": [
+    "No full before/after DB snapshot artifact is available; the projection uses tool-call evidence, tool-result payloads, state-hash transition evidence, and tau2 reward/DB/action checks.",
+    "Evaluation-phase tool replay events are retained as confirmation evidence but are not counted as additional live runtime writes.",
+    "No live runtime write tool dispatch was detected before evaluation_start."
+  ],
+  "llm_api_calls_made_by_analysis": false,
+  "model_backed_episode_run_by_analysis": false,
+  "normal_stop": true,
+  "requires_api_keys": false,
+  "reward": 0.0,
+  "runtime_run_dir": "runs/20260531-170523-841701",
+  "status": "runtime_db_mutation_analysis_completed_with_gaps",
+  "tau2_rerun_performed_by_analysis": false,
+  "user_errors": 0,
+  "vendor_tau2_bench_mutated_by_analysis": false,
+  "write_actions_matched": 0,
+  "write_actions_total": 1
+}
