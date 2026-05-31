@@ -4,8 +4,8 @@ This repository evaluates future **ActiveGraph.ai** integrations against the off
 
 ## Current phase boundary
 
-- **Current phase:** Phase 10 design-only operator authorization and incident-response readiness for the locally vendored tau2-bench baseline.
-- **Not implemented yet:** live ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 10 adds mock-contract operator approval, revocation, incident rollback/recovery planning, and incident audit anchoring while preserving `live_ready=false`; ActiveGraph is still not used to control tau2 lifecycle or task state.
+- **Current phase:** Phase 12 design-only external-auditor handoff and retention-manifest packaging for the locally vendored tau2-bench baseline.
+- **Not implemented yet:** live ActiveGraph reactive manager behavior and real tau2 runtime tracing. Phase 12 adds advisory auditor handoff, retention classification, evidence grouping, artifact hashing, auditor questions, and blocker summaries while preserving `live_ready=false`; ActiveGraph is still not used to control tau2 lifecycle or task state.
 - Local experiment code lives in `scripts/`, `docs/`, `runs/`, and future `experiments/` files. Upstream benchmark code lives under `vendor/tau2-bench/`.
 
 ## Vendored upstream provenance
@@ -52,6 +52,7 @@ python scripts/run_state_packet_smoke.py
 python scripts/run_reactive_manager_dry_run.py
 python scripts/run_operator_incident_readiness.py
 python scripts/run_human_review_package.py
+python scripts/run_auditor_handoff_package.py
 python scripts/run_all_smokes.py  # preferred compact validation command
 ```
 
@@ -68,7 +69,7 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. Later readiness phases through Phase 11 add design-only contracts for live opt-in, audit readiness, external audit/vault readiness, operator/incident readiness, and advisory human-review packaging while preserving fail-closed live execution. These smoke commands:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. Later readiness phases through Phase 12 add design-only contracts for live opt-in, audit readiness, external audit/vault readiness, operator/incident readiness, advisory human-review packaging, and external-auditor handoff/retention packaging while preserving fail-closed live execution. These smoke commands:
 
 - never require API keys;
 - never call paid LLM APIs;
@@ -462,6 +463,37 @@ runs/<timestamp>/
 ```
 
 The human-review package is advisory/reporting only. It summarizes readiness state, blockers, evidence links, operator authorization decisions, incident-response decisions, audit/vault/sandbox readiness, and future live-manager prerequisites while intentionally preserving `live_ready=false` and live execution unavailable/fail-closed. It does not approve execution, execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/human_review_package.md` for the package schema, Markdown packet structure, checklist, evidence index, blocker matrix, non-approval statement, and future-phase requirements.
+
+
+## Phase 12 external-auditor handoff package smoke command
+
+```bash
+python scripts/run_auditor_handoff_package.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+auditor_handoff_package_passed
+```
+
+This command regenerates/preserves the Phase 11 fixture-backed artifact chain and adds deterministic auditor-handoff artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  auditor_handoff_package.json
+  auditor_handoff_packet.md
+  retention_manifest.json
+  artifact_hash_manifest.json
+  evidence_bundle_index.json
+  auditor_questions.md
+  handoff_summary.md
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The auditor handoff package is advisory/reporting only. It packages references, retention classes, stable artifact hashes, evidence groups, unresolved blockers, auditor questions, and an explicit non-approval statement while intentionally preserving `live_ready=false` and live execution unavailable/fail-closed. It does not approve execution, execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/auditor_handoff_retention.md` for the handoff package schema, retention manifest schema, artifact hash manifest schema, evidence bundle index schema, auditor question set, non-approval statement, and future-phase requirements.
 
 ## Compact aggregate smoke command
 

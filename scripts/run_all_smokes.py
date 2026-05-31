@@ -83,6 +83,12 @@ SMOKES = [
         "display_command": "python scripts/run_human_review_package.py",
         "expected_statuses": ["human_review_package_passed"],
     },
+    {
+        "name": "auditor_handoff_package",
+        "command": [sys.executable, "scripts/run_auditor_handoff_package.py"],
+        "display_command": "python scripts/run_auditor_handoff_package.py",
+        "expected_statuses": ["auditor_handoff_package_passed"],
+    },
 ]
 
 
