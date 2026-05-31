@@ -72,3 +72,7 @@ The analyzer is offline-only.  It does not run tau2, does not run another model-
 ## Compatibility wrapper
 
 `scripts/analyze_successful_runtime_trace.py` remains as an argument-compatible wrapper for older commands.  It delegates to the generalized outcome analyzer and writes outcome-neutral files under `runtime_outcome_analysis/`.
+
+## Unit test coverage
+
+Fixture-based unit tests in `tests/test_runtime_trace_outcome_classification.py` exercise the offline `classify_task_outcome()` rules and live-write evidence extraction without invoking tau2, model-backed episodes, LLM/API services, or API keys.  The tests cover all five emitted outcome classes (`success`, `failed_no_write`, `failed_partial_progress`, `failed_max_steps`, and `failed_unknown`) with minimal in-memory dictionaries/events, including checks that success requires reward, DB, action-match, and normal-stop evidence; no-write failures keep evaluation replay separate from live writes; partial-progress failures preserve live mutation evidence; max-steps failures remain distinct from generic unknowns; and ambiguous inputs fall back to `failed_unknown`.
