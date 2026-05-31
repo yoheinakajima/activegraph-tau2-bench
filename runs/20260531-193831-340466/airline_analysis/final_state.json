@@ -1,0 +1,32 @@
+{
+  "analysis_boundaries": {
+    "activegraph_control_added": false,
+    "llm_api_calls_made_by_analysis": false,
+    "model_backed_episode_run_by_analysis": false,
+    "offline_analysis_only": true,
+    "original_run_paid_llm_api_calls_made": true,
+    "original_run_tau2_executed": true,
+    "requires_api_keys": false,
+    "tau2_rerun_performed_by_analysis": false,
+    "vendor_tau2_bench_mutated_by_analysis": false
+  },
+  "db_match": true,
+  "event_count": 70,
+  "generated_at_utc": "2026-05-31T20:09:36.546736Z",
+  "outputs": [
+    "airline_baseline_analysis.json",
+    "airline_baseline_summary.md",
+    "airline_task_timeline.json",
+    "airline_tool_timeline.json",
+    "airline_scoring_evidence.json",
+    "final_state.json",
+    "raw.log"
+  ],
+  "reward": 1.0,
+  "runtime_run_dir": "runs/20260531-193831-340466",
+  "status": "airline_runtime_baseline_analysis_passed",
+  "task_id": "0",
+  "termination_reason": "user_stop",
+  "tool_call_count": 1,
+  "write_tool_call_count": 0
+}

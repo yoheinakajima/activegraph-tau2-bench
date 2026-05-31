@@ -125,6 +125,17 @@ python scripts/analyze_full_mock_runtime_baseline.py \
 The analyzer writes `full_mock_baseline_analysis.json`, `full_mock_baseline_summary.md`, `task_outcomes.json`, `failure_analysis.json`, `runtime_event_coverage.json`, `mutation_summary.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/full_mock_analysis/`. It reports benchmark pass rate, average reward, per-task outcomes, DB/action/write checks, termination reasons, costs where available, runtime event coverage, mutation evidence, and inferable failure causes. See [Full mock runtime baseline analysis](docs/full_mock_runtime_baseline_analysis.md) for details.
 
 
+### Airline runtime baseline analysis
+
+Analyze the committed first successful airline runtime-traced baseline offline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_airline_runtime_baseline.py \
+  --runtime-run-dir runs/20260531-193831-340466
+```
+
+The analyzer writes `airline_baseline_analysis.json`, `airline_baseline_summary.md`, `airline_task_timeline.json`, `airline_tool_timeline.json`, `airline_scoring_evidence.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/airline_analysis/`. It reports task instructions, reward/DB evidence, agent/user turn path, read/write tool timeline, runtime event coverage, cost/token usage, runtime-trace advantages over post-run results, and remaining airline instrumentation gaps. See [Airline runtime-traced baseline analysis](docs/airline_runtime_baseline_analysis.md) for details.
+
 ### Full mock detailed failure analysis
 
 Analyze the failed cases from the committed full mock runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
