@@ -1,0 +1,96 @@
+{
+  "component_matches": {
+    "agent_db": true,
+    "combined_db_check": false,
+    "user_db": false
+  },
+  "diffs": {
+    "agent_db": [],
+    "user_db": [
+      {
+        "expected": "unread",
+        "kind": "value_mismatch",
+        "observed": "read",
+        "path": "user_db.notifications.notif_1.status"
+      }
+    ]
+  },
+  "expected_notification_id": "notif_1",
+  "expected_notification_status": "unread",
+  "expected_source": "gold_environment applies task evaluation_criteria.actions after initialization_actions; it does not replay user dismiss_notification.",
+  "expected_state": {
+    "agent_db": {
+      "tasks": {
+        "task_1": {
+          "description": "A test task",
+          "status": "completed",
+          "task_id": "task_1",
+          "title": "Test task"
+        }
+      },
+      "users": {
+        "user_1": {
+          "name": "Test User",
+          "tasks": [
+            "task_1"
+          ],
+          "user_id": "user_1"
+        }
+      }
+    },
+    "user_db": {
+      "notifications": {
+        "notif_1": {
+          "message": "Task 'Test task' has been assigned to you.",
+          "notification_id": "notif_1",
+          "status": "unread",
+          "task_id": "task_1"
+        }
+      }
+    }
+  },
+  "expected_task_id": "task_1",
+  "expected_task_status": "completed",
+  "hashes": {
+    "expected_agent_db_hash": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+    "expected_user_db_hash": "4cf3d22eed6962ba202c8738421d8a2286d2b5a0cad1372922c928be09ccbfac",
+    "observed_agent_db_hash": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+    "observed_user_db_hash": "e24aeaa25315fe5bd6768b3ce3b52e3e93517bf25e7251151c834ac908ba2f62"
+  },
+  "observed_notification_id": "notif_1",
+  "observed_notification_status": "read",
+  "observed_source": "predicted_environment replays mutating calls from full runtime trajectory, including user dismiss_notification.",
+  "observed_state": {
+    "agent_db": {
+      "tasks": {
+        "task_1": {
+          "description": "A test task",
+          "status": "completed",
+          "task_id": "task_1",
+          "title": "Test task"
+        }
+      },
+      "users": {
+        "user_1": {
+          "name": "Test User",
+          "tasks": [
+            "task_1"
+          ],
+          "user_id": "user_1"
+        }
+      }
+    },
+    "user_db": {
+      "notifications": {
+        "notif_1": {
+          "message": "Task 'Test task' has been assigned to you.",
+          "notification_id": "notif_1",
+          "status": "read",
+          "task_id": "task_1"
+        }
+      }
+    }
+  },
+  "observed_task_id": "task_1",
+  "observed_task_status": "completed"
+}

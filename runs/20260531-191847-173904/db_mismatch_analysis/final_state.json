@@ -1,0 +1,21 @@
+{
+  "activegraph_control_added": false,
+  "activegraph_controlled_tau2": false,
+  "db_check": {
+    "db_match": false,
+    "db_reward": 0.0
+  },
+  "llm_api_calls_made_by_analysis": false,
+  "requires_api_keys": false,
+  "reward": 0.0,
+  "runtime_event_count": 85,
+  "runtime_last_event_id": "rt-000085-59747949",
+  "runtime_run_dir": "runs/20260531-191847-173904",
+  "runtime_status": "tau2_runtime_traced_baseline_passed",
+  "runtime_task_id": "update_task_with_user_tools",
+  "state_packets_fed_back_to_tau2": false,
+  "status": "update_task_user_tools_db_mismatch_analysis_passed",
+  "tau2_rerun_performed_by_analysis": false,
+  "termination_reason": "user_stop",
+  "vendor_tau2_bench_mutated_by_analysis": false
+}
