@@ -53,7 +53,7 @@ cd vendor/tau2-bench && uv run tau2 run \
   --task-ids <task_id_or_index>
 ```
 
-If `--task-id` is omitted, it uses `--num-tasks 1` instead.
+If `--task-id` is omitted, it uses `--num-tasks 1` instead. Numeric `--task-id` values are resolved locally as zero-based indexes into the selected domain's `tasks.json` before tau2 is launched, so `--task-id 0` maps to the first real task ID such as `create_task_1` for the mock domain. Out-of-range numeric values fail during wrapper preflight with a clear local error.
 
 ## Required env vars by provider
 

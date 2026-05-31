@@ -24,6 +24,7 @@ REFUSED_NON_MOCK_DOMAIN_STATUS = "tau2_model_baseline_refused_non_mock_domain"
 ENV_MISSING_STATUS = "tau2_model_baseline_env_missing"
 PASSED_STATUS = "tau2_model_baseline_passed"
 FAILED_STATUS = "tau2_model_baseline_failed"
+REFUSED_INVALID_TASK_ID_STATUS = "tau2_model_baseline_refused_invalid_task_id"
 
 DEFAULT_DOMAIN = "mock"
 DEFAULT_MAX_STEPS = 5
@@ -162,6 +163,49 @@ def provider_env_status(provider: str | None, presence: dict[str, bool]) -> dict
     }
 
 
+
+def load_domain_task_ids(domain: str) -> list[str]:
+    """Load task IDs from the local vendored domain task file without running tau2."""
+    task_file = TAU2_DATA_DIR / "tau2" / "domains" / domain / "tasks.json"
+    if not task_file.is_file():
+        raise ValueError(f"cannot resolve numeric --task-id because {rel(task_file)} does not exist")
+    try:
+        tasks = json.loads(task_file.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"cannot resolve numeric --task-id because {rel(task_file)} is invalid JSON: {exc}") from exc
+    if not isinstance(tasks, list):
+        raise ValueError(f"cannot resolve numeric --task-id because {rel(task_file)} is not a task list")
+    task_ids: list[str] = []
+    for index, task in enumerate(tasks):
+        if not isinstance(task, dict) or not isinstance(task.get("id"), str):
+            raise ValueError(
+                f"cannot resolve numeric --task-id because task index {index} "
+                f"in {rel(task_file)} has no string id"
+            )
+        task_ids.append(task["id"])
+    if not task_ids:
+        raise ValueError(f"cannot resolve numeric --task-id because {rel(task_file)} contains no tasks")
+    return task_ids
+
+
+def resolve_task_id_arg(task_id: str | None, domain: str) -> tuple[str | None, str | None]:
+    """Resolve a numeric task index to the real tau2 task ID before launch."""
+    if task_id is None:
+        return None, None
+    cleaned = str(task_id).strip()
+    if not cleaned.isdigit():
+        return cleaned, None
+    index = int(cleaned)
+    task_ids = load_domain_task_ids(domain)
+    if index < 0 or index >= len(task_ids):
+        raise ValueError(
+            f"numeric --task-id {cleaned} is out of range for domain {domain!r}; "
+            f"valid zero-based indexes are 0..{len(task_ids) - 1}"
+        )
+    resolved = task_ids[index]
+    return resolved, f"numeric --task-id {cleaned} resolved to {resolved!r} for domain {domain!r}"
+
+
 def build_tau2_command(args: argparse.Namespace, tau2_output_dir: pathlib.Path) -> list[str]:
     llm_name = provider_model_name(args.provider, args.model)
     command = [
@@ -225,6 +269,7 @@ def write_artifacts(
     copied_artifacts: list[dict[str, str]] | None = None,
     returncode: int | None = None,
     reason: str | None = None,
+    task_id_resolution_note: str | None = None,
 ) -> None:
     final_state = {
         "status": status,
@@ -236,6 +281,7 @@ def write_artifacts(
         "tau2_model_name": provider_model_name(args.provider, args.model) if args.provider and args.model else None,
         "domain": args.domain,
         "task_id": args.task_id,
+        "task_id_resolution_note": task_id_resolution_note,
         "num_tasks": args.num_tasks,
         "max_steps": args.max_steps,
         "concurrency": args.concurrency,
@@ -264,6 +310,7 @@ def write_artifacts(
         f"- tau2 model name: `{final_state['tau2_model_name']}`",
         f"- domain: `{args.domain}`",
         f"- task_id: `{args.task_id}`",
+        f"- task_id resolution: {task_id_resolution_note or 'n/a'}",
         f"- num_tasks: `{args.num_tasks}`",
         f"- max_steps: `{args.max_steps}`",
         f"- concurrency: `{args.concurrency}`",
@@ -312,6 +359,7 @@ def main() -> int:
     reason: str | None = None
     returncode: int | None = None
     copied_artifacts: list[dict[str, str]] = []
+    task_id_resolution_note: str | None = None
 
     if not args.yes_i_understand_this_may_call_paid_apis:
         status = REFUSED_MISSING_ACK_STATUS
@@ -332,8 +380,15 @@ def main() -> int:
         status = FAILED_STATUS
         reason = "this first baseline wrapper only permits one task"
     else:
-        command = build_tau2_command(args, tau2_output_dir)
-        if not provider_env.get("satisfied", False):
+        try:
+            args.task_id, task_id_resolution_note = resolve_task_id_arg(args.task_id, args.domain)
+        except ValueError as exc:
+            status = REFUSED_INVALID_TASK_ID_STATUS
+            reason = str(exc)
+        command = build_tau2_command(args, tau2_output_dir) if status != REFUSED_INVALID_TASK_ID_STATUS else None
+        if status == REFUSED_INVALID_TASK_ID_STATUS:
+            pass
+        elif not provider_env.get("satisfied", False):
             status = ENV_MISSING_STATUS
             reason = "required provider API-key-like environment variables are not present"
         else:
@@ -385,10 +440,11 @@ def main() -> int:
         copied_artifacts=copied_artifacts,
         returncode=returncode,
         reason=reason,
+        task_id_resolution_note=task_id_resolution_note,
     )
     print(rel(out_dir))
     print(status)
-    return 1 if status == FAILED_STATUS else 0
+    return 1 if status in {FAILED_STATUS, REFUSED_INVALID_TASK_ID_STATUS} else 0
 
 
 if __name__ == "__main__":

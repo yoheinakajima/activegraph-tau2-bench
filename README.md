@@ -74,6 +74,16 @@ python scripts/run_tau2_model_baseline.py \
 
 The wrapper refuses to run without provider/model configuration and the paid-API acknowledgement flag, reports only API-key presence booleans, and writes artifacts under ignored `runs/<timestamp>/` directories. See [Explicit opt-in tau2 model baseline](docs/tau2_model_baseline.md) for setup, outputs, and troubleshooting.
 
+### Post-run baseline trace extraction
+
+Extract a normalized trace from an already-completed tau2 model baseline run without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/extract_tau2_baseline_trace.py --run-dir <runs/...>
+```
+
+The extractor writes `baseline_trace.jsonl`, `baseline_trace_summary.md`, `baseline_trace_final_state.json`, and `baseline_artifact_index.json` under `<runs/...>/extracted_trace/`. See [Post-run tau2 baseline trace extraction](docs/tau2_baseline_trace_extraction.md) for schema details and no-LLM/no-rerun boundaries.
+
 ## Smoke commands
 
 The aggregate command runs the completed no-LLM smoke suite:
