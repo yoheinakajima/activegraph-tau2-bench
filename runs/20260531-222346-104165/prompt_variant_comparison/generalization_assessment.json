@@ -1,0 +1,44 @@
+{
+  "continued_prompt_iteration_recommended": false,
+  "distinction": {
+    "generalizable_runtime_support_activegraph_hypotheses": [
+      "pre-write constraint packet",
+      "entity/constraint ledger from user request and tool results",
+      "write-intent vs tool-argument diff before dispatch",
+      "policy/evidence checklist before irreversible booking",
+      "post-tool mutation verification against intended constraints"
+    ],
+    "task_specific_prompt_hacking": [
+      "Adds benchmark-aware prose about preserving named passengers for this exact observed failure.",
+      "May alter conversation trajectory and action matching without a general consistency check.",
+      "Does not create a reusable representation of user constraints, tool evidence, intended mutation, or post-write verification."
+    ]
+  },
+  "failure_class_description": "The agent must carry forward user constraints, policy constraints, tool-result evidence, and price/payment constraints into one irreversible write call. The baseline lost an entity constraint; the variant preserved the entity but missed the evidence-gathering/search step and payment total.",
+  "generalizable_failure_class": "multi-constraint write action argument construction after multi-step read evidence",
+  "implemented_in_this_change": false,
+  "prompt_variant_classification": "task_specific_prompt_hack",
+  "proposed_interventions_not_implemented": [
+    {
+      "hypothesis": "Before any write, assemble a compact packet of required entities, dates, route, flight, cabin, price, payment, insurance, and baggage constraints.",
+      "name": "pre-write constraint packet"
+    },
+    {
+      "hypothesis": "Maintain a ledger that separates user-stated constraints from tool-evidenced facts and highlights unresolved or contradictory fields.",
+      "name": "entity/constraint ledger from user request and tool results"
+    },
+    {
+      "hypothesis": "Compare the intended booking state to the actual book_reservation arguments and block/flag missing passengers, missing search evidence, or payment mismatches.",
+      "name": "write-intent vs tool-argument diff before dispatch"
+    },
+    {
+      "hypothesis": "Require explicit evidence for route/date/flight availability, passenger eligibility, payment coverage, and no-insurance/baggage choices before calling a write tool.",
+      "name": "policy/evidence checklist before irreversible booking"
+    },
+    {
+      "hypothesis": "After a write, compare the resulting reservation against the pre-write packet to identify silent drops or mismatched totals immediately.",
+      "name": "post-tool mutation verification against intended constraints"
+    }
+  ],
+  "reason_not_recommended": "The variant targeted one observed symptom (dropping a named passenger) and changed the path enough to regress a read-action match while still failing the write. Iterating this task-specific prompt would optimize around airline task 8 artifacts rather than solve the broader write-argument construction problem."
+}

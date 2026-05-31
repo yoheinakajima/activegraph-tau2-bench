@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    "runs/20260531-222346-104165/prompt_variant_comparison/prompt_variant_comparison.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/prompt_variant_comparison_summary.md",
+    "runs/20260531-222346-104165/prompt_variant_comparison/action_score_delta.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/tool_argument_delta.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/message_path_delta.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/generalization_assessment.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/final_state.json",
+    "runs/20260531-222346-104165/prompt_variant_comparison/raw.log"
+  ],
+  "generated_at": "2026-05-31T22:34:43.881868Z",
+  "offline_boundary": {
+    "api_keys_required": false,
+    "interventions_implemented": false,
+    "llm_api_calls_made": false,
+    "model_backed_episode": false,
+    "tau2_rerun": false,
+    "vendor_tau2_bench_mutated": false
+  },
+  "output_dir": "runs/20260531-222346-104165/prompt_variant_comparison",
+  "status": "airline_task8_prompt_variant_comparison_passed"
+}

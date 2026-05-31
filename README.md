@@ -92,6 +92,18 @@ python scripts/run_airline_task8_prompt_variant.py \
 
 See [Airline task 8 prompt/control variant](docs/airline_task8_prompt_variant.md) for boundaries, refusal checks, and artifact details.
 
+### Airline task 8 prompt-variant comparison
+
+Compare the committed airline task 8 baseline and prompt-variant failures offline, without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/compare_airline_task8_prompt_variant.py \
+  --baseline-run-dir runs/20260531-204930-608103 \
+  --variant-run-dir runs/20260531-222346-104165
+```
+
+The comparator writes `prompt_variant_comparison.json`, `prompt_variant_comparison_summary.md`, action/tool/message deltas, `generalization_assessment.json`, `final_state.json`, and `raw.log` under `runs/20260531-222346-104165/prompt_variant_comparison/`. It marks the prompt variant as task-specific, identifies the general failure class as multi-constraint write action argument construction after multi-step read evidence, and records general ActiveGraph-style intervention hypotheses without implementing them. See [Airline task 8 prompt-variant comparison](docs/airline_task8_prompt_variant_comparison.md).
+
 ### Runtime trace-only tau2 instrumentation
 
 A no-LLM runtime trace smoke validates the trace writer, hook schema, and non-invasive monkeypatch installation without requiring API keys or paid services:
