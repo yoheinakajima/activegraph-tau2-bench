@@ -1,0 +1,416 @@
+status_start=tau2_runtime_traced_baseline_ready_not_run
+cwd=vendor/tau2-bench
+command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain mock --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 10 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-184109-726391/tau2_output --log-level INFO --num-tasks 10
+api_key_values_printed=false
+
+2026-05-31 11:41:10.072 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-05-31 11:41:10.072 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data
+2026-05-31 11:41:10.997 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-05-31 11:41:11.082 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-05-31 11:41:11.083 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-05-31 11:41:11.083 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: mock  Task Set: Default  Tasks: All                                  │
+│ Trials: 1  Max Steps: 10  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: llm_agent → openai/gpt-4.1-mini                                       │
+│ User:  user_simulator → openai/gpt-4.1-mini                                  │
+│                                                                              │
+│ Save:                                                                        │
+│ /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-184109-726391/tau2 │
+│ _output  Concurrency: 1  Verbose: False                                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-05-31 11:41:11.137 | INFO     | tau2.runner.checkpoint:try_resume:73 - Saving simulation batch to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-184109-726391/tau2_output/results.json
+
+0/10 (trial 1/1). Running task create_task_1, trial 1
+2026-05-31 11:41:11.140 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: create_task_1, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:11.146 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:14.647 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=create_task_1, reward=1.0
+
+2026-05-31 11:41:14.650 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: create_task_1, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: create_task_1                                                       │
+│ Trial: 0                                                                     │
+│ Duration: 3.49s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0005                                                          │
+│ User Cost: $0.0007                                                           │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent create_task [write] ✅ 1.0                                        │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+1/10 (trial 1/1). Running task create_task_1_with_env_assertions, trial 1
+2026-05-31 11:41:14.656 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: create_task_1_with_env_assertions, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:14.663 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:19.747 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=create_task_1_with_env_assertions, reward=1.0
+
+2026-05-31 11:41:19.748 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: create_task_1_with_env_assertions, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: create_task_1_with_env_assertions                                   │
+│ Trial: 0                                                                     │
+│ Duration: 5.07s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0005                                                          │
+│ User Cost: $0.0007                                                           │
+│ Reward: ✅ 1.0000 (DB: 1.0, ENV_ASSERTION: 1.0)                              │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Env Assertions:                                                              │
+│ - 0: assistant assert_task_status ✅ 1.0                                     │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent create_task [write] ✅ 1.0                                        │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2/10 (trial 1/1). Running task create_task_1_nl_eval, trial 1
+2026-05-31 11:41:19.754 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: create_task_1_nl_eval, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:19.757 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:22.985 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=create_task_1_nl_eval, reward=1.0
+
+2026-05-31 11:41:22.985 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: create_task_1_nl_eval, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: create_task_1_nl_eval                                               │
+│ Trial: 0                                                                     │
+│ Duration: 3.22s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0005                                                          │
+│ User Cost: $0.0007                                                           │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0)                                         │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: {'note': 'No expected actions or env assertions'}                       │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: {'note': 'No actions to evaluate'}                                   │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+3/10 (trial 1/1). Running task update_task_1, trial 1
+2026-05-31 11:41:22.989 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_1, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:22.992 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:26.404 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_1, reward=1.0
+
+2026-05-31 11:41:26.405 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_1, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_1                                                       │
+│ Trial: 0                                                                     │
+│ Duration: 3.40s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0007                                                          │
+│ User Cost: $0.0006                                                           │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent update_task_status [write] ✅ 1.0                                 │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+4/10 (trial 1/1). Running task update_task_with_message_history, trial 1
+2026-05-31 11:41:26.413 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_with_message_history, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:26.419 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:29.066 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message user: I need to create a task for the project review meeting. has no cost
+
+2026-05-31 11:41:29.071 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_with_message_history, reward=1.0
+
+2026-05-31 11:41:29.071 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_with_message_history, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_with_message_history                                    │
+│ Trial: 0                                                                     │
+│ Duration: 2.65s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent update_task_status [write] ✅ 1.0                                 │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+5/10 (trial 1/1). Running task update_task_with_initialization_data, trial 1
+2026-05-31 11:41:29.077 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_with_initialization_data, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:29.081 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:33.562 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_with_initialization_data, reward=0.0
+
+2026-05-31 11:41:33.567 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_with_initialization_data, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_with_initialization_data                                │
+│ Trial: 0                                                                     │
+│ Duration: 4.45s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0007                                                          │
+│ User Cost: $0.0010                                                           │
+│ Reward: ❌ 0.0000 (COMMUNICATE: 0.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent update_task_status [write] ✅ 1.0                                 │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Communicate Checks:                                                          │
+│ - 0: The agent acknowledged the previous context ❌                          │
+│ - 1: The agent confirmed the task status was updated successfully ❌         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: None                                                            │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+6/10 (trial 1/1). Running task update_task_with_initialization_actions, trial 1
+2026-05-31 11:41:33.606 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_with_initialization_actions, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:33.610 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:36.956 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_with_initialization_actions, reward=1.0
+
+2026-05-31 11:41:36.957 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_with_initialization_actions, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_with_initialization_actions                             │
+│ Trial: 0                                                                     │
+│ Duration: 3.33s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0004                                                          │
+│ User Cost: $0.0006                                                           │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent update_task_status [write] ✅ 1.0                                 │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│   Write: 1/1 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+7/10 (trial 1/1). Running task update_task_with_history_and_env_assertions, 
+trial 1
+2026-05-31 11:41:36.973 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_with_history_and_env_assertions, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:36.983 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+Status: 7/10 complete. Avg reward: 0.86 (N=7). 1 running: 
+update_task_with_history_and_env_assertions.0(4s)
+2026-05-31 11:41:42.493 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message user: I need to create a task for the project review meeting. has no cost
+
+2026-05-31 11:41:42.658 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_with_history_and_env_assertions, reward=1.0
+
+2026-05-31 11:41:42.659 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_with_history_and_env_assertions, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_with_history_and_env_assertions                         │
+│ Trial: 0                                                                     │
+│ Duration: 5.50s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Reward: ✅ 1.0000 (ENV_ASSERTION: 1.0)                                       │
+│                                                                              │
+│ DB Check:❌ 0.0                                                              │
+│                                                                              │
+│ Env Assertions:                                                              │
+│ - 0: assistant assert_task_status ✅ 1.0                                     │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: {'note': 'No actions to evaluate'}                                   │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+8/10 (trial 1/1). Running task update_task_with_user_tools, trial 1
+2026-05-31 11:41:42.685 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: update_task_with_user_tools, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:42.717 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:47.789 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=update_task_with_user_tools, reward=0.0
+
+2026-05-31 11:41:47.791 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: update_task_with_user_tools, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: update_task_with_user_tools                                         │
+│ Trial: 0                                                                     │
+│ Duration: 5.07s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Agent Cost: $0.0010                                                          │
+│ User Cost: $0.0011                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+9/10 (trial 1/1). Running task impossible_task_1, trial 1
+2026-05-31 11:41:47.802 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: mock, Task: impossible_task_1, Agent: llm_agent, User: user_simulator
+
+2026-05-31 11:41:47.809 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 11:41:51.009 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=mock, task=impossible_task_1, reward=1.0
+
+2026-05-31 11:41:51.009 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: mock, Task: impossible_task_1, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: impossible_task_1                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 3.19s                                                              │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0005                                                          │
+│ User Cost: $0.0006                                                           │
+│ Reward: ✅ 1.0000 (ACTION: 1.0, DB: 1.0)                                     │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent transfer_to_human_agents [generic] ✅ 1.0                         │
+│                                                                              │
+│ Partial Action Reward: 1/1 (100.0%)                                          │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         10                                               │
+│   Total Tasks               10                                               │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.8000                                           │
+│      Pass^1                 0.800                                            │
+│   💰 Avg Cost/Conversation  $0.0006                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          6/6 (100.0%)                                     │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               ✓ 8 / ✗ 1 (88.9%)                                │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            10                                               │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            9 (👤 9 / 🤖 0)                                  │
+│   ⏱️  Max Steps              1                                                │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
