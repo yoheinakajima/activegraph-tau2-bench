@@ -1,0 +1,237 @@
+{
+  "read_tool_calls": [
+    {
+      "arguments": {
+        "reservation_id": "EHGLP3"
+      },
+      "id": "call_GcNuma3trolPw12CDaIndLpC",
+      "name": "get_reservation_details",
+      "requestor": "assistant",
+      "turn_idx": 4
+    }
+  ],
+  "state_hash_changes": [],
+  "tool_call_count_from_messages": 1,
+  "tool_calls_from_messages": [
+    {
+      "arguments": {
+        "reservation_id": "EHGLP3"
+      },
+      "id": "call_GcNuma3trolPw12CDaIndLpC",
+      "name": "get_reservation_details",
+      "requestor": "assistant",
+      "turn_idx": 4
+    }
+  ],
+  "tool_event_count": 6,
+  "tool_events": [
+    {
+      "component": "tau2.orchestrator",
+      "content_preview": null,
+      "event_id": "rt-000025-f8ba95bf",
+      "event_type": "tool_call_requested",
+      "message_role": null,
+      "result_payload": null,
+      "sequence": 25,
+      "state_hash": null,
+      "state_hash_after": null,
+      "state_hash_before": null,
+      "status": null,
+      "task_id": "0",
+      "timestamp": "2026-05-31T19:38:39.378662+00:00",
+      "tool_call": {
+        "arguments": {
+          "reservation_id": "EHGLP3"
+        },
+        "id": "call_GcNuma3trolPw12CDaIndLpC",
+        "name": "get_reservation_details",
+        "requestor": "assistant"
+      },
+      "tool_name": "get_reservation_details",
+      "turn_index": 4
+    },
+    {
+      "component": "tau2.environment",
+      "content_preview": null,
+      "event_id": "rt-000026-3315b199",
+      "event_type": "tool_dispatch_start",
+      "message_role": null,
+      "result_payload": null,
+      "sequence": 26,
+      "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_after": null,
+      "state_hash_before": null,
+      "status": null,
+      "task_id": null,
+      "timestamp": "2026-05-31T19:38:39.517545+00:00",
+      "tool_call": null,
+      "tool_name": "get_reservation_details",
+      "turn_index": null
+    },
+    {
+      "component": "tau2.environment.toolkit",
+      "content_preview": null,
+      "event_id": "rt-000027-7fa88271",
+      "event_type": "toolkit_dispatch_start",
+      "message_role": null,
+      "result_payload": null,
+      "sequence": 27,
+      "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_after": null,
+      "state_hash_before": null,
+      "status": null,
+      "task_id": null,
+      "timestamp": "2026-05-31T19:38:39.560195+00:00",
+      "tool_call": null,
+      "tool_name": "get_reservation_details",
+      "turn_index": null
+    },
+    {
+      "component": "tau2.environment.toolkit",
+      "content_preview": null,
+      "event_id": "rt-000028-d12109f7",
+      "event_type": "toolkit_dispatch_end",
+      "message_role": null,
+      "result_payload": {
+        "cabin": "basic_economy",
+        "created_at": "2024-05-04T23:12:06",
+        "destination": "JFK",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-17",
+            "destination": "SEA",
+            "flight_number": "HAT156",
+            "origin": "PHX",
+            "price": 50
+          },
+          {
+            "date": "2024-05-17",
+            "destination": "JFK",
+            "flight_number": "HAT021",
+            "origin": "SEA",
+            "price": 54
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "PHX",
+        "passengers": [
+          {
+            "dob": "1965-01-16",
+            "first_name": "Evelyn",
+            "last_name": "Taylor"
+          },
+          {
+            "dob": "1971-11-22",
+            "first_name": "Anya",
+            "last_name": "Silva"
+          }
+        ],
+        "payment_history": [
+          {
+            "amount": 208,
+            "payment_id": "credit_card_5832574"
+          }
+        ],
+        "reservation_id": "EHGLP3",
+        "status": null,
+        "total_baggages": 0,
+        "user_id": "emma_kim_9957"
+      },
+      "sequence": 28,
+      "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_after": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_before": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "status": "ok",
+      "task_id": null,
+      "timestamp": "2026-05-31T19:38:39.602960+00:00",
+      "tool_call": null,
+      "tool_name": "get_reservation_details",
+      "turn_index": null
+    },
+    {
+      "component": "tau2.environment",
+      "content_preview": "{\"reservation_id\": \"EHGLP3\", \"user_id\": \"emma_kim_9957\", \"origin\": \"PHX\", \"destination\": \"JFK\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT156\", \"origin\": \"PHX\", \"destination\": \"SEA\", \"date\": \"2024-05-17\", \"price\": 50}, {\"flight_number\": \"HAT021\", \"origin\": \"SEA\", \"destinatio…",
+      "event_id": "rt-000029-0f79b283",
+      "event_type": "tool_dispatch_end",
+      "message_role": null,
+      "result_payload": {
+        "cabin": "basic_economy",
+        "created_at": "2024-05-04T23:12:06",
+        "destination": "JFK",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-17",
+            "destination": "SEA",
+            "flight_number": "HAT156",
+            "origin": "PHX",
+            "price": 50
+          },
+          {
+            "date": "2024-05-17",
+            "destination": "JFK",
+            "flight_number": "HAT021",
+            "origin": "SEA",
+            "price": 54
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "PHX",
+        "passengers": [
+          {
+            "dob": "1965-01-16",
+            "first_name": "Evelyn",
+            "last_name": "Taylor"
+          },
+          {
+            "dob": "1971-11-22",
+            "first_name": "Anya",
+            "last_name": "Silva"
+          }
+        ],
+        "payment_history": [
+          {
+            "amount": 208,
+            "payment_id": "credit_card_5832574"
+          }
+        ],
+        "reservation_id": "EHGLP3",
+        "status": null,
+        "total_baggages": 0,
+        "user_id": "emma_kim_9957"
+      },
+      "sequence": 29,
+      "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_after": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_before": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "status": "ok",
+      "task_id": null,
+      "timestamp": "2026-05-31T19:38:39.647513+00:00",
+      "tool_call": null,
+      "tool_name": "get_reservation_details",
+      "turn_index": null
+    },
+    {
+      "component": "tau2.orchestrator",
+      "content_preview": "{\"reservation_id\": \"EHGLP3\", \"user_id\": \"emma_kim_9957\", \"origin\": \"PHX\", \"destination\": \"JFK\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT156\", \"origin\": \"PHX\", \"destination\": \"SEA\", \"date\": \"2024-05-17\", \"price\": 50}, {\"flight_number\": \"HAT021\", \"origin\": \"SEA\", \"destinatio…",
+      "event_id": "rt-000030-1c977ff4",
+      "event_type": "message_observed",
+      "message_role": "tool",
+      "result_payload": null,
+      "sequence": 30,
+      "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+      "state_hash_after": null,
+      "state_hash_before": null,
+      "status": null,
+      "task_id": "0",
+      "timestamp": "2026-05-31T19:38:39.692383+00:00",
+      "tool_call": null,
+      "tool_name": null,
+      "turn_index": 4
+    }
+  ],
+  "write_tool_calls": []
+}

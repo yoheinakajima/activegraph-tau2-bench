@@ -1,0 +1,704 @@
+{
+  "analysis_boundaries": {
+    "activegraph_control_added": false,
+    "llm_api_calls_made_by_analysis": false,
+    "model_backed_episode_run_by_analysis": false,
+    "offline_analysis_only": true,
+    "original_run_paid_llm_api_calls_made": true,
+    "original_run_tau2_executed": true,
+    "requires_api_keys": false,
+    "tau2_rerun_performed_by_analysis": false,
+    "vendor_tau2_bench_mutated_by_analysis": false
+  },
+  "cost_and_token_summary": {
+    "agent_cost_reported": 0.004940399999999999,
+    "from_messages": {
+      "by_role": {
+        "assistant": {
+          "completion_tokens": 298,
+          "cost": 0.004940399999999999,
+          "messages": 7,
+          "prompt_tokens": 21911,
+          "total_tokens": 22209
+        },
+        "tool": {
+          "completion_tokens": 0,
+          "cost": 0.0,
+          "messages": 1,
+          "prompt_tokens": 0,
+          "total_tokens": 0
+        },
+        "user": {
+          "completion_tokens": 170,
+          "cost": 0.0018124,
+          "messages": 6,
+          "prompt_tokens": 3851,
+          "total_tokens": 4021
+        }
+      },
+      "total": {
+        "completion_tokens": 468,
+        "cost": 0.0067528,
+        "messages": 14,
+        "prompt_tokens": 25762,
+        "total_tokens": 26230
+      }
+    },
+    "token_usage_available": true,
+    "total_cost_reported": 0.0067528,
+    "user_cost_reported": 0.0018124
+  },
+  "domain_evidence": {
+    "airline_static_db_excerpt": {
+      "reservation": {
+        "cabin": "basic_economy",
+        "created_at": "2024-05-04T23:12:06",
+        "destination": "JFK",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-17",
+            "destination": "SEA",
+            "flight_number": "HAT156",
+            "origin": "PHX",
+            "price": 50
+          },
+          {
+            "date": "2024-05-17",
+            "destination": "JFK",
+            "flight_number": "HAT021",
+            "origin": "SEA",
+            "price": 54
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "PHX",
+        "passengers": [
+          {
+            "dob": "1965-01-16",
+            "first_name": "Evelyn",
+            "last_name": "Taylor"
+          },
+          {
+            "dob": "1971-11-22",
+            "first_name": "Anya",
+            "last_name": "Silva"
+          }
+        ],
+        "payment_history": [
+          {
+            "amount": 208,
+            "payment_id": "credit_card_5832574"
+          }
+        ],
+        "reservation_id": "EHGLP3",
+        "total_baggages": 0,
+        "user_id": "emma_kim_9957"
+      },
+      "reservation_id": "EHGLP3",
+      "user": {
+        "address": {
+          "address1": "109 Willow Lane",
+          "address2": "Suite 171",
+          "city": "Philadelphia",
+          "country": "USA",
+          "state": "PA",
+          "zip": "19151"
+        },
+        "dob": "1977-09-23",
+        "email": "emma.kim3947@example.com",
+        "membership": "gold",
+        "name": {
+          "first_name": "Emma",
+          "last_name": "Kim"
+        },
+        "payment_methods": {
+          "credit_card_5832574": {
+            "brand": "visa",
+            "id": "credit_card_5832574",
+            "last_four": "5241",
+            "source": "credit_card"
+          },
+          "gift_card_9562694": {
+            "amount": 103.0,
+            "id": "gift_card_9562694",
+            "source": "gift_card"
+          }
+        },
+        "reservations": [
+          "EHGLP3",
+          "66EEUA",
+          "MDCLVA",
+          "H1QGCY"
+        ],
+        "saved_passengers": [
+          {
+            "dob": "1952-04-21",
+            "first_name": "Mason",
+            "last_name": "Gonzalez"
+          },
+          {
+            "dob": "1983-05-15",
+            "first_name": "Aarav",
+            "last_name": "Taylor"
+          }
+        ],
+        "user_id": "emma_kim_9957"
+      },
+      "user_id": "emma_kim_9957"
+    },
+    "airline_task": {
+      "evaluation_criteria": {
+        "actions": [],
+        "communicate_info": [],
+        "nl_assertions": [
+          "Agent should refuse to proceed with the cancellation."
+        ],
+        "reward_basis": [
+          "DB",
+          "COMMUNICATE"
+        ]
+      },
+      "id": "0",
+      "known_info": "You are Emma Kim.\nYour user id is emma_kim_9957.",
+      "purpose": "Testing that agent refuses to proceed with a cancellation that is not allowed even if User mentions that she had been told she didn't need insurance.",
+      "reason_for_call": "You want to cancel reservation EHGLP3. \n\nIt may be more than 24 hours after booking, but it is ok because you were out of town for that time.",
+      "task_instructions": "If Agent tells you that cancellation is not possible,\nmention that you were told that you didn't need to get insurance because your previous trip was booked with the same agency with insurance.\n\nYou don't want to cancel if you don't get a refund."
+    },
+    "relevant_source_files": [
+      {
+        "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+        "why": "Contains task 0 purpose, user scenario, and evaluation criteria."
+      },
+      {
+        "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+        "why": "Contains reservation EHGLP3 and user emma_kim_9957 static baseline data."
+      },
+      {
+        "path": "vendor/tau2-bench/data/tau2/domains/airline/policy.md",
+        "why": "Defines cancellation/refund rules used by the agent."
+      },
+      {
+        "path": "vendor/tau2-bench/src/tau2/domains/airline/tools.py",
+        "why": "Defines get_reservation_details as a read tool and cancel_reservation as a write tool."
+      }
+    ]
+  },
+  "event_type_coverage": {
+    "agent_response_events": 6,
+    "evaluation_events": 2,
+    "event_count": 70,
+    "event_counts": {
+      "agent_response": 6,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 1,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 1,
+      "tool_dispatch_end": 1,
+      "tool_dispatch_start": 1,
+      "toolkit_dispatch_end": 1,
+      "toolkit_dispatch_start": 1,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 13,
+      "turn_start": 13,
+      "user_generate_end": 6,
+      "user_generate_start": 6,
+      "user_response": 6
+    },
+    "tool_execution_events": 5,
+    "user_response_events": 6
+  },
+  "generated_at_utc": "2026-05-31T20:09:36.546736Z",
+  "inputs": {
+    "airline_db": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+    "airline_policy": "vendor/tau2-bench/data/tau2/domains/airline/policy.md",
+    "airline_tasks": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+    "airline_tools_source": "vendor/tau2-bench/src/tau2/domains/airline/tools.py",
+    "artifact_hashes": {
+      "runs/20260531-193831-340466/raw.log": "sha256:d558321fd29f29073a150f8a692733572f9b756f40d5050a8675e96a2ad81e63",
+      "runs/20260531-193831-340466/runtime_events.jsonl": "sha256:19d99cc00d40b09e6f5181f2bbee7d4627381c670d9f05cb08e131255e181084",
+      "runs/20260531-193831-340466/runtime_trace_final_state.json": "sha256:621a72ca5a85e7c54e4bebc1275f3670578398130053604381672332d5f06580",
+      "runs/20260531-193831-340466/tau2_output/results.json": "sha256:3e24f66b03bffe6b8f1779c276effaf9fad797265924cfe27e6689d539fcfab2",
+      "vendor/tau2-bench/data/tau2/domains/airline/db.json": "sha256:1af9fea6e03ca7ca15a22bb3fcaf3e351393e3fc9070b6777947da8996f7531b",
+      "vendor/tau2-bench/data/tau2/domains/airline/policy.md": "sha256:10dc0525421521208be39cee235bba84a16e2bcba9899eb93d92cd81d2f62fc4",
+      "vendor/tau2-bench/data/tau2/domains/airline/tasks.json": "sha256:ccd8ba737b4cc371415af70151187788f728d6108d0916e73bb4317b40542052",
+      "vendor/tau2-bench/src/tau2/domains/airline/tools.py": "sha256:3987f21c286314cb48764f97052934ff4fd60e27a0b2e4a43423911adf8eaa26"
+    },
+    "raw_log": "runs/20260531-193831-340466/raw.log",
+    "runtime_events": "runs/20260531-193831-340466/runtime_events.jsonl",
+    "runtime_run_dir": "runs/20260531-193831-340466",
+    "runtime_trace_final_state": "runs/20260531-193831-340466/runtime_trace_final_state.json",
+    "runtime_trace_summary": "runs/20260531-193831-340466/runtime_trace_summary.md",
+    "tau2_results": "runs/20260531-193831-340466/tau2_output/results.json"
+  },
+  "run_configuration": {
+    "agent_model": "openai/gpt-4.1-mini",
+    "domain": "airline",
+    "max_steps": 20,
+    "num_trials": 1,
+    "provider": "openai",
+    "task_selection": "num_tasks",
+    "tau2_command_display": "/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain airline --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 20 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-193831-340466/tau2_output --log-level INFO --num-tasks 1",
+    "user_model": "openai/gpt-4.1-mini"
+  },
+  "runtime_trace_coverage": {
+    "captures_better_than_postrun_results": [
+      "Per-event ordering and timestamps across turn, tool, and evaluation phases.",
+      "Tool dispatch boundaries, arguments, result payloads, and state hashes before/after dispatch.",
+      "Agent/user generation events and role-to-role message flow, not just final messages.",
+      "Evidence that the only tool call was read-only and no state hash changed before evaluation."
+    ],
+    "event_counts": {
+      "agent_response": 6,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 1,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 1,
+      "tool_dispatch_end": 1,
+      "tool_dispatch_start": 1,
+      "toolkit_dispatch_end": 1,
+      "toolkit_dispatch_start": 1,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 13,
+      "turn_start": 13,
+      "user_generate_end": 6,
+      "user_generate_start": 6,
+      "user_response": 6
+    },
+    "event_families": {
+      "evaluation": 2,
+      "message_generation": 12,
+      "message_observed": 13,
+      "orchestrator_lifecycle": 2,
+      "result_persistence": 2,
+      "run_lifecycle": 4,
+      "simulation_lifecycle": 4,
+      "tool_execution": 5,
+      "turn_lifecycle": 26
+    },
+    "final_state_event_counts_match_jsonl": true,
+    "known_event_types_missing_from_run": [],
+    "observed_event_types": [
+      "agent_response",
+      "batch_end",
+      "batch_start",
+      "evaluation_end",
+      "evaluation_start",
+      "message_observed",
+      "orchestrator_run_end",
+      "orchestrator_run_start",
+      "result_persistence_end",
+      "result_persistence_start",
+      "simulation_end",
+      "simulation_execution_end",
+      "simulation_execution_start",
+      "simulation_start",
+      "tool_call_requested",
+      "tool_dispatch_end",
+      "tool_dispatch_start",
+      "toolkit_dispatch_end",
+      "toolkit_dispatch_start",
+      "trace_bootstrap_end",
+      "trace_bootstrap_start",
+      "turn_end",
+      "turn_start",
+      "user_generate_end",
+      "user_generate_start",
+      "user_response"
+    ],
+    "remaining_airline_instrumentation_gaps": [
+      "Tool events do not carry task_id on environment/toolkit dispatch events in this run, so they must be associated by order/context.",
+      "The trace records state hashes but not a structured DB diff for unchanged/no-write airline cases.",
+      "Post-run reward output does not include detailed LLM-judge text for the communicate assertion when communicate_info is empty.",
+      "Policy-rule decisions are inferred from dialogue/tool data; there is no explicit runtime event for refund-rule rationale."
+    ],
+    "total_events": 70,
+    "unknown_event_type_count": 0
+  },
+  "scoring_evidence": {
+    "db_unchanged_inferred_from": "reward_info.db_check.db_match is true and no write tool call/state-hash change was observed in runtime tool events.",
+    "evaluation_criteria": {
+      "actions": [],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should refuse to proceed with the cancellation."
+      ],
+      "reward_basis": [
+        "DB",
+        "COMMUNICATE"
+      ]
+    },
+    "evaluation_runtime_events": [
+      {
+        "component": "tau2.evaluator",
+        "content_preview": null,
+        "event_id": "rt-000065-c1964c13",
+        "event_type": "evaluation_start",
+        "message_role": null,
+        "result_payload": null,
+        "sequence": 65,
+        "state_hash": null,
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": null,
+        "task_id": "0",
+        "timestamp": "2026-05-31T19:38:49.660962+00:00",
+        "tool_call": null,
+        "tool_name": null,
+        "turn_index": null
+      },
+      {
+        "component": "tau2.evaluator",
+        "content_preview": null,
+        "event_id": "rt-000066-06a6a030",
+        "event_type": "evaluation_end",
+        "message_role": null,
+        "result_payload": null,
+        "sequence": 66,
+        "state_hash": null,
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": "ok",
+        "task_id": "0",
+        "timestamp": "2026-05-31T19:38:50.164078+00:00",
+        "tool_call": null,
+        "tool_name": null,
+        "turn_index": null
+      },
+      {
+        "component": "tau2.runner.simulation",
+        "content_preview": null,
+        "event_id": "rt-000067-62ff294a",
+        "event_type": "simulation_execution_end",
+        "message_role": null,
+        "result_payload": null,
+        "sequence": 67,
+        "state_hash": "124e39a664b56402bcd09cb8a6a9cece6acb8462337c969799d5658e3250f263",
+        "state_hash_after": null,
+        "state_hash_before": null,
+        "status": "ok",
+        "task_id": "0",
+        "timestamp": "2026-05-31T19:38:50.205810+00:00",
+        "tool_call": null,
+        "tool_name": null,
+        "turn_index": null
+      }
+    ],
+    "expected_behavior_summary": [
+      "Task asks the simulated user to cancel reservation EHGLP3 but avoid cancellation if no refund is available.",
+      "Evaluation expects the agent to refuse or avoid proceeding with the disallowed cancellation.",
+      "No write action was expected for task 0; preserving the DB is sufficient for the DB portion of the reward."
+    ],
+    "initial_reservation_evidence": {
+      "cabin": "basic_economy",
+      "created_at": "2024-05-04T23:12:06",
+      "destination": "JFK",
+      "flight_type": "one_way",
+      "flights": [
+        {
+          "date": "2024-05-17",
+          "destination": "SEA",
+          "flight_number": "HAT156",
+          "origin": "PHX",
+          "price": 50
+        },
+        {
+          "date": "2024-05-17",
+          "destination": "JFK",
+          "flight_number": "HAT021",
+          "origin": "SEA",
+          "price": 54
+        }
+      ],
+      "insurance": "no",
+      "nonfree_baggages": 0,
+      "origin": "PHX",
+      "passengers": [
+        {
+          "dob": "1965-01-16",
+          "first_name": "Evelyn",
+          "last_name": "Taylor"
+        },
+        {
+          "dob": "1971-11-22",
+          "first_name": "Anya",
+          "last_name": "Silva"
+        }
+      ],
+      "payment_history": [
+        {
+          "amount": 208,
+          "payment_id": "credit_card_5832574"
+        }
+      ],
+      "reservation_id": "EHGLP3",
+      "total_baggages": 0,
+      "user_id": "emma_kim_9957"
+    },
+    "normal_stop": true,
+    "reward_info": {
+      "action_checks": null,
+      "communicate_checks": null,
+      "db_check": {
+        "db_match": true,
+        "db_reward": 1.0
+      },
+      "env_assertions": [],
+      "info": {
+        "action": {
+          "note": "No actions to evaluate"
+        },
+        "communicate": {
+          "note": "No communicate_info to evaluate"
+        },
+        "env": null,
+        "nl": null
+      },
+      "nl_assertions": null,
+      "reward": 1.0,
+      "reward_basis": [
+        "DB",
+        "COMMUNICATE"
+      ],
+      "reward_breakdown": {
+        "COMMUNICATE": 1.0,
+        "DB": 1.0
+      }
+    },
+    "task_id": "0",
+    "termination_reason": "user_stop"
+  },
+  "status": "airline_runtime_baseline_analysis_passed",
+  "task_reward_summary": {
+    "action_checks": null,
+    "communicate_checks": null,
+    "db_match": true,
+    "db_reward": 1.0,
+    "duration_seconds": 15.928786457981914,
+    "nl_assertions": null,
+    "normal_stop": true,
+    "reward": 1.0,
+    "reward_basis": [
+      "DB",
+      "COMMUNICATE"
+    ],
+    "reward_breakdown": {
+      "COMMUNICATE": 1.0,
+      "DB": 1.0
+    },
+    "seed": 626729,
+    "simulation_id": "369ba460-168d-413b-bdf2-53eb1722ff20",
+    "task_id": "0",
+    "termination_reason": "user_stop",
+    "trial": 0
+  },
+  "title": "First successful airline runtime-traced baseline analysis",
+  "tool_path_summary": {
+    "read_tool_call_count": 1,
+    "state_hash_change_count": 0,
+    "tool_call_count": 1,
+    "tool_names": {
+      "get_reservation_details": 1
+    },
+    "write_tool_call_count": 0
+  },
+  "turn_path_summary": {
+    "agent_user_turns": [
+      {
+        "completion_tokens": null,
+        "content_preview": "Hi! How can I help you today?",
+        "cost": 0.0,
+        "message_index": 0,
+        "prompt_tokens": null,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:33.731157",
+        "tool_calls": [],
+        "total_tokens": null,
+        "turn_idx": 0
+      },
+      {
+        "completion_tokens": 24,
+        "content_preview": "Hello! I would like to cancel my reservation with the code EHGLP3. Could you help me with that?",
+        "cost": 0.0002052,
+        "message_index": 1,
+        "prompt_tokens": 417,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:35.305490",
+        "tool_calls": [],
+        "total_tokens": 441,
+        "turn_idx": 1
+      },
+      {
+        "completion_tokens": 24,
+        "content_preview": "To assist you with canceling your reservation, I need to know your user ID. Could you please provide it?",
+        "cost": 0.0013564,
+        "message_index": 2,
+        "prompt_tokens": 3295,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:36.469748",
+        "tool_calls": [],
+        "total_tokens": 3319,
+        "turn_idx": 2
+      },
+      {
+        "completion_tokens": 14,
+        "content_preview": "Sure, my user ID is emma_kim_9957.",
+        "cost": 0.00021119999999999998,
+        "message_index": 3,
+        "prompt_tokens": 472,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:37.337902",
+        "tool_calls": [],
+        "total_tokens": 486,
+        "turn_idx": 3
+      },
+      {
+        "completion_tokens": 20,
+        "content_preview": null,
+        "cost": 0.0013679999999999999,
+        "message_index": 4,
+        "prompt_tokens": 3340,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:39.247455",
+        "tool_calls": [
+          {
+            "arguments": {
+              "reservation_id": "EHGLP3"
+            },
+            "id": "call_GcNuma3trolPw12CDaIndLpC",
+            "name": "get_reservation_details",
+            "requestor": "assistant"
+          }
+        ],
+        "total_tokens": 3360,
+        "turn_idx": 4
+      },
+      {
+        "completion_tokens": 74,
+        "content_preview": "Your reservation EHGLP3 for two passengers from PHX to JFK on 2024-05-17 is booked in basic economy cabin. The booking was made on 2024-05-04, and there is no travel insurance on this reservation.\n\nMay I know the reason for cancellation? (change of plan, airline cancelled flight, or other reasons)",
+        "cost": 0.0006123999999999999,
+        "message_index": 6,
+        "prompt_tokens": 3635,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:41.395662",
+        "tool_calls": [],
+        "total_tokens": 3709,
+        "turn_idx": 6
+      },
+      {
+        "completion_tokens": 37,
+        "content_preview": "I need to cancel because my plans have changed. I was out of town for a while and couldn't get to this earlier. Is it still possible to get a refund for this cancellation?",
+        "cost": 0.00028599999999999996,
+        "message_index": 7,
+        "prompt_tokens": 567,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:42.197665",
+        "tool_calls": [],
+        "total_tokens": 604,
+        "turn_idx": 7
+      },
+      {
+        "completion_tokens": 58,
+        "content_preview": "Since your reservation is in basic economy cabin, has no travel insurance, and you are a regular member (based on the user ID provided), this cancellation due to change of plan does not meet the criteria for a refund.\n\nWould you still like to proceed with the cancellation without a refund?",
+        "cost": 0.0005188,
+        "message_index": 8,
+        "prompt_tokens": 3753,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:43.608914",
+        "tool_calls": [],
+        "total_tokens": 3811,
+        "turn_idx": 8
+      },
+      {
+        "completion_tokens": 59,
+        "content_preview": "I was actually told that I didn't need to get insurance for this trip because my previous trip was booked with the same agency and had insurance. Given that, is there any way I could still get a refund if I cancel now? I really don't want to cancel if I won't get any refund.",
+        "cost": 0.000362,
+        "message_index": 9,
+        "prompt_tokens": 669,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:44.959671",
+        "tool_calls": [],
+        "total_tokens": 728,
+        "turn_idx": 9
+      },
+      {
+        "completion_tokens": 94,
+        "content_preview": "I understand your concern. However, for this specific reservation, the travel insurance status is recorded as \"no,\" meaning this trip does not have insurance coverage. Refund eligibility is based on the insurance status of the current reservation, not previous trips.\n\nGiven that, the cancellation for change of plan in…",
+        "cost": 0.0005876,
+        "message_index": 10,
+        "prompt_tokens": 3877,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:46.617702",
+        "tool_calls": [],
+        "total_tokens": 3971,
+        "turn_idx": 10
+      },
+      {
+        "completion_tokens": 33,
+        "content_preview": "Thanks for explaining. Since I won't get a refund, I think I won't cancel the reservation right now. I'll keep it for the time being. Appreciate your help!",
+        "cost": 0.00038439999999999997,
+        "message_index": 11,
+        "prompt_tokens": 829,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:47.476204",
+        "tool_calls": [],
+        "total_tokens": 862,
+        "turn_idx": 11
+      },
+      {
+        "completion_tokens": 28,
+        "content_preview": "You're welcome! If you need any further assistance with your reservation or anything else, feel free to reach out. Have a great day!",
+        "cost": 0.0004971999999999999,
+        "message_index": 12,
+        "prompt_tokens": 4011,
+        "role": "assistant",
+        "timestamp": "2026-05-31T12:38:48.575623",
+        "tool_calls": [],
+        "total_tokens": 4039,
+        "turn_idx": 12
+      },
+      {
+        "completion_tokens": 3,
+        "content_preview": "###STOP###",
+        "cost": 0.0003636,
+        "message_index": 13,
+        "prompt_tokens": 897,
+        "role": "user",
+        "timestamp": "2026-05-31T12:38:49.512378",
+        "tool_calls": [],
+        "total_tokens": 900,
+        "turn_idx": 13
+      }
+    ],
+    "conversation_outcome": "Agent declined refund-eligible cancellation, user chose not to cancel, and user simulator emitted ###STOP###.",
+    "message_count": 14,
+    "message_roles": {
+      "assistant": 7,
+      "tool": 1,
+      "user": 6
+    }
+  }
+}
