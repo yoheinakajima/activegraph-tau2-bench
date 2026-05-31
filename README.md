@@ -158,6 +158,18 @@ python scripts/analyze_update_task_user_tools_db_mismatch.py --runtime-run-dir r
 
 The analyzer writes `db_mismatch_analysis.json`, `db_mismatch_summary.md`, `tool_call_timeline.json`, `expected_vs_observed.json`, `scoring_evidence.json`, `final_state.json`, and `raw.log` under `runs/20260531-191847-173904/db_mismatch_analysis/`. It identifies whether the assistant updated the wrong task/status, whether notification dismissal succeeded, how user DB state differs from gold DB replay, and why the env assertion can pass while the combined DB check fails. See [update_task_with_user_tools DB mismatch analysis](docs/update_task_user_tools_db_mismatch.md).
 
+
+### Airline task 8 failure analysis
+
+Analyze the committed airline task 8 runtime-traced failure artifact offline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_airline_task8_failure.py \
+  --runtime-run-dir runs/20260531-204930-608103
+```
+
+The analyzer writes `airline_task8_failure_analysis.json`, `airline_task8_failure_summary.md`, `action_expectation_analysis.json`, `tool_call_timeline.json`, `expected_vs_observed.json`, `scoring_evidence.json`, `final_state.json`, and `raw.log` under `runs/20260531-204930-608103/airline_task8_failure_analysis/`. It compares the expected two-passenger HAT271 booking against the observed one-passenger booking and remains offline-only: no tau2 rerun, no model-backed episode, no LLM/API calls, no API keys, and no vendored tau2 mutation. See [Airline task 8 failure analysis](docs/airline_task8_failure_analysis.md).
+
 ### Runtime DB mutation analysis
 
 Project the available DB mutation evidence from the successful runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
