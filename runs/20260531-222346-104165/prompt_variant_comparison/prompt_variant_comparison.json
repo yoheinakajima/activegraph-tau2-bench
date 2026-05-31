@@ -1,0 +1,1732 @@
+{
+  "additional_inputs": {
+    "airline_task_static_data": {
+      "task_8_excerpt": {
+        "annotations": null,
+        "description": {
+          "notes": null,
+          "purpose": "Booking with extra passenger.",
+          "relevant_policies": null
+        },
+        "evaluation_criteria": {
+          "actions": [
+            {
+              "action_id": "8_0",
+              "arguments": {
+                "user_id": "sophia_silva_7557"
+              },
+              "info": null,
+              "name": "get_user_details"
+            },
+            {
+              "action_id": "8_1",
+              "arguments": {
+                "reservation_id": "WUNA5K"
+              },
+              "info": null,
+              "name": "get_reservation_details"
+            },
+            {
+              "action_id": "8_2",
+              "arguments": {
+                "date": "2024-05-26",
+                "destination": "PHL",
+                "origin": "ORD"
+              },
+              "info": null,
+              "name": "search_direct_flight"
+            },
+            {
+              "action_id": "8_3",
+              "arguments": {
+                "cabin": "economy",
+                "destination": "PHL",
+                "flight_type": "one_way",
+                "flights": [
+                  {
+                    "date": "2024-05-26",
+                    "flight_number": "HAT271"
+                  }
+                ],
+                "insurance": "no",
+                "nonfree_baggages": 0,
+                "origin": "ORD",
+                "passengers": [
+                  {
+                    "dob": "1957-10-05",
+                    "first_name": "Sophia",
+                    "last_name": "Silva"
+                  },
+                  {
+                    "dob": "2001-04-12",
+                    "first_name": "Kevin",
+                    "last_name": "Smith"
+                  }
+                ],
+                "payment_methods": [
+                  {
+                    "amount": 348,
+                    "payment_id": "certificate_8045380"
+                  }
+                ],
+                "total_baggages": 0,
+                "user_id": "sophia_silva_7557"
+              },
+              "info": null,
+              "name": "book_reservation"
+            }
+          ],
+          "communicate_info": [],
+          "nl_assertions": [
+            "Agent get sophia_silva_7557 user details.",
+            "Agent identifies reservation id as WUNA5K.",
+            "Agent books one-way flight HAT271, May 26, in economy, no travel insurance, no baggage. Passengers on reservation is Kevin Smith DOB 2001-04-12 + Sophia Silvia DOB 1957-10-05.",
+            "Agent uses single certificate for payment."
+          ],
+          "reward_basis": [
+            "DB",
+            "COMMUNICATE"
+          ]
+        },
+        "id": "8",
+        "initial_state": null,
+        "user_scenario": {
+          "instructions": {
+            "domain": "airline",
+            "known_info": "Your name is Sophia Silva.\n\nYour user id is sophia_silva_7557.",
+            "reason_for_call": "You want to book a one-way flight from ORD to PHL on May 26.",
+            "task_instructions": "You want to book the exact same flight as your recent May 10 flight from ORD to PHL.\n\nYou do not want any other flight. \n\nYou don't have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001-04-12.\n\nYou are ok with economy and want aisle and a middle seat together. You are willing to pay up to $500 for the purchase.\n\nIf and only if the price is above $500, drop the second passenger and book only for yourself.\n\nIf the agent asks, you only want a one-way ticket, not roundtrip.\n\nYou don't need any travel insurance.\n\nYou want to pay using only one of your certificates.\n\nYou do not accept any other mode of payment. \n\nYour birthday is in your user profile so you prefer not to provide it.",
+            "unknown_info": "You do not know the flight number of your May 10 flight from ORD to PHL"
+          },
+          "persona": null
+        }
+      },
+      "tasks_json": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+    },
+    "airline_tools_source": {
+      "inspected_by_script": false,
+      "note": "Static task/evaluator outputs and runtime artifacts were sufficient for this comparison.",
+      "source_dir": "vendor/tau2-bench/src/tau2/domains/airline"
+    },
+    "baseline_db_mismatch_analysis": {
+      "content": {
+        "argument_comparison": {
+          "arguments_match_exactly": false,
+          "field_comparison": {
+            "cabin": {
+              "expected": "economy",
+              "match": true,
+              "observed": "economy"
+            },
+            "destination": {
+              "expected": "PHL",
+              "match": true,
+              "observed": "PHL"
+            },
+            "flight_type": {
+              "expected": "one_way",
+              "match": true,
+              "observed": "one_way"
+            },
+            "flights": {
+              "expected": [
+                {
+                  "date": "2024-05-26",
+                  "flight_number": "HAT271"
+                }
+              ],
+              "match": true,
+              "observed": [
+                {
+                  "date": "2024-05-26",
+                  "flight_number": "HAT271"
+                }
+              ]
+            },
+            "insurance": {
+              "expected": "no",
+              "match": true,
+              "observed": "no"
+            },
+            "nonfree_baggages": {
+              "expected": 0,
+              "match": true,
+              "observed": 0
+            },
+            "origin": {
+              "expected": "ORD",
+              "match": true,
+              "observed": "ORD"
+            },
+            "passengers": {
+              "expected": [
+                {
+                  "dob": "1957-10-05",
+                  "first_name": "Sophia",
+                  "last_name": "Silva"
+                },
+                {
+                  "dob": "2001-04-12",
+                  "first_name": "Kevin",
+                  "last_name": "Smith"
+                }
+              ],
+              "match": false,
+              "observed": [
+                {
+                  "dob": "1957-10-05",
+                  "first_name": "Sophia",
+                  "last_name": "Silva"
+                }
+              ]
+            },
+            "payment_methods": {
+              "expected": [
+                {
+                  "amount": 348,
+                  "payment_id": "certificate_8045380"
+                }
+              ],
+              "match": false,
+              "observed": [
+                {
+                  "amount": 174,
+                  "payment_id": "certificate_8045380"
+                }
+              ]
+            },
+            "total_baggages": {
+              "expected": 0,
+              "match": true,
+              "observed": 0
+            },
+            "user_id": {
+              "expected": "sophia_silva_7557",
+              "match": true,
+              "observed": "sophia_silva_7557"
+            }
+          },
+          "passenger_count_expected": 2,
+          "passenger_count_observed": 1,
+          "payment_total_expected": 348,
+          "payment_total_observed": 174
+        },
+        "book_reservation_absence_note": "Contrary to the initial failure interpretation, runtime_events.jsonl and results.json show book_reservation was called; the failed write action is an argument/DB mismatch, not an absent mutation.",
+        "book_reservation_absent": false,
+        "exact_task_instruction": "You want to book the exact same flight as your recent May 10 flight from ORD to PHL.\n\nYou do not want any other flight. \n\nYou don't have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001-04-12.\n\nYou are ok with economy and want aisle and a middle seat together. You are willing to pay up to $500 for the purchase.\n\nIf and only if the price is above $500, drop the second passenger and book only for yourself.\n\nIf the agent asks, you only want a one-way ticket, not roundtrip.\n\nYou don't need any travel insurance.\n\nYou want to pay using only one of your certificates.\n\nYou do not accept any other mode of payment. \n\nYour birthday is in your user profile so you prefer not to provide it.",
+        "expected_db_mutation": {
+          "cabin": "economy",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            },
+            {
+              "dob": "2001-04-12",
+              "first_name": "Kevin",
+              "last_name": "Smith"
+            }
+          ],
+          "payment_methods": [
+            {
+              "amount": 348,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "expected_successful_path": [
+          "Obtain user details for sophia_silva_7557.",
+          "Identify the May 10 ORD→PHL reservation WUNA5K and its flight number HAT271.",
+          "Search ORD→PHL direct flights on 2024-05-26 and select HAT271.",
+          "Because HAT271 economy has 3 seats and costs $174 per passenger, book Sophia plus Kevin for $348, below the $500 cap.",
+          "Use one travel certificate, no baggage, and no travel insurance after explicit user confirmation."
+        ],
+        "observed_book_reservation_arguments": {
+          "cabin": "economy",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_methods": [
+            {
+              "amount": 174,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "observed_book_reservation_called": true,
+        "observed_book_reservation_event_ids": [
+          "rt-000134-411e1a12"
+        ],
+        "observed_book_reservation_result": {
+          "cabin": "economy",
+          "created_at": "2024-05-15T15:00:00",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "destination": "PHL",
+              "flight_number": "HAT271",
+              "origin": "ORD",
+              "price": 174
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 174,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "reservation_id": "HATHAT",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "observed_conversation_path": [
+          {
+            "content_excerpt": "{\"user_id\": \"sophia_silva_7557\", \"name\": {\"first_name\": \"Sophia\", \"last_name\": \"Silva\"}, \"address\": {\"address1\": \"141 Cedar Avenue\", \"address2\": \"Suite 436\", \"city\": \"Columbus\", \"country\": \"USA\", \"state\": \"OH\", \"zip\": \"43282\"}, \"email\": \"sophia.silva5929@example.com\", \"dob\": \"1957-10-05\", \"payment_methods\": {\"certificate_8045380\": {\"source\": \"certificate\", \"id\": \"certificate_8045380\", \"amount\": 500.0}, \"certificate_3887113\": {\"source\": \"certificate\", \"id\": \"certificate_3887113\", \"amount\": 150.0}, \"credit_card_4196779\": {\"source\": \"credit_card\", \"id\": \"credit_card_4196779\", \"brand\": \"visa\", \"last_four\": \"7238\"}, \"gift_card_5094406\": {\"source\": \"gift_card\", \"id\": \"gift_card_5094406\", \"amount\": 274.0}}, \"saved_passengers\": [{\"first_name\": \"Yara\", \"last_name\": \"Silva\", \"dob\": \"1972-06-16\"}, {\"first_name\": \"Isabella\", \"last_name\": \"Moore\", \"dob\": \"1988-06-04\"}], \"membership\": \"regular\", \"res…",
+            "message_index": 5,
+            "role": "tool",
+            "tool_result": {
+              "address": {
+                "address1": "141 Cedar Avenue",
+                "address2": "Suite 436",
+                "city": "Columbus",
+                "country": "USA",
+                "state": "OH",
+                "zip": "43282"
+              },
+              "dob": "1957-10-05",
+              "email": "sophia.silva5929@example.com",
+              "membership": "regular",
+              "name": {
+                "first_name": "Sophia",
+                "last_name": "Silva"
+              },
+              "payment_methods": {
+                "certificate_3887113": {
+                  "amount": 150.0,
+                  "id": "certificate_3887113",
+                  "source": "certificate"
+                },
+                "certificate_8045380": {
+                  "amount": 500.0,
+                  "id": "certificate_8045380",
+                  "source": "certificate"
+                },
+                "credit_card_4196779": {
+                  "brand": "visa",
+                  "id": "credit_card_4196779",
+                  "last_four": "7238",
+                  "source": "credit_card"
+                },
+                "gift_card_5094406": {
+                  "amount": 274.0,
+                  "id": "gift_card_5094406",
+                  "source": "gift_card"
+                }
+              },
+              "reservations": [
+                "NM1VX1",
+                "KC18K6",
+                "S61CZX",
+                "H8Q05L",
+                "WUNA5K"
+              ],
+              "saved_passengers": [
+                {
+                  "dob": "1972-06-16",
+                  "first_name": "Yara",
+                  "last_name": "Silva"
+                },
+                {
+                  "dob": "1988-06-04",
+                  "first_name": "Isabella",
+                  "last_name": "Moore"
+                }
+              ],
+              "user_id": "sophia_silva_7557"
+            },
+            "turn_idx": 5
+          },
+          {
+            "content_excerpt": "Thanks for confirming the details. I actually don't need any travel insurance. Also, I want to add an extra passenger, Kevin Smith, born April 12, 2001. I don't have any checked baggage for this booking. I want to pay using only one of my travel certificates. Please make sure the seats are economy, aisle and middle seats together. And just to confirm, this is a one-way ticket only.",
+            "message_index": 17,
+            "role": "user",
+            "turn_idx": 17
+          },
+          {
+            "content_excerpt": "I need to inform you that the number of passengers in a reservation cannot be changed once booked. You can only book for the same number of passengers as in your previous reservation.\n\nWould you like to proceed with booking for just yourself on the one-way flight from ORD to PHL on May 26 in economy class without travel insurance and no checked baggage? If yes, please confirm the payment method from your travel certificates you want to use.",
+            "message_index": 18,
+            "role": "assistant",
+            "turn_idx": 18
+          },
+          {
+            "content_excerpt": "I understand. Please proceed with booking just for myself on the one-way flight from ORD to PHL on May 26 in economy class, no travel insurance, and no checked baggage. Use one of my travel certificates for payment. Let me know the price before finalizing.",
+            "message_index": 19,
+            "role": "user",
+            "turn_idx": 19
+          },
+          {
+            "content_excerpt": "There are three available economy class flights from ORD to PHL on May 26:\n\n1. Flight HAT139 departing at 17:00, price $114, 1 economy seat available.\n2. Flight HAT271 departing at 19:00, price $174, 3 economy seats available.\n3. Flight HAT289 departing at 05:00, price $161, 14 economy seats available.\n\nSince you want to book just one seat, all three flights have availability. Please confirm which flight you want to book or if you want me to book the same flight number HAT271 as your previous trip on May 10.",
+            "message_index": 22,
+            "role": "assistant",
+            "turn_idx": 22
+          },
+          {
+            "content_excerpt": "Please book the same flight number HAT271 as my previous trip on May 10.",
+            "message_index": 23,
+            "role": "user",
+            "turn_idx": 23
+          },
+          {
+            "content_excerpt": "To confirm your booking:\n\n- User ID: sophia_silva_7557\n- Trip type: one-way\n- Origin: ORD\n- Destination: PHL\n- Flight: HAT271 on May 26, 2024\n- Cabin class: economy\n- Passengers: 1 (Sophia Silva, DOB: 1957-10-05)\n- Checked baggage: 0\n- Travel insurance: no\n- Payment method: one travel certificate (please specify which one: certificate_8045380 with $500 or certificate_3887113 with $150)\n\nPlease confirm these details and specify the travel certificate you want to use for payment. Then I will proceed with the booking.",
+            "message_index": 24,
+            "role": "assistant",
+            "turn_idx": 24
+          },
+          {
+            "content_excerpt": "Please use certificate_8045380 with $500 for the payment. All the details are correct. Please go ahead and proceed with the booking.",
+            "message_index": 25,
+            "role": "user",
+            "turn_idx": 25
+          },
+          {
+            "content_excerpt": "{\n  \"user_id\": \"sophia_silva_7557\",\n  \"origin\": \"ORD\",\n  \"destination\": \"PHL\",\n  \"flight_type\": \"one_way\",\n  \"cabin\": \"economy\",\n  \"flights\": [\n    {\n      \"flight_number\": \"HAT271\",\n      \"date\": \"2024-05-26\"\n    }\n  ],\n  \"passengers\": [\n    {\n      \"first_name\": \"Sophia\",\n      \"last_name\": \"Silva\",\n      \"dob\": \"1957-10-05\"\n    }\n  ],\n  \"payment_methods\": [\n    {\n      \"payment_id\": \"certificate_8045380\",\n      \"amount\": 174\n    }\n  ],\n  \"total_baggages\": 0,\n  \"nonfree_baggages\": 0,\n  \"insurance\": \"no\"\n}",
+            "message_index": 26,
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "arguments": {
+                  "cabin": "economy",
+                  "destination": "PHL",
+                  "flight_type": "one_way",
+                  "flights": [
+                    {
+                      "date": "2024-05-26",
+                      "flight_number": "HAT271"
+                    }
+                  ],
+                  "insurance": "no",
+                  "nonfree_baggages": 0,
+                  "origin": "ORD",
+                  "passengers": [
+                    {
+                      "dob": "1957-10-05",
+                      "first_name": "Sophia",
+                      "last_name": "Silva"
+                    }
+                  ],
+                  "payment_methods": [
+                    {
+                      "amount": 174,
+                      "payment_id": "certificate_8045380"
+                    }
+                  ],
+                  "total_baggages": 0,
+                  "user_id": "sophia_silva_7557"
+                },
+                "id": "call_LnQHpr05vUeqrw6j0EA8aQHk",
+                "name": "book_reservation",
+                "requestor": "assistant"
+              }
+            ],
+            "turn_idx": 26
+          },
+          {
+            "content_excerpt": "{\"reservation_id\": \"HATHAT\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"flight_type\": \"one_way\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT271\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"date\": \"2024-05-26\", \"price\": 174}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"certificate_8045380\", \"amount\": 174}], \"created_at\": \"2024-05-15T15:00:00\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"no\", \"status\": null}",
+            "message_index": 27,
+            "role": "tool",
+            "tool_result": {
+              "cabin": "economy",
+              "created_at": "2024-05-15T15:00:00",
+              "destination": "PHL",
+              "flight_type": "one_way",
+              "flights": [
+                {
+                  "date": "2024-05-26",
+                  "destination": "PHL",
+                  "flight_number": "HAT271",
+                  "origin": "ORD",
+                  "price": 174
+                }
+              ],
+              "insurance": "no",
+              "nonfree_baggages": 0,
+              "origin": "ORD",
+              "passengers": [
+                {
+                  "dob": "1957-10-05",
+                  "first_name": "Sophia",
+                  "last_name": "Silva"
+                }
+              ],
+              "payment_history": [
+                {
+                  "amount": 174,
+                  "payment_id": "certificate_8045380"
+                }
+              ],
+              "reservation_id": "HATHAT",
+              "status": null,
+              "total_baggages": 0,
+              "user_id": "sophia_silva_7557"
+            },
+            "turn_idx": 27
+          },
+          {
+            "content_excerpt": "Your one-way flight from ORD to PHL on May 26 in economy class has been successfully booked for you. The flight number is HAT271. The payment of $174 was made using your travel certificate certificate_8045380. There is no checked baggage and no travel insurance for this booking.\n\nIf you need any further assistance, please let me know!",
+            "message_index": 28,
+            "role": "assistant",
+            "turn_idx": 28
+          },
+          {
+            "content_excerpt": "Thank you very much for your help! That will be all for now. Have a great day! \n\n###STOP###",
+            "message_index": 29,
+            "role": "user",
+            "turn_idx": 29
+          }
+        ],
+        "premature_stop_assessment": {
+          "agent_stopped_prematurely": false,
+          "assessment": "The conversation ended normally after the agent reported success. The failure happened before stop: the agent booked a one-passenger reservation instead of the two-passenger expected mutation.",
+          "tau2_completed_with_user_stop": true
+        },
+        "required_prerequisites_gathered": {
+          "certificate_8045380_available": true,
+          "explicit_confirmation_before_write": true,
+          "prior_reservation_WUNA5K": true,
+          "target_flight_HAT271_found": true,
+          "two_economy_seats_available": true,
+          "two_passenger_total_under_500": true,
+          "user_id": true
+        },
+        "task_id": "8",
+        "task_purpose": "Booking with extra passenger.",
+        "user_acceptance_or_refusal": {
+          "user_accepted_agent_prompt_to_book_only_sophia": true,
+          "user_originally_requested_kevin": true,
+          "user_refused_other_payment_modes_in_task": true
+        },
+        "valid_hAT271_candidate_from_search": {
+          "available_seats": {
+            "basic_economy": 20,
+            "business": 14,
+            "economy": 3
+          },
+          "date": null,
+          "destination": "PHL",
+          "flight_number": "HAT271",
+          "origin": "ORD",
+          "prices": {
+            "basic_economy": 83,
+            "business": 338,
+            "economy": 174
+          },
+          "scheduled_arrival_time_est": "21:00:00",
+          "scheduled_departure_time_est": "19:00:00",
+          "status": "available"
+        }
+      },
+      "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/expected_vs_observed.json",
+      "present": true
+    }
+  },
+  "answers": {
+    "did_it_change_book_reservation_arguments": true,
+    "did_it_change_search_direct_flight_arguments": true,
+    "did_it_preserve_kevin": true,
+    "did_it_select_same_flight_HAT271": true,
+    "did_prompt_variant_change_conversation_path": true,
+    "failure_class": "multi-constraint write action argument construction after multi-step read evidence",
+    "why_book_reservation_still_failed": "The variant included Sophia and Kevin on HAT271 but used payment amount 320 instead of the required/actual total 348.",
+    "why_search_direct_flight_matching_regressed": "The variant did not call search_direct_flight; the expected action required ORD->PHL on 2024-05-26."
+  },
+  "baseline_run_dir": "runs/20260531-204930-608103",
+  "baseline_summary": {
+    "db_match": false,
+    "db_reward": 0.0,
+    "message_count": 30,
+    "read_actions_matched": 3,
+    "read_actions_total": 3,
+    "reward": 0.0,
+    "runtime_event_count": 167,
+    "runtime_event_types": {
+      "agent_response": 14,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 8,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 8,
+      "tool_dispatch_end": 9,
+      "tool_dispatch_start": 9,
+      "toolkit_dispatch_end": 13,
+      "toolkit_dispatch_start": 13,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 29,
+      "turn_start": 29,
+      "user_generate_end": 7,
+      "user_generate_start": 7,
+      "user_response": 7
+    },
+    "simulation_id": "6a42139d-b1b6-4ccf-be58-d40a712240e3",
+    "task_id": "8",
+    "termination_reason": "user_stop",
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  },
+  "generated_at": "2026-05-31T22:34:43.866815Z",
+  "inputs": {
+    "baseline_raw_log": {
+      "path": "runs/20260531-204930-608103/raw.log",
+      "sha256": "sha256:cea62761d76847be0464ae9a7afdada1ab54166f3a1eeb85c26af4ce36b8cd46"
+    },
+    "baseline_results": {
+      "path": "runs/20260531-204930-608103/tau2_output/results.json",
+      "sha256": "sha256:98c490f0cc263777d0cd547dbfb8f59a6d52945c21c70c38301108773dda7920"
+    },
+    "baseline_runtime_events": {
+      "path": "runs/20260531-204930-608103/runtime_events.jsonl",
+      "sha256": "sha256:20e05828fe92ad7a543b04ae16ae6ecf4b7ab10d4879a08e14de6a3b5ad089e1"
+    },
+    "prompt_variant_json": {
+      "path": "runs/20260531-222346-104165/prompt_variant.json",
+      "sha256": "sha256:f9d19cef81d352c060db4facd8aa0c5b2e543f80e628b4e24ccae3d9c73127c3"
+    },
+    "prompt_variant_txt": {
+      "path": "runs/20260531-222346-104165/prompt_variant.txt",
+      "sha256": "sha256:db6882eef3e2c357dae8e5d7b2ca8b4b9e964c6adf3eda62441b3d50729ef66e"
+    },
+    "variant_raw_log": {
+      "path": "runs/20260531-222346-104165/raw.log",
+      "sha256": "sha256:c5394c5aaefec1c287c37bbe8cfeb73ce2308c4bd55189211bb3e2d92bce66eb"
+    },
+    "variant_results": {
+      "path": "runs/20260531-222346-104165/tau2_output/results.json",
+      "sha256": "sha256:e25d745784c9c2a8d2256138b04f3c978750678e2d94926ceb32df9ca06e728b"
+    },
+    "variant_runtime_events": {
+      "path": "runs/20260531-222346-104165/runtime_events.jsonl",
+      "sha256": "sha256:729ad2e883569d575b3b88be1e36e8df3088c86df2f571600e71bb58e0323e20"
+    }
+  },
+  "offline_boundary": {
+    "api_keys_required": false,
+    "interventions_implemented": false,
+    "llm_api_calls_made": false,
+    "model_backed_episode": false,
+    "tau2_rerun": false,
+    "vendor_tau2_bench_mutated": false
+  },
+  "output_dir": "runs/20260531-222346-104165/prompt_variant_comparison",
+  "prompt_variant": {
+    "json": {
+      "activegraph_control": false,
+      "adapter": "experiments/tau2_prompt_variant/prompt_variant_tau2_cli.py",
+      "domain": "airline",
+      "prompt_variant": "Treat this as a new booking request unless the user explicitly says they are modifying an existing booking. Preserve all named passengers unless the user explicitly removes one. If booking a reservation for multiple passengers, include every eligible named passenger in the booking.",
+      "prompt_variant_target": "tau2.agent.llm_agent.LLMAgent.system_prompt",
+      "source_inspection": {
+        "repo_adapter": "experiments/tau2_prompt_variant/prompt_variant_tau2_cli.py appends the prompt variant with a process-local property wrapper outside vendor/tau2-bench.",
+        "tau2_agent_prompt_target": "vendor/tau2-bench/src/tau2/agent/llm_agent.py defines LLMAgent.system_prompt from AGENT_INSTRUCTION plus domain policy.",
+        "tau2_cli_flags": "vendor/tau2-bench/src/tau2/cli.py exposes --agent-llm-args/--user-llm-args but no agent prompt or instruction append flag."
+      },
+      "task_id": "8",
+      "vendor_tau2_bench_mutated": false
+    },
+    "text": "Treat this as a new booking request unless the user explicitly says they are modifying an existing booking. Preserve all named passengers unless the user explicitly removes one. If booking a reservation for multiple passengers, include every eligible named passenger in the booking.\n"
+  },
+  "raw_log_summaries": {
+    "baseline": {
+      "first_lines": [
+        "status_start=tau2_runtime_traced_baseline_ready_not_run",
+        "cwd=vendor/tau2-bench",
+        "command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain airline --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 30 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-204930-608103/tau2_output --log-level INFO --task-ids 8",
+        "api_key_values_printed=false",
+        "",
+        "2026-05-31 13:49:31.440 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found",
+        "2026-05-31 13:49:31.440 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data",
+        "2026-05-31 13:49:33.619 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled"
+      ],
+      "last_lines": [
+        "│                                                                              │",
+        "│   ═══ LLM Judge Review ═══                                                   │",
+        "│   🤖 Agent Errors           0 errors                                         │",
+        "│      Sims by severity       -                                                │",
+        "│   👤 User Errors            0 errors                                         │",
+        "│      Sims by severity       -                                                │",
+        "│                                                                              │",
+        "╰──────────────────────────────────────────────────────────────────────────────╯"
+      ],
+      "line_count": 125,
+      "path": "runs/20260531-204930-608103/raw.log",
+      "sha256": "sha256:cea62761d76847be0464ae9a7afdada1ab54166f3a1eeb85c26af4ce36b8cd46"
+    },
+    "variant": {
+      "first_lines": [
+        "status_start=airline_task8_prompt_variant_ready_not_run",
+        "cwd=vendor/tau2-bench",
+        "command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_prompt_variant/prompt_variant_tau2_cli.py run --domain airline --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 30 --max-concurrency 1 --task-ids 8 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-222346-104165/tau2_output --log-level INFO",
+        "prompt_variant=Treat this as a new booking request unless the user explicitly says they are modifying an existing booking. Preserve all named passengers unless the user explicitly removes one. If booking a reservation for multiple passengers, include every eligible named passenger in the booking.",
+        "api_key_values_printed=false",
+        "",
+        "2026-05-31 15:23:48.593 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found",
+        "2026-05-31 15:23:48.593 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data"
+      ],
+      "last_lines": [
+        "│                                                                              │",
+        "│   ═══ LLM Judge Review ═══                                                   │",
+        "│   🤖 Agent Errors           0 errors                                         │",
+        "│      Sims by severity       -                                                │",
+        "│   👤 User Errors            0 errors                                         │",
+        "│      Sims by severity       -                                                │",
+        "│                                                                              │",
+        "╰──────────────────────────────────────────────────────────────────────────────╯"
+      ],
+      "line_count": 126,
+      "path": "runs/20260531-222346-104165/raw.log",
+      "sha256": "sha256:c5394c5aaefec1c287c37bbe8cfeb73ce2308c4bd55189211bb3e2d92bce66eb"
+    }
+  },
+  "runtime_tool_events": {
+    "baseline": [
+      {
+        "arguments": {
+          "user_id": "sophia_silva_7557"
+        },
+        "event_id": "rt-000025-57183b67",
+        "requestor": "assistant",
+        "tool_call_id": "call_JYPzLZF7RFP2SV3OdxR44XuV",
+        "tool_name": "get_user_details",
+        "turn_index": 4
+      },
+      {
+        "arguments": {
+          "reservation_id": "NM1VX1"
+        },
+        "event_id": "rt-000036-08eacd05",
+        "requestor": "assistant",
+        "tool_call_id": "call_gFnMYR7PGGqcYcNiTBxTuXKY",
+        "tool_name": "get_reservation_details",
+        "turn_index": 6
+      },
+      {
+        "arguments": {
+          "reservation_id": "KC18K6"
+        },
+        "event_id": "rt-000047-5f72cfb2",
+        "requestor": "assistant",
+        "tool_call_id": "call_TglfmG5YbS8HEs7tSq5IQIVa",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "reservation_id": "S61CZX"
+        },
+        "event_id": "rt-000058-981d60e4",
+        "requestor": "assistant",
+        "tool_call_id": "call_BUvv3ngr3cHRFNHcMwmxYtoH",
+        "tool_name": "get_reservation_details",
+        "turn_index": 10
+      },
+      {
+        "arguments": {
+          "reservation_id": "H8Q05L"
+        },
+        "event_id": "rt-000069-3ccc0e7a",
+        "requestor": "assistant",
+        "tool_call_id": "call_zFtr3KcMACvPVrYIep6Dnhmp",
+        "tool_name": "get_reservation_details",
+        "turn_index": 12
+      },
+      {
+        "arguments": {
+          "reservation_id": "WUNA5K"
+        },
+        "event_id": "rt-000080-4a47f2e3",
+        "requestor": "assistant",
+        "tool_call_id": "call_NUk6M8EH8GSzKQvBpQzgXnL0",
+        "tool_name": "get_reservation_details",
+        "turn_index": 14
+      },
+      {
+        "arguments": {
+          "date": "2024-05-26",
+          "destination": "PHL",
+          "origin": "ORD"
+        },
+        "event_id": "rt-000107-9f97a55c",
+        "requestor": "assistant",
+        "tool_call_id": "call_ygDS4Zb1qgA5W3rhAyQGwiG8",
+        "tool_name": "search_direct_flight",
+        "turn_index": 20
+      },
+      {
+        "arguments": {
+          "cabin": "economy",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_methods": [
+            {
+              "amount": 174,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "event_id": "rt-000134-411e1a12",
+        "requestor": "assistant",
+        "tool_call_id": "call_LnQHpr05vUeqrw6j0EA8aQHk",
+        "tool_name": "book_reservation",
+        "turn_index": 26
+      }
+    ],
+    "variant": [
+      {
+        "arguments": {
+          "user_id": "sophia_silva_7557"
+        },
+        "event_id": "rt-000026-4df63110",
+        "requestor": "assistant",
+        "tool_call_id": "call_ZGifkz1v3TaiUbP7YSr8MgIM",
+        "tool_name": "get_user_details",
+        "turn_index": 4
+      },
+      {
+        "arguments": {
+          "reservation_id": "NM1VX1"
+        },
+        "event_id": "rt-000045-923be136",
+        "requestor": "assistant",
+        "tool_call_id": "call_XFBEvTEfeG9FJpopJ96FrWJG",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "reservation_id": "KC18K6"
+        },
+        "event_id": "rt-000046-807b3188",
+        "requestor": "assistant",
+        "tool_call_id": "call_VkUwhDcI3X26sbBbqTDo8p5k",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "reservation_id": "S61CZX"
+        },
+        "event_id": "rt-000047-8fa2c3dd",
+        "requestor": "assistant",
+        "tool_call_id": "call_szzGIPJj4Y43tuDcC1nv57bj",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "reservation_id": "H8Q05L"
+        },
+        "event_id": "rt-000048-8291e6dd",
+        "requestor": "assistant",
+        "tool_call_id": "call_beQmTGjQHk1cCJJRfGzSgQu8",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "reservation_id": "WUNA5K"
+        },
+        "event_id": "rt-000049-ad281167",
+        "requestor": "assistant",
+        "tool_call_id": "call_MJ8wNp6pfq8ocDE4JmkMK0IU",
+        "tool_name": "get_reservation_details",
+        "turn_index": 8
+      },
+      {
+        "arguments": {
+          "cabin": "economy",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            },
+            {
+              "dob": "2001-04-12",
+              "first_name": "Kevin",
+              "last_name": "Smith"
+            }
+          ],
+          "payment_methods": [
+            {
+              "amount": 320,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "event_id": "rt-000100-010bb1e4",
+        "requestor": "assistant",
+        "tool_call_id": "call_6PBVwBmv9QooLlv47ibQYqHV",
+        "tool_name": "book_reservation",
+        "turn_index": 16
+      }
+    ]
+  },
+  "status": "airline_task8_prompt_variant_comparison_passed",
+  "tool_results": {
+    "baseline": [
+      {
+        "content": {
+          "address": {
+            "address1": "141 Cedar Avenue",
+            "address2": "Suite 436",
+            "city": "Columbus",
+            "country": "USA",
+            "state": "OH",
+            "zip": "43282"
+          },
+          "dob": "1957-10-05",
+          "email": "sophia.silva5929@example.com",
+          "membership": "regular",
+          "name": {
+            "first_name": "Sophia",
+            "last_name": "Silva"
+          },
+          "payment_methods": {
+            "certificate_3887113": {
+              "amount": 150.0,
+              "id": "certificate_3887113",
+              "source": "certificate"
+            },
+            "certificate_8045380": {
+              "amount": 500.0,
+              "id": "certificate_8045380",
+              "source": "certificate"
+            },
+            "credit_card_4196779": {
+              "brand": "visa",
+              "id": "credit_card_4196779",
+              "last_four": "7238",
+              "source": "credit_card"
+            },
+            "gift_card_5094406": {
+              "amount": 274.0,
+              "id": "gift_card_5094406",
+              "source": "gift_card"
+            }
+          },
+          "reservations": [
+            "NM1VX1",
+            "KC18K6",
+            "S61CZX",
+            "H8Q05L",
+            "WUNA5K"
+          ],
+          "saved_passengers": [
+            {
+              "dob": "1972-06-16",
+              "first_name": "Yara",
+              "last_name": "Silva"
+            },
+            {
+              "dob": "1988-06-04",
+              "first_name": "Isabella",
+              "last_name": "Moore"
+            }
+          ],
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"user_id\": \"sophia_silva_7557\", \"name\": {\"first_name\": \"Sophia\", \"last_name\": \"Silva\"}, \"address\": {\"address1\": \"141 Cedar Avenue\", \"address2\": \"Suite 436\", \"city\": \"Columbus\", \"country\": \"USA\", \"state\": \"OH\", \"zip\": \"43282\"}, \"email\": \"sophia.silva5929@example.com\", \"dob\": \"1957-10-05\", \"payment_methods\": {\"certificate_8045380\": {\"source\": \"certificate\", \"id\": \"certificate_8045380\", \"amount\": 500.0}, \"certificate_3887113\": {\"source\": \"certificate\", \"id\": \"certificate_3887113\", \"amount\": 150.0}, \"credit_card_4196779\": {\"source\": \"credit_card\", \"id\": \"credit_card_4196779\", \"brand\": \"visa\", \"last_four\": \"7238\"}, \"gift_card_5094406\": {\"source\": \"gift_card\", \"id\": \"gift_card_5094406\", \"amount\": 274.0}}, \"saved_passengers\": [{\"first_name\": \"Yara\", \"last_name\": \"Silva\", \"dob\": \"1972-06-16\"}, {\"first_name\": \"Isabella\", \"last_name\": \"Moore\", \"dob\": \"1988-06-04\"}], \"membership\": \"regular\", \"reservations\": [\"NM1VX1\", \"KC18K6\", \"S61CZX\", \"H8Q05L\", \"WUNA5K\"]}",
+        "message_index": 5,
+        "turn_idx": 5
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-03T08:46:43",
+          "destination": "EWR",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-25",
+              "destination": "EWR",
+              "flight_number": "HAT300",
+              "origin": "MSP",
+              "price": 100
+            },
+            {
+              "date": "2024-05-27",
+              "destination": "MSP",
+              "flight_number": "HAT208",
+              "origin": "EWR",
+              "price": 53
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "MSP",
+          "passengers": [
+            {
+              "dob": "1972-06-16",
+              "first_name": "Yara",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 183,
+              "payment_id": "gift_card_5094406"
+            }
+          ],
+          "reservation_id": "NM1VX1",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"NM1VX1\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"flight_type\": \"round_trip\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT300\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"date\": \"2024-05-25\", \"price\": 100}, {\"flight_number\": \"HAT208\", \"origin\": \"EWR\", \"destination\": \"MSP\", \"date\": \"2024-05-27\", \"price\": 53}], \"passengers\": [{\"first_name\": \"Yara\", \"last_name\": \"Silva\", \"dob\": \"1972-06-16\"}], \"payment_history\": [{\"payment_id\": \"gift_card_5094406\", \"amount\": 183}], \"created_at\": \"2024-05-03T08:46:43\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 7,
+        "turn_idx": 7
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-04T14:07:11",
+          "destination": "CLT",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-21",
+              "destination": "EWR",
+              "flight_number": "HAT300",
+              "origin": "MSP",
+              "price": 55
+            },
+            {
+              "date": "2024-05-21",
+              "destination": "CLT",
+              "flight_number": "HAT215",
+              "origin": "EWR",
+              "price": 51
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "MSP",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 136,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "KC18K6",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"KC18K6\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"MSP\", \"destination\": \"CLT\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT300\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"date\": \"2024-05-21\", \"price\": 55}, {\"flight_number\": \"HAT215\", \"origin\": \"EWR\", \"destination\": \"CLT\", \"date\": \"2024-05-21\", \"price\": 51}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 136}], \"created_at\": \"2024-05-04T14:07:11\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 9,
+        "turn_idx": 9
+      },
+      {
+        "content": {
+          "cabin": "economy",
+          "created_at": "2024-05-02T04:38:01",
+          "destination": "CLT",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-23",
+              "destination": "EWR",
+              "flight_number": "HAT228",
+              "origin": "LAX",
+              "price": 131
+            },
+            {
+              "date": "2024-05-24",
+              "destination": "CLT",
+              "flight_number": "HAT043",
+              "origin": "EWR",
+              "price": 163
+            },
+            {
+              "date": "2024-05-24",
+              "destination": "EWR",
+              "flight_number": "HAT157",
+              "origin": "CLT",
+              "price": 157
+            },
+            {
+              "date": "2024-05-25",
+              "destination": "LAX",
+              "flight_number": "HAT041",
+              "origin": "EWR",
+              "price": 186
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "LAX",
+          "passengers": [
+            {
+              "dob": "1974-09-05",
+              "first_name": "Harper",
+              "last_name": "Jackson"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 667,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "S61CZX",
+          "status": null,
+          "total_baggages": 1,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"S61CZX\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"LAX\", \"destination\": \"CLT\", \"flight_type\": \"round_trip\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT228\", \"origin\": \"LAX\", \"destination\": \"EWR\", \"date\": \"2024-05-23\", \"price\": 131}, {\"flight_number\": \"HAT043\", \"origin\": \"EWR\", \"destination\": \"CLT\", \"date\": \"2024-05-24\", \"price\": 163}, {\"flight_number\": \"HAT157\", \"origin\": \"CLT\", \"destination\": \"EWR\", \"date\": \"2024-05-24\", \"price\": 157}, {\"flight_number\": \"HAT041\", \"origin\": \"EWR\", \"destination\": \"LAX\", \"date\": \"2024-05-25\", \"price\": 186}], \"passengers\": [{\"first_name\": \"Harper\", \"last_name\": \"Jackson\", \"dob\": \"1974-09-05\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 667}], \"created_at\": \"2024-05-02T04:38:01\", \"total_baggages\": 1, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 11,
+        "turn_idx": 11
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-03T15:12:00",
+          "destination": "ATL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-24",
+              "destination": "ATL",
+              "flight_number": "HAT268",
+              "origin": "JFK",
+              "price": 74
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "JFK",
+          "passengers": [
+            {
+              "dob": "1973-10-26",
+              "first_name": "Harper",
+              "last_name": "Kovacs"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 104,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "H8Q05L",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"H8Q05L\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"JFK\", \"destination\": \"ATL\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT268\", \"origin\": \"JFK\", \"destination\": \"ATL\", \"date\": \"2024-05-24\", \"price\": 74}], \"passengers\": [{\"first_name\": \"Harper\", \"last_name\": \"Kovacs\", \"dob\": \"1973-10-26\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 104}], \"created_at\": \"2024-05-03T15:12:00\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 13,
+        "turn_idx": 13
+      },
+      {
+        "content": {
+          "cabin": "economy",
+          "created_at": "2024-05-08T19:01:02",
+          "destination": "PHL",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-10",
+              "destination": "PHL",
+              "flight_number": "HAT271",
+              "origin": "ORD",
+              "price": 160
+            },
+            {
+              "date": "2024-05-11",
+              "destination": "ORD",
+              "flight_number": "HAT197",
+              "origin": "PHL",
+              "price": 100
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 260,
+              "payment_id": "gift_card_5094406"
+            }
+          ],
+          "reservation_id": "WUNA5K",
+          "status": null,
+          "total_baggages": 1,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"WUNA5K\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"flight_type\": \"round_trip\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT271\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"date\": \"2024-05-10\", \"price\": 160}, {\"flight_number\": \"HAT197\", \"origin\": \"PHL\", \"destination\": \"ORD\", \"date\": \"2024-05-11\", \"price\": 100}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"gift_card_5094406\", \"amount\": 260}], \"created_at\": \"2024-05-08T19:01:02\", \"total_baggages\": 1, \"nonfree_baggages\": 0, \"insurance\": \"no\", \"status\": null}",
+        "message_index": 15,
+        "turn_idx": 15
+      },
+      {
+        "content": [
+          {
+            "available_seats": {
+              "basic_economy": 7,
+              "business": 7,
+              "economy": 1
+            },
+            "date": null,
+            "destination": "PHL",
+            "flight_number": "HAT139",
+            "origin": "ORD",
+            "prices": {
+              "basic_economy": 65,
+              "business": 395,
+              "economy": 114
+            },
+            "scheduled_arrival_time_est": "19:00:00",
+            "scheduled_departure_time_est": "17:00:00",
+            "status": "available"
+          },
+          {
+            "available_seats": {
+              "basic_economy": 20,
+              "business": 14,
+              "economy": 3
+            },
+            "date": null,
+            "destination": "PHL",
+            "flight_number": "HAT271",
+            "origin": "ORD",
+            "prices": {
+              "basic_economy": 83,
+              "business": 338,
+              "economy": 174
+            },
+            "scheduled_arrival_time_est": "21:00:00",
+            "scheduled_departure_time_est": "19:00:00",
+            "status": "available"
+          },
+          {
+            "available_seats": {
+              "basic_economy": 17,
+              "business": 10,
+              "economy": 14
+            },
+            "date": null,
+            "destination": "PHL",
+            "flight_number": "HAT289",
+            "origin": "ORD",
+            "prices": {
+              "basic_economy": 83,
+              "business": 253,
+              "economy": 161
+            },
+            "scheduled_arrival_time_est": "07:00:00",
+            "scheduled_departure_time_est": "05:00:00",
+            "status": "available"
+          }
+        ],
+        "content_excerpt": "[{\"flight_number\": \"HAT139\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"status\": \"available\", \"scheduled_departure_time_est\": \"17:00:00\", \"scheduled_arrival_time_est\": \"19:00:00\", \"date\": null, \"available_seats\": {\"basic_economy\": 7, \"economy\": 1, \"business\": 7}, \"prices\": {\"basic_economy\": 65, \"economy\": 114, \"business\": 395}}, {\"flight_number\": \"HAT271\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"status\": \"available\", \"scheduled_departure_time_est\": \"19:00:00\", \"scheduled_arrival_time_est\": \"21:00:00\", \"date\": null, \"available_seats\": {\"basic_economy\": 20, \"economy\": 3, \"business\": 14}, \"prices\": {\"basic_economy\": 83, \"economy\": 174, \"business\": 338}}, {\"flight_number\": \"HAT289\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"status\": \"available\", \"scheduled_departure_time_est\": \"05:00:00\", \"scheduled_arrival_time_est\": \"07:00:00\", \"date\": null, \"available_seats\": {\"basic_economy\": 17, \"economy\": 14, \"business\": 10}, \"prices\": {\"basic_economy\": 83, \"economy\": 161, \"business\": 253}}]",
+        "message_index": 21,
+        "turn_idx": 21
+      },
+      {
+        "content": {
+          "cabin": "economy",
+          "created_at": "2024-05-15T15:00:00",
+          "destination": "PHL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-26",
+              "destination": "PHL",
+              "flight_number": "HAT271",
+              "origin": "ORD",
+              "price": 174
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 174,
+              "payment_id": "certificate_8045380"
+            }
+          ],
+          "reservation_id": "HATHAT",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"HATHAT\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"flight_type\": \"one_way\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT271\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"date\": \"2024-05-26\", \"price\": 174}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"certificate_8045380\", \"amount\": 174}], \"created_at\": \"2024-05-15T15:00:00\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"no\", \"status\": null}",
+        "message_index": 27,
+        "turn_idx": 27
+      }
+    ],
+    "variant": [
+      {
+        "content": {
+          "address": {
+            "address1": "141 Cedar Avenue",
+            "address2": "Suite 436",
+            "city": "Columbus",
+            "country": "USA",
+            "state": "OH",
+            "zip": "43282"
+          },
+          "dob": "1957-10-05",
+          "email": "sophia.silva5929@example.com",
+          "membership": "regular",
+          "name": {
+            "first_name": "Sophia",
+            "last_name": "Silva"
+          },
+          "payment_methods": {
+            "certificate_3887113": {
+              "amount": 150.0,
+              "id": "certificate_3887113",
+              "source": "certificate"
+            },
+            "certificate_8045380": {
+              "amount": 500.0,
+              "id": "certificate_8045380",
+              "source": "certificate"
+            },
+            "credit_card_4196779": {
+              "brand": "visa",
+              "id": "credit_card_4196779",
+              "last_four": "7238",
+              "source": "credit_card"
+            },
+            "gift_card_5094406": {
+              "amount": 274.0,
+              "id": "gift_card_5094406",
+              "source": "gift_card"
+            }
+          },
+          "reservations": [
+            "NM1VX1",
+            "KC18K6",
+            "S61CZX",
+            "H8Q05L",
+            "WUNA5K"
+          ],
+          "saved_passengers": [
+            {
+              "dob": "1972-06-16",
+              "first_name": "Yara",
+              "last_name": "Silva"
+            },
+            {
+              "dob": "1988-06-04",
+              "first_name": "Isabella",
+              "last_name": "Moore"
+            }
+          ],
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"user_id\": \"sophia_silva_7557\", \"name\": {\"first_name\": \"Sophia\", \"last_name\": \"Silva\"}, \"address\": {\"address1\": \"141 Cedar Avenue\", \"address2\": \"Suite 436\", \"city\": \"Columbus\", \"country\": \"USA\", \"state\": \"OH\", \"zip\": \"43282\"}, \"email\": \"sophia.silva5929@example.com\", \"dob\": \"1957-10-05\", \"payment_methods\": {\"certificate_8045380\": {\"source\": \"certificate\", \"id\": \"certificate_8045380\", \"amount\": 500.0}, \"certificate_3887113\": {\"source\": \"certificate\", \"id\": \"certificate_3887113\", \"amount\": 150.0}, \"credit_card_4196779\": {\"source\": \"credit_card\", \"id\": \"credit_card_4196779\", \"brand\": \"visa\", \"last_four\": \"7238\"}, \"gift_card_5094406\": {\"source\": \"gift_card\", \"id\": \"gift_card_5094406\", \"amount\": 274.0}}, \"saved_passengers\": [{\"first_name\": \"Yara\", \"last_name\": \"Silva\", \"dob\": \"1972-06-16\"}, {\"first_name\": \"Isabella\", \"last_name\": \"Moore\", \"dob\": \"1988-06-04\"}], \"membership\": \"regular\", \"reservations\": [\"NM1VX1\", \"KC18K6\", \"S61CZX\", \"H8Q05L\", \"WUNA5K\"]}",
+        "message_index": 5,
+        "turn_idx": 5
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-03T08:46:43",
+          "destination": "EWR",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-25",
+              "destination": "EWR",
+              "flight_number": "HAT300",
+              "origin": "MSP",
+              "price": 100
+            },
+            {
+              "date": "2024-05-27",
+              "destination": "MSP",
+              "flight_number": "HAT208",
+              "origin": "EWR",
+              "price": 53
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "MSP",
+          "passengers": [
+            {
+              "dob": "1972-06-16",
+              "first_name": "Yara",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 183,
+              "payment_id": "gift_card_5094406"
+            }
+          ],
+          "reservation_id": "NM1VX1",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"NM1VX1\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"flight_type\": \"round_trip\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT300\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"date\": \"2024-05-25\", \"price\": 100}, {\"flight_number\": \"HAT208\", \"origin\": \"EWR\", \"destination\": \"MSP\", \"date\": \"2024-05-27\", \"price\": 53}], \"passengers\": [{\"first_name\": \"Yara\", \"last_name\": \"Silva\", \"dob\": \"1972-06-16\"}], \"payment_history\": [{\"payment_id\": \"gift_card_5094406\", \"amount\": 183}], \"created_at\": \"2024-05-03T08:46:43\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 9,
+        "turn_idx": 9
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-04T14:07:11",
+          "destination": "CLT",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-21",
+              "destination": "EWR",
+              "flight_number": "HAT300",
+              "origin": "MSP",
+              "price": 55
+            },
+            {
+              "date": "2024-05-21",
+              "destination": "CLT",
+              "flight_number": "HAT215",
+              "origin": "EWR",
+              "price": 51
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "MSP",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 136,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "KC18K6",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"KC18K6\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"MSP\", \"destination\": \"CLT\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT300\", \"origin\": \"MSP\", \"destination\": \"EWR\", \"date\": \"2024-05-21\", \"price\": 55}, {\"flight_number\": \"HAT215\", \"origin\": \"EWR\", \"destination\": \"CLT\", \"date\": \"2024-05-21\", \"price\": 51}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 136}], \"created_at\": \"2024-05-04T14:07:11\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 10,
+        "turn_idx": 10
+      },
+      {
+        "content": {
+          "cabin": "economy",
+          "created_at": "2024-05-02T04:38:01",
+          "destination": "CLT",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-23",
+              "destination": "EWR",
+              "flight_number": "HAT228",
+              "origin": "LAX",
+              "price": 131
+            },
+            {
+              "date": "2024-05-24",
+              "destination": "CLT",
+              "flight_number": "HAT043",
+              "origin": "EWR",
+              "price": 163
+            },
+            {
+              "date": "2024-05-24",
+              "destination": "EWR",
+              "flight_number": "HAT157",
+              "origin": "CLT",
+              "price": 157
+            },
+            {
+              "date": "2024-05-25",
+              "destination": "LAX",
+              "flight_number": "HAT041",
+              "origin": "EWR",
+              "price": 186
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "LAX",
+          "passengers": [
+            {
+              "dob": "1974-09-05",
+              "first_name": "Harper",
+              "last_name": "Jackson"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 667,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "S61CZX",
+          "status": null,
+          "total_baggages": 1,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"S61CZX\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"LAX\", \"destination\": \"CLT\", \"flight_type\": \"round_trip\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT228\", \"origin\": \"LAX\", \"destination\": \"EWR\", \"date\": \"2024-05-23\", \"price\": 131}, {\"flight_number\": \"HAT043\", \"origin\": \"EWR\", \"destination\": \"CLT\", \"date\": \"2024-05-24\", \"price\": 163}, {\"flight_number\": \"HAT157\", \"origin\": \"CLT\", \"destination\": \"EWR\", \"date\": \"2024-05-24\", \"price\": 157}, {\"flight_number\": \"HAT041\", \"origin\": \"EWR\", \"destination\": \"LAX\", \"date\": \"2024-05-25\", \"price\": 186}], \"passengers\": [{\"first_name\": \"Harper\", \"last_name\": \"Jackson\", \"dob\": \"1974-09-05\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 667}], \"created_at\": \"2024-05-02T04:38:01\", \"total_baggages\": 1, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 11,
+        "turn_idx": 11
+      },
+      {
+        "content": {
+          "cabin": "basic_economy",
+          "created_at": "2024-05-03T15:12:00",
+          "destination": "ATL",
+          "flight_type": "one_way",
+          "flights": [
+            {
+              "date": "2024-05-24",
+              "destination": "ATL",
+              "flight_number": "HAT268",
+              "origin": "JFK",
+              "price": 74
+            }
+          ],
+          "insurance": "yes",
+          "nonfree_baggages": 0,
+          "origin": "JFK",
+          "passengers": [
+            {
+              "dob": "1973-10-26",
+              "first_name": "Harper",
+              "last_name": "Kovacs"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 104,
+              "payment_id": "credit_card_4196779"
+            }
+          ],
+          "reservation_id": "H8Q05L",
+          "status": null,
+          "total_baggages": 0,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"H8Q05L\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"JFK\", \"destination\": \"ATL\", \"flight_type\": \"one_way\", \"cabin\": \"basic_economy\", \"flights\": [{\"flight_number\": \"HAT268\", \"origin\": \"JFK\", \"destination\": \"ATL\", \"date\": \"2024-05-24\", \"price\": 74}], \"passengers\": [{\"first_name\": \"Harper\", \"last_name\": \"Kovacs\", \"dob\": \"1973-10-26\"}], \"payment_history\": [{\"payment_id\": \"credit_card_4196779\", \"amount\": 104}], \"created_at\": \"2024-05-03T15:12:00\", \"total_baggages\": 0, \"nonfree_baggages\": 0, \"insurance\": \"yes\", \"status\": null}",
+        "message_index": 12,
+        "turn_idx": 12
+      },
+      {
+        "content": {
+          "cabin": "economy",
+          "created_at": "2024-05-08T19:01:02",
+          "destination": "PHL",
+          "flight_type": "round_trip",
+          "flights": [
+            {
+              "date": "2024-05-10",
+              "destination": "PHL",
+              "flight_number": "HAT271",
+              "origin": "ORD",
+              "price": 160
+            },
+            {
+              "date": "2024-05-11",
+              "destination": "ORD",
+              "flight_number": "HAT197",
+              "origin": "PHL",
+              "price": 100
+            }
+          ],
+          "insurance": "no",
+          "nonfree_baggages": 0,
+          "origin": "ORD",
+          "passengers": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ],
+          "payment_history": [
+            {
+              "amount": 260,
+              "payment_id": "gift_card_5094406"
+            }
+          ],
+          "reservation_id": "WUNA5K",
+          "status": null,
+          "total_baggages": 1,
+          "user_id": "sophia_silva_7557"
+        },
+        "content_excerpt": "{\"reservation_id\": \"WUNA5K\", \"user_id\": \"sophia_silva_7557\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"flight_type\": \"round_trip\", \"cabin\": \"economy\", \"flights\": [{\"flight_number\": \"HAT271\", \"origin\": \"ORD\", \"destination\": \"PHL\", \"date\": \"2024-05-10\", \"price\": 160}, {\"flight_number\": \"HAT197\", \"origin\": \"PHL\", \"destination\": \"ORD\", \"date\": \"2024-05-11\", \"price\": 100}], \"passengers\": [{\"first_name\": \"Sophia\", \"last_name\": \"Silva\", \"dob\": \"1957-10-05\"}], \"payment_history\": [{\"payment_id\": \"gift_card_5094406\", \"amount\": 260}], \"created_at\": \"2024-05-08T19:01:02\", \"total_baggages\": 1, \"nonfree_baggages\": 0, \"insurance\": \"no\", \"status\": null}",
+        "message_index": 13,
+        "turn_idx": 13
+      },
+      {
+        "content": "Error: Payment amount does not add up, total price is 348, but paid 320",
+        "content_excerpt": "Error: Payment amount does not add up, total price is 348, but paid 320",
+        "message_index": 21,
+        "turn_idx": 21
+      }
+    ]
+  },
+  "variant_run_dir": "runs/20260531-222346-104165",
+  "variant_summary": {
+    "db_match": false,
+    "db_reward": 0.0,
+    "message_count": 26,
+    "read_actions_matched": 2,
+    "read_actions_total": 3,
+    "reward": 0.0,
+    "runtime_event_count": 141,
+    "runtime_event_types": {
+      "agent_prompt_variant_installed": 1,
+      "agent_response": 10,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 3,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 7,
+      "tool_dispatch_end": 8,
+      "tool_dispatch_start": 8,
+      "toolkit_dispatch_end": 12,
+      "toolkit_dispatch_start": 12,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 21,
+      "turn_start": 21,
+      "user_generate_end": 8,
+      "user_generate_start": 8,
+      "user_response": 8
+    },
+    "simulation_id": "9dddb59b-475d-4024-b172-888d3a4c8977",
+    "task_id": "8",
+    "termination_reason": "user_stop",
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  }
+}

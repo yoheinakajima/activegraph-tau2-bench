@@ -1,0 +1,56 @@
+{
+  "actions": [
+    {
+      "action_name": "book_reservation",
+      "baseline_match": false,
+      "baseline_reward": 0.0,
+      "matching_improved": false,
+      "matching_regressed": false,
+      "reward_delta_variant_minus_baseline": 0,
+      "tool_type": "write",
+      "variant_match": false,
+      "variant_reward": 0.0
+    },
+    {
+      "action_name": "get_reservation_details",
+      "baseline_match": true,
+      "baseline_reward": 1.0,
+      "matching_improved": false,
+      "matching_regressed": false,
+      "reward_delta_variant_minus_baseline": 0.0,
+      "tool_type": "read",
+      "variant_match": true,
+      "variant_reward": 1.0
+    },
+    {
+      "action_name": "get_user_details",
+      "baseline_match": true,
+      "baseline_reward": 1.0,
+      "matching_improved": false,
+      "matching_regressed": false,
+      "reward_delta_variant_minus_baseline": 0.0,
+      "tool_type": "read",
+      "variant_match": true,
+      "variant_reward": 1.0
+    },
+    {
+      "action_name": "search_direct_flight",
+      "baseline_match": true,
+      "baseline_reward": 1.0,
+      "matching_improved": false,
+      "matching_regressed": true,
+      "reward_delta_variant_minus_baseline": -1.0,
+      "tool_type": "read",
+      "variant_match": false,
+      "variant_reward": 0.0
+    }
+  ],
+  "read_score": {
+    "baseline": "3/3",
+    "variant": "2/3"
+  },
+  "write_score": {
+    "baseline": "0/1",
+    "variant": "0/1"
+  }
+}
