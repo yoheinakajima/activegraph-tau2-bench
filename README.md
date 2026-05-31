@@ -74,6 +74,29 @@ python scripts/run_tau2_model_baseline.py \
 
 The wrapper refuses to run without provider/model configuration and the paid-API acknowledgement flag, reports only API-key presence booleans, and writes artifacts under ignored `runs/<timestamp>/` directories. See [Explicit opt-in tau2 model baseline](docs/tau2_model_baseline.md) for setup, outputs, and troubleshooting.
 
+
+### Runtime trace-only tau2 instrumentation
+
+A no-LLM runtime trace smoke validates the trace writer, hook schema, and non-invasive monkeypatch installation without requiring API keys or paid services:
+
+```bash
+python scripts/run_tau2_runtime_trace_smoke.py
+```
+
+An explicit opt-in model-backed traced baseline is available, but is not included in aggregate smokes and must be acknowledged as paid/API-backed:
+
+```bash
+python scripts/run_tau2_runtime_traced_baseline.py \
+  --provider <provider> \
+  --model <model> \
+  --domain mock \
+  --task-id create_task_1 \
+  --max-steps 2 \
+  --yes-i-understand-this-may-call-paid-apis
+```
+
+See [tau2 runtime trace-only instrumentation](docs/tau2_runtime_trace.md) for hook coverage, artifacts, status values, and no-control/no-vendor-mutation boundaries.
+
 ### Post-run baseline trace extraction
 
 Extract a normalized trace from an already-completed tau2 model baseline run without rerunning tau2 or calling LLM/API services:
