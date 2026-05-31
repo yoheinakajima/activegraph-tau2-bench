@@ -51,6 +51,7 @@ python scripts/run_activegraph_trace_smoke.py
 python scripts/run_state_packet_smoke.py
 python scripts/run_reactive_manager_dry_run.py
 python scripts/run_operator_incident_readiness.py
+python scripts/run_human_review_package.py
 python scripts/run_all_smokes.py  # preferred compact validation command
 ```
 
@@ -67,7 +68,7 @@ Running real tau2 benchmark simulations may require model/API credentials depend
 
 ## No-LLM/API-call boundary
 
-The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. Later readiness phases through Phase 10 add design-only contracts for live opt-in, audit readiness, external audit/vault readiness, and operator/incident readiness while preserving fail-closed live execution. These smoke commands:
+The Phase 1.5 smoke harness is intentionally source/data inspection only. The Phase 2 trace smoke remains no-LLM-safe and fixture-backed while adding JSONL observability artifacts. The Phase 3 ActiveGraph trace smoke mirrors that JSONL stream into a trace-only adapter/mock projection. The Phase 4 state-packet smoke serializes deterministic packet artifacts derived from the same event stream and projection. The Phase 5 reactive-manager dry run computes replay/fork/diff plans from those artifacts without executing them. Later readiness phases through Phase 11 add design-only contracts for live opt-in, audit readiness, external audit/vault readiness, operator/incident readiness, and advisory human-review packaging while preserving fail-closed live execution. These smoke commands:
 
 - never require API keys;
 - never call paid LLM APIs;
@@ -433,6 +434,34 @@ runs/<timestamp>/
 ```
 
 The operator/incident readiness smoke is design-only. It validates future operator authorization, revocation, expiration, incident declaration, rollback/recovery planning, and incident audit/source anchoring shapes while intentionally preserving `live_ready=false`, `operator_authorization_live_ready=false`, `incident_response_live_ready=false`, rollback execution unavailable, and live execution unavailable/fail-closed. It does not execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/operator_incident_readiness.md` for schemas, validation rules, failure modes, and future-phase requirements.
+
+## Phase 11 human-review package smoke command
+
+```bash
+python scripts/run_human_review_package.py
+```
+
+Expected successful state when the local vendor tree exists at the recorded upstream commit:
+
+```text
+human_review_package_passed
+```
+
+This command regenerates/preserves the Phase 10 fixture-backed artifact chain and adds deterministic human-review artifacts under `runs/<timestamp>/`:
+
+```text
+runs/<timestamp>/
+  human_review_package.json
+  human_review_packet.md
+  reviewer_checklist.md
+  source_evidence_index.json
+  blocker_matrix.json
+  raw.log
+  summary.md
+  final_state.json
+```
+
+The human-review package is advisory/reporting only. It summarizes readiness state, blockers, evidence links, operator authorization decisions, incident-response decisions, audit/vault/sandbox readiness, and future live-manager prerequisites while intentionally preserving `live_ready=false` and live execution unavailable/fail-closed. It does not approve execution, execute tau2 control flow, feed state packets back into tau2, mutate tau2 behavior or vendored tau2 source, run `tau2 run`, call model-backed agents or LLM/API services, or read/store real credentials. See `docs/human_review_package.md` for the package schema, Markdown packet structure, checklist, evidence index, blocker matrix, non-approval statement, and future-phase requirements.
 
 ## Compact aggregate smoke command
 
