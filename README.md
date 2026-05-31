@@ -125,6 +125,17 @@ python scripts/analyze_full_mock_runtime_baseline.py \
 The analyzer writes `full_mock_baseline_analysis.json`, `full_mock_baseline_summary.md`, `task_outcomes.json`, `failure_analysis.json`, `runtime_event_coverage.json`, `mutation_summary.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/full_mock_analysis/`. It reports benchmark pass rate, average reward, per-task outcomes, DB/action/write checks, termination reasons, costs where available, runtime event coverage, mutation evidence, and inferable failure causes. See [Full mock runtime baseline analysis](docs/full_mock_runtime_baseline_analysis.md) for details.
 
 
+### Full mock detailed failure analysis
+
+Analyze the failed cases from the committed full mock runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_full_mock_failures.py \
+  --runtime-run-dir runs/20260531-184109-726391
+```
+
+The analyzer writes `failure_analysis_detailed.json`, `failure_analysis_summary.md`, `failed_task_timelines.json`, `failed_task_event_slices.jsonl`, `scoring_evidence.json`, `final_state.json`, and `raw.log` under `runs/20260531-184109-726391/full_mock_failure_analysis/`. It explains why `update_task_with_initialization_data` received reward `0.0` despite DB/write success and why `update_task_with_user_tools` hit `max_steps`. See [Full mock baseline detailed failure analysis](docs/full_mock_failure_analysis.md).
+
 ### Runtime DB mutation analysis
 
 Project the available DB mutation evidence from the successful runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
