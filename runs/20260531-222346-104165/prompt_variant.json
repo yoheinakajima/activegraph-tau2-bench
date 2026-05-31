@@ -1,0 +1,14 @@
+{
+  "activegraph_control": false,
+  "adapter": "experiments/tau2_prompt_variant/prompt_variant_tau2_cli.py",
+  "domain": "airline",
+  "prompt_variant": "Treat this as a new booking request unless the user explicitly says they are modifying an existing booking. Preserve all named passengers unless the user explicitly removes one. If booking a reservation for multiple passengers, include every eligible named passenger in the booking.",
+  "prompt_variant_target": "tau2.agent.llm_agent.LLMAgent.system_prompt",
+  "source_inspection": {
+    "repo_adapter": "experiments/tau2_prompt_variant/prompt_variant_tau2_cli.py appends the prompt variant with a process-local property wrapper outside vendor/tau2-bench.",
+    "tau2_agent_prompt_target": "vendor/tau2-bench/src/tau2/agent/llm_agent.py defines LLMAgent.system_prompt from AGENT_INSTRUCTION plus domain policy.",
+    "tau2_cli_flags": "vendor/tau2-bench/src/tau2/cli.py exposes --agent-llm-args/--user-llm-args but no agent prompt or instruction append flag."
+  },
+  "task_id": "8",
+  "vendor_tau2_bench_mutated": false
+}

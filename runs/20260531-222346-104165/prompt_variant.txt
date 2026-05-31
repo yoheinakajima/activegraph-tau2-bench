@@ -1,0 +1,1 @@
+Treat this as a new booking request unless the user explicitly says they are modifying an existing booking. Preserve all named passengers unless the user explicitly removes one. If booking a reservation for multiple passengers, include every eligible named passenger in the booking.
