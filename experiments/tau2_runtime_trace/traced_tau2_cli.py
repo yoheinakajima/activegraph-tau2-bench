@@ -62,7 +62,15 @@ def main() -> int:
         inspected = locals().get("inspected") or inspect_hook_targets()
         write_hook_map(run_dir, inspected, validated, deferred)
         write_final_state(run_dir, status, writer, extra={"tau2_executed": True, "returncode": rc, "paid_llm_api_calls_made": True})
-        write_summary(run_dir, status, writer, validated=validated, deferred=deferred, command="python experiments/tau2_runtime_trace/traced_tau2_cli.py " + " ".join(sys.argv[1:]))
+        write_summary(
+            run_dir,
+            status,
+            writer,
+            validated=validated,
+            deferred=deferred,
+            command="python experiments/tau2_runtime_trace/traced_tau2_cli.py " + " ".join(sys.argv[1:]),
+            paid_llm_api_calls_made=True,
+        )
         writer.close()
     return rc
 

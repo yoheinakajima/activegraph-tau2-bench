@@ -1,0 +1,1073 @@
+{
+  "artifact_provenance": {
+    "postrun_artifacts": [
+      {
+        "available": true,
+        "path": "runs/20260531-042306-420109/extracted_trace/baseline_trace.jsonl",
+        "sha256": "sha256:2df2bd9e059baf9b779eb4d1cd27df70039c28812b4d9e7caf627b431fcb1663"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-042306-420109/extracted_trace/baseline_trace_final_state.json",
+        "sha256": "sha256:9d229ae56e3341dc7d140bc36e6cf7d2c0c78cce4d47f57d3b69f1a97a487daa"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-042306-420109/extracted_trace/baseline_trace_summary.md",
+        "sha256": "sha256:05f4884a9513c365fd61d031e1e1e206cb689da396bcbefc891493804d0c58a6"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-042306-420109/extracted_trace/baseline_artifact_index.json",
+        "sha256": "sha256:c4c409aefaedc7d51ac599e021b7793f8af0fb198b7d1496fcf705ea505850db"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-042306-420109/tau2_output/results.json",
+        "sha256": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174"
+      }
+    ],
+    "runtime_artifacts": [
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/runtime_events.jsonl",
+        "sha256": "sha256:bb63e2fa5f30a66b17b1db96b460b4492905dd99f7f55d5778618ea854b5e3b9"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/runtime_trace_summary.md",
+        "sha256": "sha256:c72a0da9e3011d5fbc8a269ef0d1c794dd5b98423c8ca721f854dc2d0943fd81"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/runtime_trace_final_state.json",
+        "sha256": "sha256:75d2d00830a9018daee208217646d82831a4adc693536029c209afd04b8e169e"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/runtime_hook_map.json",
+        "sha256": "sha256:05dbc8b39b757a47ea1221f5d435b86bbb76ddc39dac04eb7a5c35c131049762"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/tau2_output/results.json",
+        "sha256": "sha256:ae88ce74383e90c7c1f387791cf54372affd0318c98adc5ea84aa52fda8cc874"
+      },
+      {
+        "available": true,
+        "path": "runs/20260531-153843-240865/tau2_artifacts/results.json",
+        "sha256": "sha256:ae88ce74383e90c7c1f387791cf54372affd0318c98adc5ea84aa52fda8cc874"
+      }
+    ]
+  },
+  "coverage": {
+    "postrun": {
+      "components": [
+        "baseline.config",
+        "baseline.evaluator",
+        "baseline.message",
+        "baseline.results",
+        "baseline.simulation",
+        "baseline.tool",
+        "baseline.wrapper"
+      ],
+      "cost_metadata_event_count": 0,
+      "event_count": 12,
+      "event_type_counts": {
+        "baseline.config.loaded": 1,
+        "baseline.evaluation.observed": 1,
+        "baseline.message.observed": 4,
+        "baseline.result.persisted": 1,
+        "baseline.run.completed": 1,
+        "baseline.run.started": 1,
+        "baseline.task.started": 1,
+        "baseline.tool.completed": 1,
+        "baseline.tool.requested": 1
+      },
+      "final_state": {
+        "artifacts_inspected": 5,
+        "event_count": 12,
+        "event_schema_fields": [
+          "event_id",
+          "timestamp",
+          "run_id",
+          "phase",
+          "component",
+          "event_type",
+          "task_id",
+          "turn_index",
+          "tool_name",
+          "message_role",
+          "state_hash",
+          "payload",
+          "parent_event_id"
+        ],
+        "event_types_emitted": [
+          "baseline.run.started",
+          "baseline.config.loaded",
+          "baseline.task.started",
+          "baseline.message.observed",
+          "baseline.message.observed",
+          "baseline.message.observed",
+          "baseline.tool.requested",
+          "baseline.message.observed",
+          "baseline.tool.completed",
+          "baseline.evaluation.observed",
+          "baseline.result.persisted",
+          "baseline.run.completed"
+        ],
+        "fixture_backed": false,
+        "limitations": [
+          "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+          "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+        ],
+        "llm_api_calls_made_by_extractor": false,
+        "model": "gpt-4.1-mini",
+        "output_files": [
+          "runs/20260531-042306-420109/extracted_trace/baseline_trace.jsonl",
+          "runs/20260531-042306-420109/extracted_trace/baseline_trace_summary.md",
+          "runs/20260531-042306-420109/extracted_trace/baseline_trace_final_state.json",
+          "runs/20260531-042306-420109/extracted_trace/baseline_artifact_index.json"
+        ],
+        "phase": "real_tau2_model_baseline_extracted",
+        "provider": "openai",
+        "requires_api_keys": false,
+        "run_id": "20260531-042306-420109",
+        "schema_version": "trace_event.v1",
+        "source_run_dir": "runs/20260531-042306-420109",
+        "source_status": "tau2_model_baseline_passed",
+        "status": "tau2_baseline_trace_extraction_passed",
+        "task_id": "create_task_1",
+        "tau2_rerun": false,
+        "timestamp_utc": "2026-05-31T05:11:05.418936Z",
+        "trace_mode": "post_run_extraction",
+        "unique_event_types_emitted": [
+          "baseline.config.loaded",
+          "baseline.evaluation.observed",
+          "baseline.message.observed",
+          "baseline.result.persisted",
+          "baseline.run.completed",
+          "baseline.run.started",
+          "baseline.task.started",
+          "baseline.tool.completed",
+          "baseline.tool.requested"
+        ],
+        "vendor_tau2_bench_mutated": false
+      },
+      "label": "postrun",
+      "message_roles": {
+        "count": 3,
+        "values": [
+          "assistant",
+          "tool",
+          "user"
+        ]
+      },
+      "parent_link_event_count": 11,
+      "payload_key_counts": {
+        "agent_cost": 1,
+        "arguments": 1,
+        "concurrency": 1,
+        "contains_speech": 4,
+        "content": 5,
+        "copied_tau2_artifacts": 1,
+        "cost": 4,
+        "domain": 1,
+        "duration": 1,
+        "end_time": 1,
+        "error": 1,
+        "evaluation_criteria": 1,
+        "extractor_api_key_requirement": 1,
+        "fixture_backed": 12,
+        "has_tool_calls": 4,
+        "is_audio": 4,
+        "limitations": 1,
+        "llm_api_calls_made_by_extractor": 12,
+        "max_steps": 1,
+        "message_id": 1,
+        "message_index": 6,
+        "mode": 1,
+        "model": 1,
+        "paid_api_acknowledged_in_source_run": 1,
+        "provider": 1,
+        "raw_data_summary": 2,
+        "reason": 1,
+        "requestor": 2,
+        "results_timestamp": 1,
+        "returncode": 1,
+        "reward_info": 1,
+        "run_id": 1,
+        "run_id_source": 1,
+        "seed": 1,
+        "simulation_count": 1,
+        "simulation_id": 1,
+        "simulation_index": 1,
+        "source_results_path": 1,
+        "source_run_dir": 1,
+        "start_time": 1,
+        "status": 2,
+        "task_count": 1,
+        "task_description": 1,
+        "task_id": 1,
+        "tau2_command": 1,
+        "tau2_cwd": 1,
+        "tau2_model_name": 1,
+        "tau2_output_path": 1,
+        "tau2_rerun": 12,
+        "tau2_results_info": 1,
+        "termination_reason": 2,
+        "ticket": 1,
+        "tool_call_id": 2,
+        "tool_call_index": 1,
+        "trace_mode": 12,
+        "trial": 1,
+        "usage": 4,
+        "user_cost": 1,
+        "user_scenario": 1
+      },
+      "results_metadata": {
+        "action_checks_present": false,
+        "agent_cost": 0.00019240000000000001,
+        "available": true,
+        "db_check_present": false,
+        "effect_timeline_present": false,
+        "message_count": 4,
+        "nl_assertions_present": false,
+        "reward_info_keys": [
+          "action_checks",
+          "communicate_checks",
+          "db_check",
+          "env_assertions",
+          "info",
+          "nl_assertions",
+          "reward",
+          "reward_basis",
+          "reward_breakdown"
+        ],
+        "simulation_count": 1,
+        "task_count": 1,
+        "termination_reason": "max_steps",
+        "ticks_present": false,
+        "timestamp": "2026-05-30T21:23:09.714002",
+        "user_cost": 0.0003268
+      },
+      "semantic_family_counts": {
+        "config_observed": 1,
+        "evaluation_observed": 1,
+        "message_observed": 4,
+        "results_persisted": 1,
+        "run_completed": 1,
+        "run_started": 1,
+        "task_started": 1,
+        "tool_completed": 1,
+        "tool_requested": 1
+      },
+      "state_hash_event_count": 1,
+      "state_hashes": {
+        "count": 1,
+        "values": [
+          "sha256:3ff025ddf74f3c0a60713fb1330851f5d32439babb01bea0930187b3f3722c68"
+        ]
+      },
+      "task_ids": {
+        "count": 1,
+        "values": [
+          "create_task_1"
+        ]
+      },
+      "tool_names": {
+        "count": 1,
+        "values": [
+          "get_users"
+        ]
+      },
+      "turn_indexes": {
+        "count": 4,
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "usage_metadata_event_count": 0
+    },
+    "runtime": {
+      "components": [
+        "tau2.data_model.simulation",
+        "tau2.environment",
+        "tau2.environment.toolkit",
+        "tau2.evaluator",
+        "tau2.orchestrator",
+        "tau2.runner.batch",
+        "tau2.runner.simulation",
+        "tau2.user",
+        "tau2_runtime_trace.bootstrap"
+      ],
+      "cost_metadata_event_count": 5,
+      "event_count": 30,
+      "event_type_counts": {
+        "agent_response": 1,
+        "batch_end": 1,
+        "batch_start": 1,
+        "evaluation_end": 1,
+        "evaluation_start": 1,
+        "message_observed": 1,
+        "orchestrator_run_end": 1,
+        "orchestrator_run_start": 1,
+        "result_persistence_end": 1,
+        "result_persistence_start": 1,
+        "simulation_end": 1,
+        "simulation_execution_end": 1,
+        "simulation_execution_start": 1,
+        "simulation_start": 1,
+        "tool_call_requested": 1,
+        "tool_dispatch_end": 1,
+        "tool_dispatch_start": 1,
+        "toolkit_dispatch_end": 1,
+        "toolkit_dispatch_start": 1,
+        "trace_bootstrap_end": 1,
+        "trace_bootstrap_start": 1,
+        "turn_end": 3,
+        "turn_start": 3,
+        "user_generate_end": 1,
+        "user_generate_start": 1,
+        "user_response": 1
+      },
+      "final_state": {
+        "activegraph_controlled_tau2": false,
+        "errors": [],
+        "event_counts": {
+          "agent_response": 1,
+          "batch_end": 1,
+          "batch_start": 1,
+          "evaluation_end": 1,
+          "evaluation_start": 1,
+          "message_observed": 1,
+          "orchestrator_run_end": 1,
+          "orchestrator_run_start": 1,
+          "result_persistence_end": 1,
+          "result_persistence_start": 1,
+          "simulation_end": 1,
+          "simulation_execution_end": 1,
+          "simulation_execution_start": 1,
+          "simulation_start": 1,
+          "tool_call_requested": 1,
+          "tool_dispatch_end": 1,
+          "tool_dispatch_start": 1,
+          "toolkit_dispatch_end": 1,
+          "toolkit_dispatch_start": 1,
+          "trace_bootstrap_end": 1,
+          "trace_bootstrap_start": 1,
+          "turn_end": 3,
+          "turn_start": 3,
+          "user_generate_end": 1,
+          "user_generate_start": 1,
+          "user_response": 1
+        },
+        "last_event_id": "rt-000030-e2400637",
+        "paid_llm_api_calls_made": true,
+        "returncode": 0,
+        "run_id": "20260531-153843-240865",
+        "runtime_events_path": "runtime_events.jsonl",
+        "state_packets_fed_back_to_tau2": false,
+        "status": "tau2_runtime_traced_baseline_passed",
+        "tau2_executed": true
+      },
+      "label": "runtime",
+      "message_roles": {
+        "count": 3,
+        "values": [
+          "assistant",
+          "tool",
+          "user"
+        ]
+      },
+      "parent_link_event_count": 16,
+      "payload_key_counts": {
+        "action_checks": 1,
+        "arguments": 1,
+        "argv": 1,
+        "db_check": 1,
+        "deferred_hooks": 1,
+        "domain": 3,
+        "done": 3,
+        "evaluation_type": 2,
+        "format": 1,
+        "from_role": 6,
+        "input_message": 1,
+        "kwargs": 1,
+        "message": 6,
+        "nl_assertions": 1,
+        "path": 2,
+        "requestor": 1,
+        "response": 1,
+        "result": 2,
+        "result_type": 1,
+        "returncode": 1,
+        "reward": 1,
+        "reward_info": 1,
+        "save_path": 1,
+        "simulation_id": 1,
+        "state_hash_after": 2,
+        "state_hash_before": 2,
+        "status": 10,
+        "steps": 1,
+        "task_ids": 1,
+        "termination_reason": 4,
+        "to_role": 6,
+        "tool_call": 1,
+        "validated_hooks": 1
+      },
+      "results_metadata": {
+        "action_checks_present": false,
+        "agent_cost": 0.00019240000000000001,
+        "available": true,
+        "db_check_present": false,
+        "effect_timeline_present": false,
+        "message_count": 4,
+        "nl_assertions_present": false,
+        "reward_info_keys": [
+          "action_checks",
+          "communicate_checks",
+          "db_check",
+          "env_assertions",
+          "info",
+          "nl_assertions",
+          "reward",
+          "reward_basis",
+          "reward_breakdown"
+        ],
+        "simulation_count": 1,
+        "task_count": 1,
+        "termination_reason": "max_steps",
+        "ticks_present": false,
+        "timestamp": "2026-05-31T08:38:46.737305",
+        "user_cost": 0.0003268
+      },
+      "semantic_family_counts": {
+        "batch_completed": 1,
+        "batch_started": 1,
+        "evaluation_observed": 1,
+        "evaluation_started": 1,
+        "message_observed": 3,
+        "orchestrator_completed": 1,
+        "orchestrator_started": 1,
+        "result_persistence_started": 1,
+        "results_persisted": 1,
+        "run_completed": 1,
+        "run_started": 1,
+        "simulation_execution_completed": 1,
+        "simulation_execution_started": 1,
+        "task_completed": 1,
+        "task_started": 1,
+        "tool_completed": 1,
+        "tool_dispatch_started": 1,
+        "tool_requested": 1,
+        "toolkit_completed": 1,
+        "toolkit_dispatch_started": 1,
+        "turn_completed": 3,
+        "turn_started": 3,
+        "user_generation_completed": 1,
+        "user_generation_started": 1
+      },
+      "state_hash_event_count": 15,
+      "state_hashes": {
+        "count": 1,
+        "values": [
+          "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6"
+        ]
+      },
+      "task_ids": {
+        "count": 1,
+        "values": [
+          "create_task_1"
+        ]
+      },
+      "tool_names": {
+        "count": 1,
+        "values": [
+          "get_users"
+        ]
+      },
+      "turn_indexes": {
+        "count": 3,
+        "values": [
+          0,
+          1,
+          2
+        ]
+      },
+      "usage_metadata_event_count": 4
+    }
+  },
+  "event_counts": {
+    "postrun": 12,
+    "runtime": 30
+  },
+  "event_type_alignment": {
+    "exact_event_types_common": [],
+    "interpretation": [
+      "Exact event_type names differ because runtime tracing records live hook names while post-run extraction emits baseline.* normalized names.",
+      "Semantic families are the comparison contract for lifecycle, messages, tool requests/completions, evaluation, and result persistence.",
+      "Runtime-only start/end families are expected improvements when hooks observe boundaries as they happen."
+    ],
+    "postrun_event_count": 12,
+    "postrun_event_type_counts": {
+      "baseline.config.loaded": 1,
+      "baseline.evaluation.observed": 1,
+      "baseline.message.observed": 4,
+      "baseline.result.persisted": 1,
+      "baseline.run.completed": 1,
+      "baseline.run.started": 1,
+      "baseline.task.started": 1,
+      "baseline.tool.completed": 1,
+      "baseline.tool.requested": 1
+    },
+    "postrun_only_event_types": [
+      "baseline.config.loaded",
+      "baseline.evaluation.observed",
+      "baseline.message.observed",
+      "baseline.result.persisted",
+      "baseline.run.completed",
+      "baseline.run.started",
+      "baseline.task.started",
+      "baseline.tool.completed",
+      "baseline.tool.requested"
+    ],
+    "runtime_event_count": 30,
+    "runtime_event_type_counts": {
+      "agent_response": 1,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 1,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 1,
+      "tool_dispatch_end": 1,
+      "tool_dispatch_start": 1,
+      "toolkit_dispatch_end": 1,
+      "toolkit_dispatch_start": 1,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 3,
+      "turn_start": 3,
+      "user_generate_end": 1,
+      "user_generate_start": 1,
+      "user_response": 1
+    },
+    "runtime_only_event_types": [
+      "agent_response",
+      "batch_end",
+      "batch_start",
+      "evaluation_end",
+      "evaluation_start",
+      "message_observed",
+      "orchestrator_run_end",
+      "orchestrator_run_start",
+      "result_persistence_end",
+      "result_persistence_start",
+      "simulation_end",
+      "simulation_execution_end",
+      "simulation_execution_start",
+      "simulation_start",
+      "tool_call_requested",
+      "tool_dispatch_end",
+      "tool_dispatch_start",
+      "toolkit_dispatch_end",
+      "toolkit_dispatch_start",
+      "trace_bootstrap_end",
+      "trace_bootstrap_start",
+      "turn_end",
+      "turn_start",
+      "user_generate_end",
+      "user_generate_start",
+      "user_response"
+    ],
+    "semantic_family_counts": {
+      "common": [
+        "evaluation_observed",
+        "message_observed",
+        "results_persisted",
+        "run_completed",
+        "run_started",
+        "task_started",
+        "tool_completed",
+        "tool_requested"
+      ],
+      "postrun": {
+        "config_observed": 1,
+        "evaluation_observed": 1,
+        "message_observed": 4,
+        "results_persisted": 1,
+        "run_completed": 1,
+        "run_started": 1,
+        "task_started": 1,
+        "tool_completed": 1,
+        "tool_requested": 1
+      },
+      "postrun_only": [
+        "config_observed"
+      ],
+      "runtime": {
+        "batch_completed": 1,
+        "batch_started": 1,
+        "evaluation_observed": 1,
+        "evaluation_started": 1,
+        "message_observed": 3,
+        "orchestrator_completed": 1,
+        "orchestrator_started": 1,
+        "result_persistence_started": 1,
+        "results_persisted": 1,
+        "run_completed": 1,
+        "run_started": 1,
+        "simulation_execution_completed": 1,
+        "simulation_execution_started": 1,
+        "task_completed": 1,
+        "task_started": 1,
+        "tool_completed": 1,
+        "tool_dispatch_started": 1,
+        "tool_requested": 1,
+        "toolkit_completed": 1,
+        "toolkit_dispatch_started": 1,
+        "turn_completed": 3,
+        "turn_started": 3,
+        "user_generation_completed": 1,
+        "user_generation_started": 1
+      },
+      "runtime_only": [
+        "batch_completed",
+        "batch_started",
+        "evaluation_started",
+        "orchestrator_completed",
+        "orchestrator_started",
+        "result_persistence_started",
+        "simulation_execution_completed",
+        "simulation_execution_started",
+        "task_completed",
+        "tool_dispatch_started",
+        "toolkit_completed",
+        "toolkit_dispatch_started",
+        "turn_completed",
+        "turn_started",
+        "user_generation_completed",
+        "user_generation_started"
+      ]
+    }
+  },
+  "generated_at_utc": "2026-05-31T15:50:12.598109Z",
+  "inputs": {
+    "postrun_artifact_index_path": "runs/20260531-042306-420109/extracted_trace/baseline_artifact_index.json",
+    "postrun_baseline_dir": "runs/20260531-042306-420109",
+    "postrun_events_path": "runs/20260531-042306-420109/extracted_trace/baseline_trace.jsonl",
+    "postrun_final_state_path": "runs/20260531-042306-420109/extracted_trace/baseline_trace_final_state.json",
+    "postrun_results_path": "runs/20260531-042306-420109/tau2_output/results.json",
+    "postrun_summary_path": "runs/20260531-042306-420109/extracted_trace/baseline_trace_summary.md",
+    "runtime_artifact_results_path": "runs/20260531-153843-240865/tau2_artifacts/results.json",
+    "runtime_events_path": "runs/20260531-153843-240865/runtime_events.jsonl",
+    "runtime_final_state_path": "runs/20260531-153843-240865/runtime_trace_final_state.json",
+    "runtime_hook_map_path": "runs/20260531-153843-240865/runtime_hook_map.json",
+    "runtime_results_path": "runs/20260531-153843-240865/tau2_output/results.json",
+    "runtime_run_dir": "runs/20260531-153843-240865",
+    "runtime_summary_path": "runs/20260531-153843-240865/runtime_trace_summary.md"
+  },
+  "no_rerun_no_api_guarantees": {
+    "activegraph_controlled_tau2_by_comparison": false,
+    "llm_api_calls_made_by_comparison": false,
+    "model_backed_episode_run_by_comparison": false,
+    "requires_api_keys": false,
+    "state_packets_fed_back_to_tau2_by_comparison": false,
+    "tau2_rerun_performed_by_comparison": false,
+    "vendor_tau2_bench_mutated_by_comparison": false
+  },
+  "optional_postrun_artifacts": {
+    "activegraph_projection": {
+      "available": false,
+      "files": [
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/activegraph_projection/activegraph_baseline_projection.json",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/activegraph_projection/activegraph_baseline_events.jsonl",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/activegraph_projection/activegraph_baseline_state_packets.jsonl",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/activegraph_projection/activegraph_projection_final_state.json",
+          "sha256": null
+        }
+      ],
+      "path": "runs/20260531-042306-420109/activegraph_projection"
+    },
+    "trace_comparison": {
+      "available": false,
+      "files": [
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/trace_comparison/trace_comparison_report.json",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/trace_comparison/trace_comparison_summary.md",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/trace_comparison/coverage_gaps.json",
+          "sha256": null
+        },
+        {
+          "available": false,
+          "path": "runs/20260531-042306-420109/trace_comparison/final_state.json",
+          "sha256": null
+        }
+      ],
+      "path": "runs/20260531-042306-420109/trace_comparison"
+    }
+  },
+  "output_files": [
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_vs_postrun_comparison.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_vs_postrun_summary.md",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_coverage_gaps.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/event_type_alignment.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/final_state.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/raw.log"
+  ],
+  "postrun_trace_inspection": {
+    "artifact_index": {
+      "files_inspected": [
+        {
+          "contributed_events": true,
+          "event_count": 3,
+          "notes": [],
+          "parser": "json",
+          "path": "runs/20260531-042306-420109/final_state.json",
+          "relative_path": "final_state.json",
+          "sha256": "sha256:6e9975fd32deed3b2cdb52c75ddcad3326dd9a5b1af59b35b809af3e1bbd0d76",
+          "size_bytes": 2620
+        },
+        {
+          "contributed_events": false,
+          "event_count": 0,
+          "notes": [],
+          "parser": "tau2_wrapper_raw_log_text",
+          "path": "runs/20260531-042306-420109/raw.log",
+          "relative_path": "raw.log",
+          "sha256": "sha256:406e144eaf8da309e3653835af87d9e7fcdd2c3b26337d78e8fc3ac92c47a83f",
+          "size_bytes": 8487
+        },
+        {
+          "contributed_events": false,
+          "event_count": 0,
+          "notes": [],
+          "parser": "markdown_metadata",
+          "path": "runs/20260531-042306-420109/summary.md",
+          "relative_path": "summary.md",
+          "sha256": "sha256:874b2e7746310866c9d1cd8003fd0fab47ba49c620e75bc1b7ff3119581f1e25",
+          "size_bytes": 1622
+        },
+        {
+          "contributed_events": false,
+          "event_count": 0,
+          "notes": [
+            "copy of tau2_output/results.json; indexed but not parsed for duplicate events"
+          ],
+          "parser": "json",
+          "path": "runs/20260531-042306-420109/tau2_artifacts/results.json",
+          "relative_path": "tau2_artifacts/results.json",
+          "sha256": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174",
+          "size_bytes": 11954
+        },
+        {
+          "contributed_events": true,
+          "event_count": 9,
+          "notes": [],
+          "parser": "json",
+          "path": "runs/20260531-042306-420109/tau2_output/results.json",
+          "relative_path": "tau2_output/results.json",
+          "sha256": "sha256:38ac148e0e76e87ddacb90baf876c976b2f8598e538510785a452d44f5a8e174",
+          "size_bytes": 11954
+        }
+      ],
+      "fixture_backed": false,
+      "generated_at_utc": "2026-05-31T05:11:05.419945Z",
+      "llm_api_calls_made_by_extractor": false,
+      "missing_or_unsupported_artifact_notes": [
+        "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+      ],
+      "phase": "real_tau2_model_baseline_extracted",
+      "source_run_directory": "runs/20260531-042306-420109",
+      "supported_tau2_formats": [
+        "wrapper final_state.json object",
+        "wrapper summary.md markdown",
+        "wrapper raw.log text",
+        "tau2 results.json object with tasks[] and simulations[].messages[]"
+      ],
+      "tau2_rerun": false,
+      "trace_mode": "post_run_extraction",
+      "unsupported_tau2_formats_observed": []
+    },
+    "final_state": {
+      "artifacts_inspected": 5,
+      "event_count": 12,
+      "event_schema_fields": [
+        "event_id",
+        "timestamp",
+        "run_id",
+        "phase",
+        "component",
+        "event_type",
+        "task_id",
+        "turn_index",
+        "tool_name",
+        "message_role",
+        "state_hash",
+        "payload",
+        "parent_event_id"
+      ],
+      "event_types_emitted": [
+        "baseline.run.started",
+        "baseline.config.loaded",
+        "baseline.task.started",
+        "baseline.message.observed",
+        "baseline.message.observed",
+        "baseline.message.observed",
+        "baseline.tool.requested",
+        "baseline.message.observed",
+        "baseline.tool.completed",
+        "baseline.evaluation.observed",
+        "baseline.result.persisted",
+        "baseline.run.completed"
+      ],
+      "fixture_backed": false,
+      "limitations": [
+        "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+        "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted."
+      ],
+      "llm_api_calls_made_by_extractor": false,
+      "model": "gpt-4.1-mini",
+      "output_files": [
+        "runs/20260531-042306-420109/extracted_trace/baseline_trace.jsonl",
+        "runs/20260531-042306-420109/extracted_trace/baseline_trace_summary.md",
+        "runs/20260531-042306-420109/extracted_trace/baseline_trace_final_state.json",
+        "runs/20260531-042306-420109/extracted_trace/baseline_artifact_index.json"
+      ],
+      "phase": "real_tau2_model_baseline_extracted",
+      "provider": "openai",
+      "requires_api_keys": false,
+      "run_id": "20260531-042306-420109",
+      "schema_version": "trace_event.v1",
+      "source_run_dir": "runs/20260531-042306-420109",
+      "source_status": "tau2_model_baseline_passed",
+      "status": "tau2_baseline_trace_extraction_passed",
+      "task_id": "create_task_1",
+      "tau2_rerun": false,
+      "timestamp_utc": "2026-05-31T05:11:05.418936Z",
+      "trace_mode": "post_run_extraction",
+      "unique_event_types_emitted": [
+        "baseline.config.loaded",
+        "baseline.evaluation.observed",
+        "baseline.message.observed",
+        "baseline.result.persisted",
+        "baseline.run.completed",
+        "baseline.run.started",
+        "baseline.task.started",
+        "baseline.tool.completed",
+        "baseline.tool.requested"
+      ],
+      "vendor_tau2_bench_mutated": false
+    }
+  },
+  "runtime_coverage_gaps": {
+    "gaps_closed": [
+      "Runtime trace closes the turn-level boundary gap with turn_start and turn_end events.",
+      "Runtime trace closes the tool dispatch gap with request, environment dispatch, and toolkit dispatch events.",
+      "Runtime trace adds explicit agent_response and user_response boundaries in addition to serialized messages.",
+      "Runtime trace adds evaluation start/end boundaries instead of only post-run reward observation.",
+      "Runtime trace adds result persistence start/end boundaries around tau2 result saving.",
+      "Runtime trace improves state snapshot coverage with repeated environment/toolkit state hashes around turns and tools.",
+      "Runtime run artifacts retain provider/model token and cost metadata in copied tau2 results."
+    ],
+    "missed_message_tool_evaluator_fields": [
+      "runtime events do not emit a config_observed equivalent; config remains available in tau2 results artifacts.",
+      "turn indexes do not align exactly: post-run extraction uses serialized message turn_idx values while runtime hooks use orchestrator step_count boundaries."
+    ],
+    "postrun_extraction_limitations_observed": [
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+      "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted.",
+      "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json."
+    ],
+    "posture": "Runtime tracing materially improves boundary and dispatch evidence, but remaining gaps are expected until deeper tau2 internals/evaluator details are exposed.",
+    "remaining_runtime_hook_coverage_gaps": [
+      "detailed DB assertion checks remain missing because reward_info.db_check is null.",
+      "detailed action assertion checks remain missing because reward_info.action_checks is null.",
+      "detailed natural-language assertion checks remain missing because reward_info.nl_assertions is null.",
+      "effect timeline transitions are still missing; tau2 results serialize effect_timeline as null and runtime hooks do not reconstruct it.",
+      "tick-level internals are still missing; tau2 results serialize ticks as null and runtime hooks do not emit tick events."
+    ]
+  },
+  "runtime_run_inspection": {
+    "deferred_hooks": [],
+    "final_state": {
+      "activegraph_controlled_tau2": false,
+      "errors": [],
+      "event_counts": {
+        "agent_response": 1,
+        "batch_end": 1,
+        "batch_start": 1,
+        "evaluation_end": 1,
+        "evaluation_start": 1,
+        "message_observed": 1,
+        "orchestrator_run_end": 1,
+        "orchestrator_run_start": 1,
+        "result_persistence_end": 1,
+        "result_persistence_start": 1,
+        "simulation_end": 1,
+        "simulation_execution_end": 1,
+        "simulation_execution_start": 1,
+        "simulation_start": 1,
+        "tool_call_requested": 1,
+        "tool_dispatch_end": 1,
+        "tool_dispatch_start": 1,
+        "toolkit_dispatch_end": 1,
+        "toolkit_dispatch_start": 1,
+        "trace_bootstrap_end": 1,
+        "trace_bootstrap_start": 1,
+        "turn_end": 3,
+        "turn_start": 3,
+        "user_generate_end": 1,
+        "user_generate_start": 1,
+        "user_response": 1
+      },
+      "last_event_id": "rt-000030-e2400637",
+      "paid_llm_api_calls_made": true,
+      "returncode": 0,
+      "run_id": "20260531-153843-240865",
+      "runtime_events_path": "runtime_events.jsonl",
+      "state_packets_fed_back_to_tau2": false,
+      "status": "tau2_runtime_traced_baseline_passed",
+      "tau2_executed": true
+    },
+    "hook_map_schema": "tau2_runtime_hook_map.v1",
+    "validated_hooks": [
+      "agent_base_generate_contract",
+      "batch_run_simulation_alias",
+      "batch_run_single_task",
+      "batch_run_tasks",
+      "environment_get_response",
+      "evaluator_evaluate_simulation",
+      "layer1_run_simulation",
+      "orchestrator_run",
+      "orchestrator_step",
+      "simulation_evaluate_alias",
+      "simulation_model_dump",
+      "toolkit_use_tool",
+      "user_simulator_generate_contract"
+    ]
+  },
+  "schema_alignment": {
+    "common_fields": [
+      "component",
+      "event_id",
+      "event_type",
+      "message_role",
+      "parent_event_id",
+      "payload",
+      "phase",
+      "run_id",
+      "state_hash",
+      "task_id",
+      "timestamp",
+      "tool_name",
+      "turn_index"
+    ],
+    "compatible_envelope": true,
+    "expected_event_fields": [
+      "event_id",
+      "timestamp",
+      "run_id",
+      "phase",
+      "component",
+      "event_type",
+      "task_id",
+      "turn_index",
+      "tool_name",
+      "message_role",
+      "state_hash",
+      "payload",
+      "parent_event_id"
+    ],
+    "postrun_extra_fields": [],
+    "postrun_fields": [
+      "component",
+      "event_id",
+      "event_type",
+      "message_role",
+      "parent_event_id",
+      "payload",
+      "phase",
+      "run_id",
+      "state_hash",
+      "task_id",
+      "timestamp",
+      "tool_name",
+      "turn_index"
+    ],
+    "postrun_missing_expected_fields": [],
+    "runtime_extra_fields": [],
+    "runtime_fields": [
+      "component",
+      "event_id",
+      "event_type",
+      "message_role",
+      "parent_event_id",
+      "payload",
+      "phase",
+      "run_id",
+      "state_hash",
+      "task_id",
+      "timestamp",
+      "tool_name",
+      "turn_index"
+    ],
+    "runtime_missing_expected_fields": []
+  },
+  "status": "runtime_vs_postrun_comparison_completed_with_remaining_gaps"
+}

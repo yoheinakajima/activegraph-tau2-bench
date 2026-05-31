@@ -546,7 +546,16 @@ def write_final_state(run_dir: pathlib.Path, status: str, writer: RuntimeTraceWr
     return path
 
 
-def write_summary(run_dir: pathlib.Path, status: str, writer: RuntimeTraceWriter, *, validated: list[str], deferred: list[str], command: str | None = None) -> pathlib.Path:
+def write_summary(
+    run_dir: pathlib.Path,
+    status: str,
+    writer: RuntimeTraceWriter,
+    *,
+    validated: list[str],
+    deferred: list[str],
+    command: str | None = None,
+    paid_llm_api_calls_made: bool = False,
+) -> pathlib.Path:
     path = run_dir / "runtime_trace_summary.md"
     lines = [
         "# tau2 runtime trace",
@@ -555,7 +564,7 @@ def write_summary(run_dir: pathlib.Path, status: str, writer: RuntimeTraceWriter
         f"- run_id: `{writer.run_id}`",
         f"- runtime events: `{run_dir / 'runtime_events.jsonl'}`",
         f"- event count: `{sum(writer.event_counts.values())}`",
-        f"- paid LLM/API calls made: `false`",
+        f"- paid LLM/API calls made: `{paid_llm_api_calls_made}`",
         f"- ActiveGraph control of tau2: `false`",
         f"- command: `{command or 'n/a'}`",
         "",
