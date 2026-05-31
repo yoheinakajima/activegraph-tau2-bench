@@ -1,0 +1,255 @@
+[
+  {
+    "arguments": {},
+    "message_tool_result": {
+      "content": [
+        {
+          "message": "Task 'Test task' has been assigned to you.",
+          "notification_id": "notif_1",
+          "status": "unread",
+          "task_id": "task_1"
+        }
+      ],
+      "error": false,
+      "turn_idx": 2
+    },
+    "name": "check_notifications",
+    "requestor": "user",
+    "result": [
+      {
+        "message": "Task 'Test task' has been assigned to you.",
+        "notification_id": "notif_1",
+        "status": "unread",
+        "task_id": "task_1"
+      }
+    ],
+    "sequence": 1,
+    "state_transition": {
+      "environment_state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "environment_state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "toolkit_state_hash_after": "4cf3d22eed6962ba202c8738421d8a2286d2b5a0cad1372922c928be09ccbfac",
+      "toolkit_state_hash_before": "4cf3d22eed6962ba202c8738421d8a2286d2b5a0cad1372922c928be09ccbfac"
+    },
+    "tool_call_id": "call_a58sj5r5hCXQ1yB8D1jG7ujk",
+    "tool_call_requested_event": {
+      "component": "tau2.orchestrator",
+      "event_id": "rt-000014-6b6386e7",
+      "event_type": "tool_call_requested",
+      "line": 14,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "check_notifications"
+    },
+    "tool_dispatch_end_event": {
+      "component": "tau2.environment",
+      "event_id": "rt-000018-20870e13",
+      "event_type": "tool_dispatch_end",
+      "line": 18,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "check_notifications"
+    },
+    "toolkit_dispatch_end_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000017-b4380420",
+      "event_type": "toolkit_dispatch_end",
+      "line": 17,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "check_notifications"
+    },
+    "toolkit_dispatch_start_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000016-b6fecd65",
+      "event_type": "toolkit_dispatch_start",
+      "line": 16,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "check_notifications"
+    },
+    "turn_index": 1
+  },
+  {
+    "arguments": {},
+    "message_tool_result": {
+      "content": [
+        {
+          "name": "Test User",
+          "tasks": [
+            "task_1"
+          ],
+          "user_id": "user_1"
+        }
+      ],
+      "error": false,
+      "turn_idx": 5
+    },
+    "name": "get_users",
+    "requestor": "assistant",
+    "result": [
+      {
+        "name": "Test User",
+        "tasks": [
+          "task_1"
+        ],
+        "user_id": "user_1"
+      }
+    ],
+    "sequence": 2,
+    "state_transition": {
+      "environment_state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "environment_state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "toolkit_state_hash_after": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "toolkit_state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6"
+    },
+    "tool_call_id": "call_WOofnOvr2k1Yjx86IZbtuVQQ",
+    "tool_call_requested_event": {
+      "component": "tau2.orchestrator",
+      "event_id": "rt-000030-e6a2f0cd",
+      "event_type": "tool_call_requested",
+      "line": 30,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "get_users"
+    },
+    "tool_dispatch_end_event": {
+      "component": "tau2.environment",
+      "event_id": "rt-000034-d7a04ced",
+      "event_type": "tool_dispatch_end",
+      "line": 34,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "get_users"
+    },
+    "toolkit_dispatch_end_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000033-2c27c2f2",
+      "event_type": "toolkit_dispatch_end",
+      "line": 33,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "get_users"
+    },
+    "toolkit_dispatch_start_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000032-92b8aa90",
+      "event_type": "toolkit_dispatch_start",
+      "line": 32,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "get_users"
+    },
+    "turn_index": 4
+  },
+  {
+    "arguments": {
+      "status": "completed",
+      "task_id": "task_1"
+    },
+    "message_tool_result": {
+      "content": {
+        "description": "A test task",
+        "status": "completed",
+        "task_id": "task_1",
+        "title": "Test task"
+      },
+      "error": false,
+      "turn_idx": 7
+    },
+    "name": "update_task_status",
+    "requestor": "assistant",
+    "result": {
+      "description": "A test task",
+      "status": "completed",
+      "task_id": "task_1",
+      "title": "Test task"
+    },
+    "sequence": 3,
+    "state_transition": {
+      "environment_state_hash_after": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+      "environment_state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6",
+      "toolkit_state_hash_after": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+      "toolkit_state_hash_before": "107f83a70b7bf4f616e283b0b0b8451346fe7681173398d4498a1ec15c5fdfc6"
+    },
+    "tool_call_id": "call_jgp0Pw7V42mJqSYfMO9bFtdj",
+    "tool_call_requested_event": {
+      "component": "tau2.orchestrator",
+      "event_id": "rt-000041-29a8dc6d",
+      "event_type": "tool_call_requested",
+      "line": 41,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "update_task_status"
+    },
+    "tool_dispatch_end_event": {
+      "component": "tau2.environment",
+      "event_id": "rt-000045-b9d9e0e6",
+      "event_type": "tool_dispatch_end",
+      "line": 45,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "update_task_status"
+    },
+    "toolkit_dispatch_end_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000044-f81a4e85",
+      "event_type": "toolkit_dispatch_end",
+      "line": 44,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "update_task_status"
+    },
+    "toolkit_dispatch_start_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000043-24d505e2",
+      "event_type": "toolkit_dispatch_start",
+      "line": 43,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "update_task_status"
+    },
+    "turn_index": 6
+  },
+  {
+    "arguments": {
+      "notification_id": "notif_1"
+    },
+    "message_tool_result": {
+      "content": "Notification notif_1 dismissed",
+      "error": false,
+      "turn_idx": 10
+    },
+    "name": "dismiss_notification",
+    "requestor": "user",
+    "result": "Notification notif_1 dismissed",
+    "sequence": 4,
+    "state_transition": {
+      "environment_state_hash_after": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+      "environment_state_hash_before": "b1f6b69753e521e81879e1da10df1e641e6d749b9eb2b69669f643d179e2e548",
+      "toolkit_state_hash_after": "e24aeaa25315fe5bd6768b3ce3b52e3e93517bf25e7251151c834ac908ba2f62",
+      "toolkit_state_hash_before": "4cf3d22eed6962ba202c8738421d8a2286d2b5a0cad1372922c928be09ccbfac"
+    },
+    "tool_call_id": "call_g8E5GASrHUDIh9i2qdaPBKYN",
+    "tool_call_requested_event": {
+      "component": "tau2.orchestrator",
+      "event_id": "rt-000057-2dc57655",
+      "event_type": "tool_call_requested",
+      "line": 57,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "dismiss_notification"
+    },
+    "tool_dispatch_end_event": {
+      "component": "tau2.environment",
+      "event_id": "rt-000061-38019f8d",
+      "event_type": "tool_dispatch_end",
+      "line": 61,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "dismiss_notification"
+    },
+    "toolkit_dispatch_end_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000060-2ce5bab7",
+      "event_type": "toolkit_dispatch_end",
+      "line": 60,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "dismiss_notification"
+    },
+    "toolkit_dispatch_start_event": {
+      "component": "tau2.environment.toolkit",
+      "event_id": "rt-000059-42ca288a",
+      "event_type": "toolkit_dispatch_start",
+      "line": 59,
+      "source_artifact": "runtime_events.jsonl",
+      "tool_name": "dismiss_notification"
+    },
+    "turn_index": 9
+  }
+]

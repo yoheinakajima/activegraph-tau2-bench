@@ -136,6 +136,17 @@ python scripts/analyze_full_mock_failures.py \
 
 The analyzer writes `failure_analysis_detailed.json`, `failure_analysis_summary.md`, `failed_task_timelines.json`, `failed_task_event_slices.jsonl`, `scoring_evidence.json`, `final_state.json`, and `raw.log` under `runs/20260531-184109-726391/full_mock_failure_analysis/`. It explains why `update_task_with_initialization_data` received reward `0.0` despite DB/write success and why `update_task_with_user_tools` hit `max_steps`. See [Full mock baseline detailed failure analysis](docs/full_mock_failure_analysis.md).
 
+
+### Update task user-tools DB mismatch analysis
+
+Analyze the committed `update_task_with_user_tools` runtime-traced failure artifact offline without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/analyze_update_task_user_tools_db_mismatch.py --runtime-run-dir runs/20260531-191847-173904
+```
+
+The analyzer writes `db_mismatch_analysis.json`, `db_mismatch_summary.md`, `tool_call_timeline.json`, `expected_vs_observed.json`, `scoring_evidence.json`, `final_state.json`, and `raw.log` under `runs/20260531-191847-173904/db_mismatch_analysis/`. It identifies whether the assistant updated the wrong task/status, whether notification dismissal succeeded, how user DB state differs from gold DB replay, and why the env assertion can pass while the combined DB check fails. See [update_task_with_user_tools DB mismatch analysis](docs/update_task_user_tools_db_mismatch.md).
+
 ### Runtime DB mutation analysis
 
 Project the available DB mutation evidence from the successful runtime-traced tau2 baseline without rerunning tau2 or calling APIs:
