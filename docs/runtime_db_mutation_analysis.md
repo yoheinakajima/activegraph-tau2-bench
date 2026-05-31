@@ -1,12 +1,12 @@
 # Runtime DB mutation analysis
 
-This document describes the offline deterministic DB-diff / mutation-summary projection for the successful runtime-traced tau2 baseline at `runs/20260531-155904-128551`.
+This document describes the offline deterministic DB-diff / mutation-summary projection for runtime-traced tau2 baselines, including successful runs, no-write failures, and partial-progress failures.
 
 ## Purpose
 
-The analyzer inspects already-produced artifacts from the successful runtime-traced baseline and projects the DB mutation evidence that is available without fabricating a complete database diff.
+The analyzer inspects already-produced artifacts from a runtime-traced baseline and projects the DB mutation evidence that is available without fabricating a complete database diff.
 
-The canonical run reports:
+The canonical successful run reports:
 
 - 44 runtime events
 - reward `1.0`
@@ -36,9 +36,15 @@ The analyzer requires and inspects these existing source artifacts:
 
 - `runtime_events.jsonl`
 - `tau2_output/results.json`
-- `runtime_success_analysis/completion_path.json`
-- `runtime_success_analysis/successful_runtime_trace_analysis.json`
-- `runtime_success_analysis/final_state.json`
+
+When present, it also uses generalized outcome-analysis artifacts as confirmation context, with legacy successful-runtime artifacts as a fallback:
+
+- `runtime_outcome_analysis/completion_or_failure_path.json`
+- `runtime_outcome_analysis/runtime_outcome_analysis.json`
+- `runtime_outcome_analysis/final_state.json`
+- `runtime_success_analysis/completion_path.json` (legacy fallback)
+- `runtime_success_analysis/successful_runtime_trace_analysis.json` (legacy fallback)
+- `runtime_success_analysis/final_state.json` (legacy fallback)
 
 It performs artifact analysis only. It does not run tau2, run a model-backed episode, call LLM/API services, require API keys, mutate `vendor/tau2-bench`, or add ActiveGraph control over tau2.
 
@@ -61,9 +67,15 @@ The projection uses only evidence that exists in the committed run artifacts:
 4. Tool result payloads from toolkit result fields and tool-message content.
 5. State hash before/after fields around the write tool.
 6. tau2 reward, DB check, and action check fields from `tau2_output/results.json`.
-7. Existing successful runtime-trace final metrics for normal stop and error counts.
+7. Existing runtime outcome-analysis final metrics for normal stop and error counts, with legacy successful-runtime metrics as a fallback.
 
-## Canonical findings
+## Compatibility findings
+
+The analyzer supports three important evidence shapes:
+
+- Success write with reward success: a live write is detected, DB match is true, and reward/action checks pass.
+- No-write failure: expected write action checks exist, but no live write dispatch is detected before evaluation.
+- Partial-progress write with reward failure: a live write/result/state-hash change is detected, but reward/DB/action/termination criteria do not pass.
 
 The canonical successful run has one detected live runtime write:
 
