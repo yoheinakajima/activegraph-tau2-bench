@@ -77,6 +77,21 @@ python scripts/run_tau2_model_baseline.py \
 The wrapper refuses to run without provider/model configuration and the paid-API acknowledgement flag, reports only API-key presence booleans, and writes artifacts under ignored `runs/<timestamp>/` directories. See [Explicit opt-in tau2 model baseline](docs/tau2_model_baseline.md) for setup, outputs, and troubleshooting.
 
 
+
+## Airline task 8 prompt/control variant
+
+An explicit opt-in prompt/control variant runner is available for investigating the airline task 8 passenger-preservation failure mode. It is **not** included in `python scripts/run_all_smokes.py`, keeps concurrency at 1, records the exact prompt variant under `runs/<timestamp>/`, and refuses unless provider/model and the paid-API acknowledgement are supplied.
+
+```bash
+python scripts/run_airline_task8_prompt_variant.py \
+  --provider openai \
+  --model gpt-4.1-mini \
+  --max-steps 30 \
+  --yes-i-understand-this-may-call-paid-apis
+```
+
+See [Airline task 8 prompt/control variant](docs/airline_task8_prompt_variant.md) for boundaries, refusal checks, and artifact details.
+
 ### Runtime trace-only tau2 instrumentation
 
 A no-LLM runtime trace smoke validates the trace writer, hook schema, and non-invasive monkeypatch installation without requiring API keys or paid services:
