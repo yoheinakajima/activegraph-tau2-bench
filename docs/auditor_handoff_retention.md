@@ -178,6 +178,9 @@ Each entry includes:
 | `hash_reference` | Pointer into `artifact_hash_manifest.json`. |
 
 The manifest is advisory. Retaining artifacts does not approve live execution.
+The Phase 12 smoke also verifies that the referenced Phase 11 human-review package
+reported a passing status and preserved `live_ready=false` before the auditor
+handoff package can pass.
 
 ## Artifact hash manifest schema
 
