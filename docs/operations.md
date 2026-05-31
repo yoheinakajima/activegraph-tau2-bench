@@ -14,9 +14,15 @@ python --version
 
 The local smoke and health scripts use the Python standard library. They do not require API keys and do not require installing the vendored tau2 package.
 
-## One-line validation
+## Validation commands
 
-Preferred compact validation:
+Use the lightweight standard-library unit test discovery command when changing runtime trace outcome classification logic or when you need the fastest check of the `tests/` suite:
+
+```bash
+python -m unittest discover -s tests
+```
+
+Use the aggregate no-LLM smoke command when you need the full local harness validation and can tolerate generated artifacts under `runs/<timestamp>/`:
 
 ```bash
 python scripts/run_all_smokes.py
@@ -27,6 +33,8 @@ Expected aggregate status:
 ```text
 aggregate_status=all_smokes_passed
 ```
+
+Neither command requires API keys, calls paid model services, or runs model-backed tau2 benchmark episodes.
 
 ## CI-lite health checks
 
@@ -42,7 +50,7 @@ Health check plus the full smoke aggregate:
 python scripts/check_repo_health.py --run-smokes
 ```
 
-The default health check is intentionally cheap and does not run all smoke scripts. The `--run-smokes` flag delegates to `python scripts/run_all_smokes.py`.
+The default health check is intentionally cheap: it checks that the runtime outcome unit test file is present, but it does not execute the full smoke suite. The `--run-smokes` flag delegates to `python scripts/run_all_smokes.py`.
 
 ## Inspect the latest aggregate run
 
@@ -131,10 +139,11 @@ Do not run any of the following without a future, explicit gate and review plan:
 
 ## GitHub Actions
 
-The repository includes a CI-lite workflow at `.github/workflows/ci.yml`. It runs the fast health check and Python compile checks only:
+The repository includes a CI-lite workflow at `.github/workflows/ci.yml`. It runs the fast health check, standard-library unit tests, and Python compile checks:
 
 ```bash
 python scripts/check_repo_health.py
+python -m unittest discover -s tests
 python -m compileall scripts experiments
 ```
 
