@@ -1,0 +1,390 @@
+{
+  "constraints": [
+    {
+      "category": "passengers/entities",
+      "constraint": "Book Sophia Silva and added passenger Kevin Smith unless the total price is above $500.",
+      "evidence_sources": [
+        {
+          "detail": "task 8 task_instructions names Kevin Smith DOB 2001-04-12 and conditional drop rule",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": "You want to book the exact same flight as your recent May 10 flight from ORD to PHL.\n\nYou do not want any other flight. \n\nYou don't have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001-04-12.\n\nYou are ok with economy and want aisle and a middle seat together. You are willing to pay up to $500 for the purchase.\n\nIf and only if the price is above $500, drop the second passenger and book only for yourself.\n\nIf the agent asks, you only want a one-way ticket, not roundtrip.\n\nYou don't need any travel insurance.\n\nYou want to pay using only one of your certificates.\n\nYou do not accept any other mode of payment. \n\nYour birthday is in your user profile so you prefer not to provide it."
+        },
+        {
+          "detail": "expected book_reservation.passengers",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            },
+            {
+              "dob": "2001-04-12",
+              "first_name": "Kevin",
+              "last_name": "Smith"
+            }
+          ]
+        },
+        {
+          "detail": "WUNA5K contains Sophia Silva DOB 1957-10-05",
+          "kind": "reservation detail",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": [
+            {
+              "dob": "1957-10-05",
+              "first_name": "Sophia",
+              "last_name": "Silva"
+            }
+          ]
+        }
+      ],
+      "id": "preserve_named_passengers",
+      "required_value": [
+        {
+          "dob": "1957-10-05",
+          "first_name": "Sophia",
+          "last_name": "Silva"
+        },
+        {
+          "dob": "2001-04-12",
+          "first_name": "Kevin",
+          "last_name": "Smith"
+        }
+      ]
+    },
+    {
+      "category": "origin/destination",
+      "constraint": "Book ORD to PHL.",
+      "evidence_sources": [
+        {
+          "detail": "reason_for_call and task instructions specify ORD to PHL",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "WUNA5K recent flight route",
+          "kind": "reservation detail",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": {
+            "destination": "PHL",
+            "origin": "ORD"
+          }
+        },
+        {
+          "detail": "expected search_direct_flight route",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": {
+            "date": "2024-05-26",
+            "destination": "PHL",
+            "origin": "ORD"
+          }
+        }
+      ],
+      "id": "origin_destination",
+      "required_value": {
+        "destination": "PHL",
+        "origin": "ORD"
+      }
+    },
+    {
+      "category": "travel date",
+      "constraint": "Book the new one-way outbound for 2024-05-26.",
+      "evidence_sources": [
+        {
+          "detail": "reason_for_call says May 26",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "expected search_direct_flight.date",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": "2024-05-26"
+        }
+      ],
+      "id": "travel_date",
+      "required_value": "2024-05-26"
+    },
+    {
+      "category": "selected flight",
+      "constraint": "Use the same May 10 ORD→PHL flight number, HAT271, on the new travel date.",
+      "evidence_sources": [
+        {
+          "detail": "WUNA5K outbound flight is HAT271 ORD→PHL on 2024-05-10",
+          "kind": "reservation detail",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": {
+            "date": "2024-05-10",
+            "destination": "PHL",
+            "flight_number": "HAT271",
+            "origin": "ORD",
+            "price": 160
+          }
+        },
+        {
+          "detail": "HAT271 is available on 2024-05-26",
+          "kind": "flight-search result",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": {
+            "available_seats": {
+              "basic_economy": 20,
+              "business": 14,
+              "economy": 3
+            },
+            "status": "available"
+          }
+        },
+        {
+          "detail": "expected book_reservation.flights",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": [
+            {
+              "date": "2024-05-26",
+              "flight_number": "HAT271"
+            }
+          ]
+        }
+      ],
+      "id": "selected_flight",
+      "required_value": [
+        {
+          "date": "2024-05-26",
+          "flight_number": "HAT271"
+        }
+      ]
+    },
+    {
+      "category": "cabin/class",
+      "constraint": "Use economy cabin.",
+      "evidence_sources": [
+        {
+          "detail": "task says user is ok with economy",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "WUNA5K cabin",
+          "kind": "reservation detail",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": "economy"
+        },
+        {
+          "detail": "expected book_reservation.cabin",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": "economy"
+        }
+      ],
+      "id": "cabin_class",
+      "required_value": "economy"
+    },
+    {
+      "category": "baggage constraints",
+      "constraint": "No baggage for this booking.",
+      "evidence_sources": [
+        {
+          "detail": "task says user does not have any baggages",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "expected baggage arguments",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": {
+            "nonfree_baggages": 0,
+            "total_baggages": 0
+          }
+        }
+      ],
+      "id": "baggage",
+      "required_value": {
+        "nonfree_baggages": 0,
+        "total_baggages": 0
+      }
+    },
+    {
+      "category": "seat constraints",
+      "constraint": "Aisle and middle seats together are requested, but book_reservation has no seat-assignment argument.",
+      "evidence_sources": [
+        {
+          "detail": "task instructions include aisle and middle seat together",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "book_reservation signature has no seat selection field",
+          "kind": "policy/tool source",
+          "path": "vendor/tau2-bench/src/tau2/domains/airline/tools.py"
+        }
+      ],
+      "id": "seat_preference",
+      "required_value": {
+        "requested": "aisle and middle seat together",
+        "tool_argument_supported": false
+      }
+    },
+    {
+      "category": "payment/price constraints",
+      "constraint": "Use only certificate_8045380 and pay exactly the total price when it is <= $500; with two passengers on HAT271 economy the total is $348.",
+      "evidence_sources": [
+        {
+          "detail": "task says use only one certificate, willing to pay up to $500, drop Kevin iff price is above $500",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "HAT271 2024-05-26 economy price and seats",
+          "kind": "flight-search result",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": {
+            "available_seats": {
+              "basic_economy": 20,
+              "business": 14,
+              "economy": 3
+            },
+            "prices": {
+              "basic_economy": 83,
+              "business": 338,
+              "economy": 174
+            },
+            "status": "available"
+          }
+        },
+        {
+          "detail": "user profile certificate_8045380 balance",
+          "kind": "reservation detail",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+          "value": {
+            "amount": 500.0,
+            "id": "certificate_8045380",
+            "source": "certificate"
+          }
+        },
+        {
+          "detail": "book_reservation requires total_payment == total_price and deducts certificates",
+          "kind": "policy/tool source",
+          "path": "vendor/tau2-bench/src/tau2/domains/airline/tools.py"
+        }
+      ],
+      "id": "payment_price",
+      "required_value": {
+        "certificate_balance": 500.0,
+        "expected_total": 348,
+        "passengers": 2,
+        "payment_methods": [
+          {
+            "amount": 348,
+            "payment_id": "certificate_8045380"
+          }
+        ],
+        "unit_price": 174
+      }
+    },
+    {
+      "category": "policy constraints",
+      "constraint": "No travel insurance.",
+      "evidence_sources": [
+        {
+          "detail": "task says user does not need travel insurance",
+          "kind": "user request",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json"
+        },
+        {
+          "detail": "expected book_reservation.insurance",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": "no"
+        }
+      ],
+      "id": "insurance",
+      "required_value": "no"
+    },
+    {
+      "category": "policy constraints",
+      "constraint": "Before booking, gather search_direct_flight evidence for ORD→PHL on 2024-05-26 to support availability and current price.",
+      "evidence_sources": [
+        {
+          "detail": "expected read action before write",
+          "kind": "task data",
+          "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+          "value": {
+            "date": "2024-05-26",
+            "destination": "PHL",
+            "origin": "ORD"
+          }
+        },
+        {
+          "detail": "search_direct_flight returns available direct flights for date/origin/destination",
+          "kind": "policy/tool source",
+          "path": "vendor/tau2-bench/src/tau2/domains/airline/tools.py"
+        }
+      ],
+      "id": "prerequisite_search_evidence",
+      "required_value": {
+        "date": "2024-05-26",
+        "destination": "PHL",
+        "origin": "ORD"
+      }
+    }
+  ],
+  "derived_price_calculation": {
+    "cabin": "economy",
+    "date": "2024-05-26",
+    "drop_second_passenger_condition_triggered": false,
+    "expected_total": 348,
+    "flight_number": "HAT271",
+    "insurance_fee": 0,
+    "nonfree_baggage_fee": 0,
+    "passenger_count": 2,
+    "unit_price": 174
+  },
+  "expected_write_arguments": {
+    "cabin": "economy",
+    "destination": "PHL",
+    "flight_type": "one_way",
+    "flights": [
+      {
+        "date": "2024-05-26",
+        "flight_number": "HAT271"
+      }
+    ],
+    "insurance": "no",
+    "nonfree_baggages": 0,
+    "origin": "ORD",
+    "passengers": [
+      {
+        "dob": "1957-10-05",
+        "first_name": "Sophia",
+        "last_name": "Silva"
+      },
+      {
+        "dob": "2001-04-12",
+        "first_name": "Kevin",
+        "last_name": "Smith"
+      }
+    ],
+    "payment_methods": [
+      {
+        "amount": 348,
+        "payment_id": "certificate_8045380"
+      }
+    ],
+    "total_baggages": 0,
+    "user_id": "sophia_silva_7557"
+  },
+  "offline_boundary": {
+    "activegraph_control_added": false,
+    "api_keys_required": false,
+    "llm_api_calls": false,
+    "model_backed_episode": false,
+    "tau2_rerun": false,
+    "vendor_tau2_bench_mutated": false
+  },
+  "status": "ledger_built_from_offline_artifacts",
+  "task_id": "8"
+}

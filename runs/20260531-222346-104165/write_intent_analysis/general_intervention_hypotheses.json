@@ -1,0 +1,67 @@
+{
+  "avoid_task_specific_prompt_tuning": true,
+  "hypotheses": [
+    {
+      "classification": [
+        "offline-detectable now",
+        "runtime-observable next",
+        "requires future control/manager behavior"
+      ],
+      "description": "Construct a structured packet of required entities, route/date, selected flight, class, baggage, insurance, price, payment method, and prerequisite evidence before any irreversible booking write.",
+      "future_control_manager_behavior": "A manager would need authority to block, repair, or request clarification before dispatch.",
+      "name": "pre-write constraint packet",
+      "offline_detectable_now": "Existing traces can show whether actual write arguments violate the packet.",
+      "runtime_observable_next": "Runtime tracing can observe when a write is about to dispatch and whether the packet has required evidence."
+    },
+    {
+      "classification": [
+        "offline-detectable now",
+        "runtime-observable next",
+        "requires future control/manager behavior"
+      ],
+      "description": "Maintain a durable ledger that merges user constraints with reservation, search, policy, and tool outputs so later write construction cannot silently drop entities or overwrite constraints.",
+      "future_control_manager_behavior": "A manager can enforce ledger invariants across planning and tool dispatch.",
+      "name": "entity/constraint ledger from user request and tool results",
+      "offline_detectable_now": "Completed artifacts can reconstruct a ledger for audits like this one.",
+      "runtime_observable_next": "A future trace hook can update the ledger after each observed user or tool message."
+    },
+    {
+      "classification": [
+        "offline-detectable now",
+        "runtime-observable next",
+        "requires future control/manager behavior"
+      ],
+      "description": "Diff intended constraints against concrete tool arguments before the tool call, flagging missing passengers, unsupported flight selection, or payment totals that do not equal known prices.",
+      "future_control_manager_behavior": "Blocking or editing arguments requires an explicit control plane not added here.",
+      "name": "write-intent vs tool-argument diff before dispatch",
+      "offline_detectable_now": "The same diff can be run after the episode using saved arguments.",
+      "runtime_observable_next": "The diff can be computed at tool_call_requested time."
+    },
+    {
+      "classification": [
+        "offline-detectable now",
+        "runtime-observable next",
+        "requires future control/manager behavior"
+      ],
+      "description": "Require evidence for user identity, source reservation, selected flight availability, current price, passenger count, payment coverage, and no-insurance/no-baggage policy before booking.",
+      "future_control_manager_behavior": "A future manager could prevent irreversible writes until the checklist passes.",
+      "name": "policy/evidence checklist before irreversible booking",
+      "offline_detectable_now": "Traces show whether prerequisite read actions occurred before the write.",
+      "runtime_observable_next": "The checklist can be observed and scored in live traces before a write."
+    },
+    {
+      "classification": [
+        "offline-detectable now",
+        "runtime-observable next",
+        "requires future control/manager behavior"
+      ],
+      "description": "After a write, compare the resulting reservation or error against the pre-write packet to detect silent drops, mismatched totals, or failed mutations immediately.",
+      "future_control_manager_behavior": "Remediation, rollback, or follow-up correction requires future control behavior.",
+      "name": "post-tool mutation verification against intended constraints",
+      "offline_detectable_now": "Saved tool results and final state can be compared to intended constraints after the run.",
+      "runtime_observable_next": "A trace observer can verify tool_dispatch_end results against intent."
+    }
+  ],
+  "recommended_direction": "general pre-write constraint/check mechanism aligned with future ActiveGraph manager behavior",
+  "status": "general_intervention_hypotheses_only_no_control_added"
+}

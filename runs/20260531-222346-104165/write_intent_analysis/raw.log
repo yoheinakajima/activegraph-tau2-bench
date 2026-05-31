@@ -1,0 +1,8 @@
+status=airline_task8_write_intent_analysis_passed
+generated_at=2026-05-31T22:52:37.116745Z
+baseline_run_dir=runs/20260531-204930-608103
+variant_run_dir=runs/20260531-222346-104165
+offline_boundary={"activegraph_control_added": false, "api_keys_required": false, "llm_api_calls": false, "model_backed_episode": false, "tau2_rerun": false, "vendor_tau2_bench_mutated": false}
+baseline_verdict=violates_ledger
+variant_verdict=violates_ledger
+outputs_dir=runs/20260531-222346-104165/write_intent_analysis

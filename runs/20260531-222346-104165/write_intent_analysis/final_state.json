@@ -1,0 +1,127 @@
+{
+  "baseline_summary": {
+    "db_match": false,
+    "db_reward": 0.0,
+    "message_count": 30,
+    "read_actions_matched": 3,
+    "read_actions_total": 3,
+    "reward": 0.0,
+    "runtime_event_count": 167,
+    "runtime_event_types": {
+      "agent_response": 14,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 8,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 8,
+      "tool_dispatch_end": 9,
+      "tool_dispatch_start": 9,
+      "toolkit_dispatch_end": 13,
+      "toolkit_dispatch_start": 13,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 29,
+      "turn_start": 29,
+      "user_generate_end": 7,
+      "user_generate_start": 7,
+      "user_response": 7
+    },
+    "simulation_id": "6a42139d-b1b6-4ccf-be58-d40a712240e3",
+    "task_id": "8",
+    "termination_reason": "user_stop",
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  },
+  "generated_at": "2026-05-31T22:52:37.116745Z",
+  "offline_boundary": {
+    "activegraph_control_added": false,
+    "api_keys_required": false,
+    "llm_api_calls": false,
+    "model_backed_episode": false,
+    "tau2_rerun": false,
+    "vendor_tau2_bench_mutated": false
+  },
+  "source_artifacts": {
+    "airline_db": {
+      "path": "vendor/tau2-bench/data/tau2/domains/airline/db.json",
+      "sha256": "sha256:1af9fea6e03ca7ca15a22bb3fcaf3e351393e3fc9070b6777947da8996f7531b"
+    },
+    "airline_tasks": {
+      "path": "vendor/tau2-bench/data/tau2/domains/airline/tasks.json",
+      "sha256": "sha256:ccd8ba737b4cc371415af70151187788f728d6108d0916e73bb4317b40542052"
+    },
+    "airline_tools": {
+      "path": "vendor/tau2-bench/src/tau2/domains/airline/tools.py",
+      "sha256": "sha256:3987f21c286314cb48764f97052934ff4fd60e27a0b2e4a43423911adf8eaa26"
+    },
+    "baseline_results": {
+      "path": "runs/20260531-204930-608103/tau2_output/results.json",
+      "sha256": "sha256:98c490f0cc263777d0cd547dbfb8f59a6d52945c21c70c38301108773dda7920"
+    },
+    "baseline_runtime_events": {
+      "path": "runs/20260531-204930-608103/runtime_events.jsonl",
+      "sha256": "sha256:20e05828fe92ad7a543b04ae16ae6ecf4b7ab10d4879a08e14de6a3b5ad089e1"
+    },
+    "variant_results": {
+      "path": "runs/20260531-222346-104165/tau2_output/results.json",
+      "sha256": "sha256:e25d745784c9c2a8d2256138b04f3c978750678e2d94926ceb32df9ca06e728b"
+    },
+    "variant_runtime_events": {
+      "path": "runs/20260531-222346-104165/runtime_events.jsonl",
+      "sha256": "sha256:729ad2e883569d575b3b88be1e36e8df3088c86df2f571600e71bb58e0323e20"
+    }
+  },
+  "status": "airline_task8_write_intent_analysis_passed",
+  "variant_summary": {
+    "db_match": false,
+    "db_reward": 0.0,
+    "message_count": 26,
+    "read_actions_matched": 2,
+    "read_actions_total": 3,
+    "reward": 0.0,
+    "runtime_event_count": 141,
+    "runtime_event_types": {
+      "agent_prompt_variant_installed": 1,
+      "agent_response": 10,
+      "batch_end": 1,
+      "batch_start": 1,
+      "evaluation_end": 1,
+      "evaluation_start": 1,
+      "message_observed": 3,
+      "orchestrator_run_end": 1,
+      "orchestrator_run_start": 1,
+      "result_persistence_end": 1,
+      "result_persistence_start": 1,
+      "simulation_end": 1,
+      "simulation_execution_end": 1,
+      "simulation_execution_start": 1,
+      "simulation_start": 1,
+      "tool_call_requested": 7,
+      "tool_dispatch_end": 8,
+      "tool_dispatch_start": 8,
+      "toolkit_dispatch_end": 12,
+      "toolkit_dispatch_start": 12,
+      "trace_bootstrap_end": 1,
+      "trace_bootstrap_start": 1,
+      "turn_end": 21,
+      "turn_start": 21,
+      "user_generate_end": 8,
+      "user_generate_start": 8,
+      "user_response": 8
+    },
+    "simulation_id": "9dddb59b-475d-4024-b172-888d3a4c8977",
+    "task_id": "8",
+    "termination_reason": "user_stop",
+    "write_actions_matched": 0,
+    "write_actions_total": 1
+  }
+}

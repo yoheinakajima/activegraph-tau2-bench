@@ -104,6 +104,18 @@ python scripts/compare_airline_task8_prompt_variant.py \
 
 The comparator writes `prompt_variant_comparison.json`, `prompt_variant_comparison_summary.md`, action/tool/message deltas, `generalization_assessment.json`, `final_state.json`, and `raw.log` under `runs/20260531-222346-104165/prompt_variant_comparison/`. It marks the prompt variant as task-specific, identifies the general failure class as multi-constraint write action argument construction after multi-step read evidence, and records general ActiveGraph-style intervention hypotheses without implementing them. See [Airline task 8 prompt-variant comparison](docs/airline_task8_prompt_variant_comparison.md).
 
+### Airline task 8 write-intent constraint analysis
+
+Build an offline pre-write constraint ledger and compare baseline/prompt-variant `book_reservation` arguments against the required task 8 write intent, without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/analyze_airline_task8_write_intent.py \
+  --baseline-run-dir runs/20260531-204930-608103 \
+  --variant-run-dir runs/20260531-222346-104165
+```
+
+The analyzer writes `write_intent_analysis.json`, `write_intent_summary.md`, `constraint_ledger.json`, `write_argument_diff.json`, `evidence_timeline.json`, `general_intervention_hypotheses.json`, `final_state.json`, and `raw.log` under `runs/20260531-222346-104165/write_intent_analysis/`. It identifies the baseline dropped-entity/payment mismatch, the prompt variant's missing search evidence/payment mismatch, and general pre-write constraint/check hypotheses rather than recommending more task-specific prompt tuning. See [Airline task 8 write-intent constraint analysis](docs/airline_task8_write_intent_analysis.md).
+
 ### Runtime trace-only tau2 instrumentation
 
 A no-LLM runtime trace smoke validates the trace writer, hook schema, and non-invasive monkeypatch installation without requiring API keys or paid services:

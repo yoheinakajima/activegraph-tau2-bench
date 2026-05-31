@@ -1,0 +1,335 @@
+{
+  "baseline": {
+    "actual_arguments": {
+      "cabin": "economy",
+      "destination": "PHL",
+      "flight_type": "one_way",
+      "flights": [
+        {
+          "date": "2024-05-26",
+          "flight_number": "HAT271"
+        }
+      ],
+      "insurance": "no",
+      "nonfree_baggages": 0,
+      "origin": "ORD",
+      "passengers": [
+        {
+          "dob": "1957-10-05",
+          "first_name": "Sophia",
+          "last_name": "Silva"
+        }
+      ],
+      "payment_methods": [
+        {
+          "amount": 174,
+          "payment_id": "certificate_8045380"
+        }
+      ],
+      "total_baggages": 0,
+      "user_id": "sophia_silva_7557"
+    },
+    "book_reservation_call": {
+      "arguments": {
+        "cabin": "economy",
+        "destination": "PHL",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-26",
+            "flight_number": "HAT271"
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "ORD",
+        "passengers": [
+          {
+            "dob": "1957-10-05",
+            "first_name": "Sophia",
+            "last_name": "Silva"
+          }
+        ],
+        "payment_methods": [
+          {
+            "amount": 174,
+            "payment_id": "certificate_8045380"
+          }
+        ],
+        "total_baggages": 0,
+        "user_id": "sophia_silva_7557"
+      },
+      "call_index": 0,
+      "id": "call_LnQHpr05vUeqrw6j0EA8aQHk",
+      "message_index": 26,
+      "name": "book_reservation",
+      "requestor": "assistant",
+      "turn_idx": 26
+    },
+    "dropped_entities": [
+      {
+        "dob": "2001-04-12",
+        "first_name": "Kevin",
+        "last_name": "Smith"
+      }
+    ],
+    "expected_arguments": {
+      "cabin": "economy",
+      "destination": "PHL",
+      "flight_type": "one_way",
+      "flights": [
+        {
+          "date": "2024-05-26",
+          "flight_number": "HAT271"
+        }
+      ],
+      "insurance": "no",
+      "nonfree_baggages": 0,
+      "origin": "ORD",
+      "passengers": [
+        {
+          "dob": "1957-10-05",
+          "first_name": "Sophia",
+          "last_name": "Silva"
+        },
+        {
+          "dob": "2001-04-12",
+          "first_name": "Kevin",
+          "last_name": "Smith"
+        }
+      ],
+      "payment_methods": [
+        {
+          "amount": 348,
+          "payment_id": "certificate_8045380"
+        }
+      ],
+      "total_baggages": 0,
+      "user_id": "sophia_silva_7557"
+    },
+    "expected_payment_total": 348,
+    "extra_entities": [],
+    "field_mismatches": [
+      {
+        "dropped": [
+          {
+            "dob": "2001-04-12",
+            "first_name": "Kevin",
+            "last_name": "Smith"
+          }
+        ],
+        "field": "passengers",
+        "issue": "dropped_required_entities"
+      },
+      {
+        "actual_total": 174,
+        "expected_total": 348,
+        "field": "payment_methods.amount",
+        "issue": "payment_total_mismatch"
+      }
+    ],
+    "missing_prerequisite_evidence": [],
+    "payment_total": 174,
+    "price_payment_mismatch": true,
+    "prior_tool_sequence_before_write": [
+      "get_user_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "search_direct_flight"
+    ],
+    "run_label": "baseline",
+    "search_support": {
+      "has_prior_search_direct_flight": true,
+      "matched_flight_in_prior_search_result": true,
+      "matched_price": 174,
+      "matched_search_result": {
+        "available_seats": {
+          "basic_economy": 20,
+          "business": 14,
+          "economy": 3
+        },
+        "date_requested_by_call": "2024-05-26",
+        "destination": "PHL",
+        "flight_number": "HAT271",
+        "message_index": 21,
+        "origin": "ORD",
+        "price_for_cabin": 174
+      },
+      "search_call_arguments": [
+        {
+          "date": "2024-05-26",
+          "destination": "PHL",
+          "origin": "ORD"
+        }
+      ]
+    },
+    "verdict": "violates_ledger",
+    "write_arguments_unsupported_by_prior_tool_results": [
+      "payment amount equals computed total",
+      "complete passenger set from task constraints"
+    ],
+    "write_happened_before_sufficient_evidence": false
+  },
+  "variant": {
+    "actual_arguments": {
+      "cabin": "economy",
+      "destination": "PHL",
+      "flight_type": "one_way",
+      "flights": [
+        {
+          "date": "2024-05-26",
+          "flight_number": "HAT271"
+        }
+      ],
+      "insurance": "no",
+      "nonfree_baggages": 0,
+      "origin": "ORD",
+      "passengers": [
+        {
+          "dob": "1957-10-05",
+          "first_name": "Sophia",
+          "last_name": "Silva"
+        },
+        {
+          "dob": "2001-04-12",
+          "first_name": "Kevin",
+          "last_name": "Smith"
+        }
+      ],
+      "payment_methods": [
+        {
+          "amount": 320,
+          "payment_id": "certificate_8045380"
+        }
+      ],
+      "total_baggages": 0,
+      "user_id": "sophia_silva_7557"
+    },
+    "book_reservation_call": {
+      "arguments": {
+        "cabin": "economy",
+        "destination": "PHL",
+        "flight_type": "one_way",
+        "flights": [
+          {
+            "date": "2024-05-26",
+            "flight_number": "HAT271"
+          }
+        ],
+        "insurance": "no",
+        "nonfree_baggages": 0,
+        "origin": "ORD",
+        "passengers": [
+          {
+            "dob": "1957-10-05",
+            "first_name": "Sophia",
+            "last_name": "Silva"
+          },
+          {
+            "dob": "2001-04-12",
+            "first_name": "Kevin",
+            "last_name": "Smith"
+          }
+        ],
+        "payment_methods": [
+          {
+            "amount": 320,
+            "payment_id": "certificate_8045380"
+          }
+        ],
+        "total_baggages": 0,
+        "user_id": "sophia_silva_7557"
+      },
+      "call_index": 0,
+      "id": "call_6PBVwBmv9QooLlv47ibQYqHV",
+      "message_index": 20,
+      "name": "book_reservation",
+      "requestor": "assistant",
+      "turn_idx": 20
+    },
+    "dropped_entities": [],
+    "expected_arguments": {
+      "cabin": "economy",
+      "destination": "PHL",
+      "flight_type": "one_way",
+      "flights": [
+        {
+          "date": "2024-05-26",
+          "flight_number": "HAT271"
+        }
+      ],
+      "insurance": "no",
+      "nonfree_baggages": 0,
+      "origin": "ORD",
+      "passengers": [
+        {
+          "dob": "1957-10-05",
+          "first_name": "Sophia",
+          "last_name": "Silva"
+        },
+        {
+          "dob": "2001-04-12",
+          "first_name": "Kevin",
+          "last_name": "Smith"
+        }
+      ],
+      "payment_methods": [
+        {
+          "amount": 348,
+          "payment_id": "certificate_8045380"
+        }
+      ],
+      "total_baggages": 0,
+      "user_id": "sophia_silva_7557"
+    },
+    "expected_payment_total": 348,
+    "extra_entities": [],
+    "field_mismatches": [
+      {
+        "actual_total": 320,
+        "expected_total": 348,
+        "field": "payment_methods.amount",
+        "issue": "payment_total_mismatch"
+      },
+      {
+        "field": "prerequisite_evidence",
+        "issue": "missing_prior_search_direct_flight"
+      }
+    ],
+    "missing_prerequisite_evidence": [
+      {
+        "field": "prerequisite_evidence",
+        "issue": "missing_prior_search_direct_flight"
+      }
+    ],
+    "payment_total": 320,
+    "price_payment_mismatch": true,
+    "prior_tool_sequence_before_write": [
+      "get_user_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details",
+      "get_reservation_details"
+    ],
+    "run_label": "variant",
+    "search_support": {
+      "has_prior_search_direct_flight": false,
+      "matched_flight_in_prior_search_result": false,
+      "matched_price": null,
+      "matched_search_result": null,
+      "search_call_arguments": []
+    },
+    "verdict": "violates_ledger",
+    "write_arguments_unsupported_by_prior_tool_results": [
+      "flight availability",
+      "current selected-flight price",
+      "seat availability on requested date",
+      "payment amount equals computed total"
+    ],
+    "write_happened_before_sufficient_evidence": true
+  }
+}
