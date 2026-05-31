@@ -1,0 +1,29 @@
+{
+  "activegraph_controlled_tau2": false,
+  "gaps_closed_count": 7,
+  "generated_at_utc": "2026-05-31T15:50:12.598109Z",
+  "llm_api_calls_made_by_comparison": false,
+  "missed_message_tool_evaluator_field_count": 2,
+  "model_backed_episode_run_by_comparison": false,
+  "output_dir": "runs/20260531-153843-240865/runtime_vs_postrun_comparison",
+  "output_files": [
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_vs_postrun_comparison.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_vs_postrun_summary.md",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/runtime_coverage_gaps.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/event_type_alignment.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/final_state.json",
+    "runs/20260531-153843-240865/runtime_vs_postrun_comparison/raw.log"
+  ],
+  "postrun_baseline_dir": "runs/20260531-042306-420109",
+  "postrun_event_count": 12,
+  "remaining_runtime_hook_coverage_gap_count": 5,
+  "requires_api_keys": false,
+  "runtime_event_count": 30,
+  "runtime_paid_llm_api_calls_made": true,
+  "runtime_run_dir": "runs/20260531-153843-240865",
+  "runtime_tau2_executed": true,
+  "state_packets_fed_back_to_tau2": false,
+  "status": "runtime_vs_postrun_comparison_completed_with_remaining_gaps",
+  "tau2_rerun_performed_by_comparison": false,
+  "vendor_tau2_bench_mutated_by_comparison": false
+}

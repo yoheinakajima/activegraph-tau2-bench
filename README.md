@@ -97,6 +97,19 @@ python scripts/run_tau2_runtime_traced_baseline.py \
 
 See [tau2 runtime trace-only instrumentation](docs/tau2_runtime_trace.md) for hook coverage, artifacts, status values, and no-control/no-vendor-mutation boundaries.
 
+
+### Runtime vs post-run trace comparison
+
+Compare the paid runtime-traced tau2 baseline against the earlier post-run extracted baseline trace without rerunning tau2 or calling APIs:
+
+```bash
+python scripts/compare_runtime_trace_vs_postrun_trace.py \
+  --runtime-run-dir runs/20260531-153843-240865 \
+  --postrun-baseline-dir runs/20260531-042306-420109
+```
+
+The comparator writes `runtime_vs_postrun_comparison.json`, `runtime_vs_postrun_summary.md`, `runtime_coverage_gaps.json`, `event_type_alignment.json`, `final_state.json`, and `raw.log` under `<runtime-run-dir>/runtime_vs_postrun_comparison/`. The expected canonical status is `runtime_vs_postrun_comparison_completed_with_remaining_gaps`. See [Runtime trace vs post-run extracted trace comparison](docs/runtime_vs_postrun_trace_comparison.md) for closed gaps, remaining hook coverage gaps, and no-rerun/no-API boundaries.
+
 ### Post-run baseline trace extraction
 
 Extract a normalized trace from an already-completed tau2 model baseline run without rerunning tau2 or calling LLM/API services:

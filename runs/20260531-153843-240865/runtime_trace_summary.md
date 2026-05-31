@@ -4,7 +4,7 @@
 - run_id: `20260531-153843-240865`
 - runtime events: `/Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-153843-240865/runtime_events.jsonl`
 - event count: `30`
-- paid LLM/API calls made: `false`
+- paid LLM/API calls made: `true`
 - ActiveGraph control of tau2: `false`
 - command: `python experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain mock --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 2 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260531-153843-240865/tau2_output --log-level INFO --task-ids create_task_1`
 

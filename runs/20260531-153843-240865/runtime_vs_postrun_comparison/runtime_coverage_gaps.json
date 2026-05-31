@@ -1,0 +1,32 @@
+{
+  "gaps_closed": [
+    "Runtime trace closes the turn-level boundary gap with turn_start and turn_end events.",
+    "Runtime trace closes the tool dispatch gap with request, environment dispatch, and toolkit dispatch events.",
+    "Runtime trace adds explicit agent_response and user_response boundaries in addition to serialized messages.",
+    "Runtime trace adds evaluation start/end boundaries instead of only post-run reward observation.",
+    "Runtime trace adds result persistence start/end boundaries around tau2 result saving.",
+    "Runtime trace improves state snapshot coverage with repeated environment/toolkit state hashes around turns and tools.",
+    "Runtime run artifacts retain provider/model token and cost metadata in copied tau2 results."
+  ],
+  "missed_message_tool_evaluator_fields": [
+    "runtime events do not emit a config_observed equivalent; config remains available in tau2 results artifacts.",
+    "turn indexes do not align exactly: post-run extraction uses serialized message turn_idx values while runtime hooks use orchestrator step_count boundaries."
+  ],
+  "postrun_extraction_limitations_observed": [
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize an effect_timeline; no state transition timeline was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 did not serialize tick-level events; no tick events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 has no speech_environment artifact; no audio events were emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.action_checks is null; no action check detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.db_check is null; no database assertion detail was emitted.",
+    "simulation 119def6a-5e46-4609-8c5b-11bca149b307 reward_info.nl_assertions is null; no natural-language assertion detail was emitted.",
+    "wrapper raw.log and summary.md were inspected for provenance but do not contain structured turn data beyond fields already represented in final_state.json/results.json."
+  ],
+  "posture": "Runtime tracing materially improves boundary and dispatch evidence, but remaining gaps are expected until deeper tau2 internals/evaluator details are exposed.",
+  "remaining_runtime_hook_coverage_gaps": [
+    "detailed DB assertion checks remain missing because reward_info.db_check is null.",
+    "detailed action assertion checks remain missing because reward_info.action_checks is null.",
+    "detailed natural-language assertion checks remain missing because reward_info.nl_assertions is null.",
+    "effect timeline transitions are still missing; tau2 results serialize effect_timeline as null and runtime hooks do not reconstruct it.",
+    "tick-level internals are still missing; tau2 results serialize ticks as null and runtime hooks do not emit tick events."
+  ]
+}

@@ -1,0 +1,10 @@
+comparison_status=runtime_vs_postrun_comparison_completed_with_remaining_gaps
+runtime_run_dir=runs/20260531-153843-240865
+postrun_baseline_dir=runs/20260531-042306-420109
+runtime_event_count=30
+postrun_event_count=12
+tau2_rerun_performed_by_comparison=false
+model_backed_episode_run_by_comparison=false
+llm_api_calls_made_by_comparison=false
+requires_api_keys=false
+vendor_tau2_bench_mutated_by_comparison=false
