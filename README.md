@@ -104,6 +104,17 @@ python scripts/compare_airline_task8_prompt_variant.py \
 
 The comparator writes `prompt_variant_comparison.json`, `prompt_variant_comparison_summary.md`, action/tool/message deltas, `generalization_assessment.json`, `final_state.json`, and `raw.log` under `runs/20260531-222346-104165/prompt_variant_comparison/`. It marks the prompt variant as task-specific, identifies the general failure class as multi-constraint write action argument construction after multi-step read evidence, and records general ActiveGraph-style intervention hypotheses without implementing them. See [Airline task 8 prompt-variant comparison](docs/airline_task8_prompt_variant_comparison.md).
 
+### Observer batch emission gap analysis
+
+Diagnose an existing observer-enabled runtime batch with empty observer artifacts without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/analyze_observer_batch_emission_gap.py \
+  --runtime-run-dir runs/20260601-033543-612139
+```
+
+The analyzer writes `observer_emission_gap_analysis.json`, `observer_emission_gap_summary.md`, `runtime_write_candidate_index.json`, `observer_hook_coverage.json`, `task_level_observer_coverage.json`, `final_state.json`, and `raw.log` under `<run-dir>/observer_emission_gap_analysis/`. See [Observer batch emission gap analysis](docs/observer_batch_emission_gap_analysis.md).
+
 ### Failed trace write-intent gap scan
 
 Scan existing failed or partial runtime artifacts for task-agnostic write-intent gaps without rerunning tau2 or calling LLM/API services:
