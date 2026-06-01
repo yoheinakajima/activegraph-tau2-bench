@@ -1,0 +1,126 @@
+status_start=tau2_runtime_traced_baseline_ready_not_run
+cwd=vendor/tau2-bench
+command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain airline --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 30 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033142-413096/tau2_output --log-level INFO --task-ids 8
+api_key_values_printed=false
+
+2026-05-31 20:31:43.051 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-05-31 20:31:43.051 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data
+2026-05-31 20:31:44.238 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-05-31 20:31:44.331 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-05-31 20:31:44.334 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-05-31 20:31:44.334 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: airline  Task Set: Default  Tasks: 8                                 │
+│ Trials: 1  Max Steps: 30  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: llm_agent → openai/gpt-4.1-mini                                       │
+│ User:  user_simulator → openai/gpt-4.1-mini                                  │
+│                                                                              │
+│ Save:                                                                        │
+│ /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033142-413096/tau2 │
+│ _output  Concurrency: 1  Verbose: False                                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-05-31 20:31:44.469 | INFO     | tau2.runner.checkpoint:try_resume:73 - Saving simulation batch to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033142-413096/tau2_output/results.json
+
+0/1 (trial 1/1). Running task 8, trial 1
+2026-05-31 20:31:44.471 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 8, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:31:44.547 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+Status: 0/1 complete. Avg reward: N/A. 1 running: 8.0(30s)
+Status: 0/1 complete. Avg reward: N/A. 1 running: 8.0(60s)
+2026-05-31 20:32:56.715 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=8, reward=0.0
+
+2026-05-31 20:32:56.758 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 8, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 8                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 70.52s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0139                                                          │
+│ User Cost: $0.0031                                                           │
+│ Reward: ❌ 0.0000 (COMMUNICATE: 1.0, DB: 0.0)                                │
+│                                                                              │
+│ DB Check:❌ 0.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent get_user_details [read] ✅ 1.0                                    │
+│ - 1: agent get_reservation_details [read] ✅ 1.0                             │
+│ - 2: agent search_direct_flight [read] ❌ 0.0                                │
+│ - 3: agent book_reservation [write] ❌ 0.0                                   │
+│                                                                              │
+│ Partial Action Reward: 2/4 (50.0%)                                           │
+│   Read:  2/3 (66.7%)                                                         │
+│   Write: 0/1 (0.0%)                                                          │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         1                                                │
+│   Total Tasks               1                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.0000                                           │
+│      Pass^1                 0.000                                            │
+│   💰 Avg Cost/Conversation  $0.0139                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           2/3 (66.7%)                                      │
+│   ✏️  Write Actions          0/1 (0.0%)                                       │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               ✓ 0 / ✗ 1 (0.0%)                                 │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            1                                                │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            1 (👤 1 / 🤖 0)                                  │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
