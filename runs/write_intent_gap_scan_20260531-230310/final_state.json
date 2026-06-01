@@ -1,0 +1,36 @@
+{
+  "aggregate": {
+    "cases_scanned": 8,
+    "future_activegraph_control_would_be_needed": 2,
+    "general_pre_write_checker_could_have_flagged": 2,
+    "offline_analysis_can_detect_today": 7,
+    "run_dirs_scanned": 6,
+    "runtime_observation_would_be_needed": 3,
+    "taxonomy_counts": {
+      "communication correct but DB state wrong": 3,
+      "insufficient evidence to classify": 1,
+      "max-steps before write": 0,
+      "missing entity": 1,
+      "missing prerequisite read": 1,
+      "no-write failure": 1,
+      "post-write state mismatch": 4,
+      "scoring/evaluation ambiguity": 3,
+      "unsupported selected option": 0,
+      "write before sufficient evidence": 1,
+      "wrong date/time": 0,
+      "wrong price/payment": 2,
+      "wrong quantity": 0
+    }
+  },
+  "generated_at": "2026-05-31T23:03:10.796829Z",
+  "outputs": {
+    "candidate_intervention_matrix": "runs/write_intent_gap_scan_20260531-230310/candidate_intervention_matrix.json",
+    "failure_taxonomy": "runs/write_intent_gap_scan_20260531-230310/failure_taxonomy.json",
+    "final_state": "runs/write_intent_gap_scan_20260531-230310/final_state.json",
+    "raw_log": "runs/write_intent_gap_scan_20260531-230310/raw.log",
+    "trace_case_index": "runs/write_intent_gap_scan_20260531-230310/trace_case_index.json",
+    "write_intent_gap_scan": "runs/write_intent_gap_scan_20260531-230310/write_intent_gap_scan.json",
+    "write_intent_gap_scan_summary": "runs/write_intent_gap_scan_20260531-230310/write_intent_gap_scan_summary.md"
+  },
+  "status": "write_intent_gap_scan_passed"
+}

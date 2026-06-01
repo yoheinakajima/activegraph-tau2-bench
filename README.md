@@ -104,6 +104,16 @@ python scripts/compare_airline_task8_prompt_variant.py \
 
 The comparator writes `prompt_variant_comparison.json`, `prompt_variant_comparison_summary.md`, action/tool/message deltas, `generalization_assessment.json`, `final_state.json`, and `raw.log` under `runs/20260531-222346-104165/prompt_variant_comparison/`. It marks the prompt variant as task-specific, identifies the general failure class as multi-constraint write action argument construction after multi-step read evidence, and records general ActiveGraph-style intervention hypotheses without implementing them. See [Airline task 8 prompt-variant comparison](docs/airline_task8_prompt_variant_comparison.md).
 
+### Failed trace write-intent gap scan
+
+Scan existing failed or partial runtime artifacts for task-agnostic write-intent gaps without rerunning tau2 or calling LLM/API services:
+
+```bash
+python scripts/scan_failed_traces_for_write_intent_gaps.py
+```
+
+The scanner writes `write_intent_gap_scan.json`, `write_intent_gap_scan_summary.md`, `failure_taxonomy.json`, `trace_case_index.json`, `candidate_intervention_matrix.json`, `final_state.json`, and `raw.log` under `runs/write_intent_gap_scan_<timestamp>/`. It reports whether each case is detectable offline today, requires runtime observation, or would require future ActiveGraph control for prevention. See [Failed trace write-intent gap scan](docs/write_intent_gap_scan.md).
+
 ### Airline task 8 write-intent constraint analysis
 
 Build an offline pre-write constraint ledger and compare baseline/prompt-variant `book_reservation` arguments against the required task 8 write intent, without rerunning tau2 or calling LLM/API services:

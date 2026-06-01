@@ -1,0 +1,115 @@
+{
+  "counts": {
+    "future_activegraph_control_would_be_needed": 2,
+    "general_pre_write_checker_could_have_flagged": 2,
+    "offline_analysis_can_detect_today": 7,
+    "runtime_observation_would_be_needed": 3
+  },
+  "rows": [
+    {
+      "candidate_intervention": "Passive runtime observer for stalled write progress; not a pre-write argument repair case.",
+      "case_id": "20260531-170523-841701:update_task_1",
+      "categories": [
+        "communication correct but DB state wrong",
+        "no-write failure"
+      ],
+      "confidence": "medium",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": true
+    },
+    {
+      "candidate_intervention": "Do not intervene automatically; gather stronger evidence first.",
+      "case_id": "20260531-170618-525260:create_task_1_with_env_assertions",
+      "categories": [
+        "insufficient evidence to classify"
+      ],
+      "confidence": "low",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": false,
+      "runtime_observation_would_be_needed": false
+    },
+    {
+      "candidate_intervention": "Offline evaluator/state reconciliation and clearer scoring instrumentation.",
+      "case_id": "20260531-191847-173904:update_task_with_user_tools",
+      "categories": [
+        "post-write state mismatch",
+        "scoring/evaluation ambiguity"
+      ],
+      "confidence": "medium",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": false
+    },
+    {
+      "candidate_intervention": "Pre-write constraint ledger argument check against task/user/read evidence.",
+      "case_id": "20260531-204930-608103:8",
+      "categories": [
+        "communication correct but DB state wrong",
+        "missing entity",
+        "post-write state mismatch",
+        "wrong price/payment"
+      ],
+      "confidence": "high",
+      "future_activegraph_control_would_be_needed": true,
+      "general_pre_write_checker_could_have_flagged": true,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": true
+    },
+    {
+      "candidate_intervention": "Pre-write constraint ledger argument check against task/user/read evidence.",
+      "case_id": "20260531-222346-104165:8",
+      "categories": [
+        "communication correct but DB state wrong",
+        "missing prerequisite read",
+        "post-write state mismatch",
+        "write before sufficient evidence",
+        "wrong price/payment"
+      ],
+      "confidence": "high",
+      "future_activegraph_control_would_be_needed": true,
+      "general_pre_write_checker_could_have_flagged": true,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": true
+    },
+    {
+      "candidate_intervention": "Offline evaluator/state reconciliation and clearer scoring instrumentation.",
+      "case_id": "20260531-184109-726391:update_task_with_initialization_data",
+      "categories": [
+        "scoring/evaluation ambiguity"
+      ],
+      "confidence": "medium",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": false
+    },
+    {
+      "candidate_intervention": "Post-write state reconciliation; pre-write checker may help only if expected arguments are reconstructable.",
+      "case_id": "20260531-184109-726391:update_task_with_history_and_env_assertions",
+      "categories": [
+        "post-write state mismatch"
+      ],
+      "confidence": "medium",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": false
+    },
+    {
+      "candidate_intervention": "Offline evaluator/state reconciliation and clearer scoring instrumentation.",
+      "case_id": "20260531-184109-726391:update_task_with_user_tools",
+      "categories": [
+        "scoring/evaluation ambiguity"
+      ],
+      "confidence": "medium",
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "offline_analysis_can_detect_today": true,
+      "runtime_observation_would_be_needed": false
+    }
+  ]
+}
