@@ -1,0 +1,27 @@
+{
+  "artifacts": [
+    "observer_events.jsonl",
+    "constraint_ledger_snapshots.jsonl",
+    "write_intent_diffs.jsonl",
+    "observer_summary.md",
+    "observer_final_state.json",
+    "raw.log"
+  ],
+  "case_count": 0,
+  "case_results": [],
+  "event_count": 9,
+  "observer_boundary": {
+    "activegraph_control_enabled": false,
+    "blocks_tool_calls": false,
+    "feeds_state_packets_back_to_tau2": false,
+    "llm_or_api_calls_made": false,
+    "mutates_vendor_tau2_bench": false,
+    "passive_observer_only": true,
+    "repairs_or_rolls_back": false,
+    "rewrites_tool_arguments": false
+  },
+  "run_id": "20260601-023242-818996",
+  "schema": "write_intent_observer.v1",
+  "status": "tau2_runtime_traced_baseline_passed",
+  "warning_counts_by_phase": {}
+}
