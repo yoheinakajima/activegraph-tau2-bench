@@ -266,7 +266,47 @@ Guardrails:
 - No read-action regression.
 - Observer warning false-positive rate on successful tasks.
 
-## 11. Recommended next implementation step
+## 11. Registry and taxonomy evolution model
+
+For any given eval run, the tau2 tool registry, failure taxonomy, and action-space definitions are **frozen measurement instruments**. They define how artifacts are parsed, counted, labeled, and reported for that run. The measurement layer must therefore be versioned and immutable during the run: it can observe unknowns, emit proposal artifacts, and attach conservative labels, but it must not silently rewrite its own registry, taxonomy, ledger schema, or action-space definitions while producing the same report.
+
+Conservative runtime/report-time classification rules:
+
+- Unknown tools should be classified as `ambiguous_tool` unless artifact evidence proves read-only or write behavior.
+- Unknown write-like tools should be classified as `observer_unsupported_write` when they appear to mutate state but are not covered by the current observer registry.
+- Unknown or under-evidenced failures should be classified as `insufficient_evidence` or `unclassified`, not forced into a known failure regime.
+- New ownership types, observer gaps, ledger schemas, failure regimes, and action seams should be emitted only as proposal artifacts during the current run.
+- Proposal artifacts must not silently mutate the registry or taxonomy version that is being used to measure the current run.
+
+Proposal artifact types:
+
+- `tool_registry_addition`: a previously unknown tool should be added to the registry.
+- `tool_ownership_update`: an existing or proposed tool should change ownership classification, such as read-only, assistant/business write, user/environment write, or evaluator replay write.
+- `observer_coverage_update`: observer support should be added, broadened, narrowed, or reclassified for a tool or tool family.
+- `failure_regime_addition`: a recurring failure pattern should become a named deterministic taxonomy label.
+- `ledger_schema_addition`: a new expected-constraint or evidence-ledger shape should be supported.
+- `action_seam_addition`: a new observation, warning, review, or future-control seam should be considered.
+
+Required proposal fields:
+
+| Field | Requirement |
+| --- | --- |
+| `proposed_change` | Human-readable and machine-serializable description of the registry, taxonomy, ledger, observer, or seam change. |
+| `evidence_count` | Number of runs, tasks, tool calls, observer gaps, or failures supporting the proposal. |
+| `representative_run_task_ids` | Representative run IDs and task IDs that demonstrate the proposed change. |
+| `source_artifact_paths` | Paths to raw results, runtime events, observer artifacts, analysis files, or reports supporting the proposal. |
+| `confidence` | Conservative confidence level or score, with unknowns preserved rather than inflated. |
+| `required_review_gate` | Required human review, fixture review, held-out batch, or governance gate before promotion. |
+| `affects_future_measurement_observer_or_control` | Explicit impact classification: future measurement only, observer coverage, future control, or multiple. |
+
+Promotion rule:
+
+- Proposals can update the tau2 registry, taxonomy, ledger schemas, observer coverage definitions, or action-space definitions only for **future runs**.
+- Prior reports remain tied to the registry/taxonomy/action-space version used when they were generated.
+- Historical reports may be regenerated under a newer version only as a new report artifact that records both the source artifact version and the new measurement version.
+- Controlled interventions require a separate held-out/gated evaluation even if a proposal has already been promoted for future measurement or observer coverage.
+
+## 12. Recommended next implementation step
 
 Recommended next PR in `regimes`: **add an artifact-only tau2 target skeleton**.
 
