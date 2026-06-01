@@ -1,0 +1,254 @@
+status_start=tau2_runtime_traced_baseline_ready_not_run
+cwd=vendor/tau2-bench
+command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain airline --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 30 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033543-612139/tau2_output --log-level INFO --num-tasks 5
+api_key_values_printed=false
+
+2026-05-31 20:35:44.571 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-05-31 20:35:44.572 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data
+2026-05-31 20:35:54.001 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-05-31 20:35:59.037 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-05-31 20:35:59.044 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-05-31 20:35:59.045 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: airline  Task Set: Default  Tasks: All                               │
+│ Trials: 1  Max Steps: 30  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: llm_agent → openai/gpt-4.1-mini                                       │
+│ User:  user_simulator → openai/gpt-4.1-mini                                  │
+│                                                                              │
+│ Save:                                                                        │
+│ /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033543-612139/tau2 │
+│ _output  Concurrency: 1  Verbose: False                                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-05-31 20:36:00.315 | INFO     | tau2.runner.checkpoint:try_resume:73 - Saving simulation batch to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-033543-612139/tau2_output/results.json
+
+0/5 (trial 1/1). Running task 0, trial 1
+2026-05-31 20:36:00.384 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 0, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:36:02.135 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 20:36:16.777 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=0, reward=1.0
+
+2026-05-31 20:36:16.822 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 0, Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 0                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 14.01s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0025                                                          │
+│ User Cost: $0.0011                                                           │
+│ Reward: ✅ 1.0000 (COMMUNICATE: 1.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: {'note': 'No actions to evaluate'}                                   │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+1/5 (trial 1/1). Running task 1, trial 1
+2026-05-31 20:36:16.830 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 1, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:36:16.918 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+Status: 1/5 complete. Avg reward: 1.00 (N=1). 1 running: 1.0(14s)
+2026-05-31 20:36:38.588 | WARNING  | tau2.domains.airline.tools:cancel_reservation:367 - Seats release not implemented for cancellation!!!
+
+2026-05-31 20:36:41.524 | WARNING  | tau2.domains.airline.tools:cancel_reservation:367 - Seats release not implemented for cancellation!!!
+
+2026-05-31 20:36:42.244 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=1, reward=0.0
+
+2026-05-31 20:36:42.318 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 1, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 1                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 24.11s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0071                                                          │
+│ User Cost: $0.0024                                                           │
+│ Reward: ❌ 0.0000 (COMMUNICATE: 1.0, DB: 0.0)                                │
+│                                                                              │
+│ DB Check:❌ 0.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent get_user_details [read] ✅ 1.0                                    │
+│ - 1: agent get_reservation_details [read] ✅ 1.0                             │
+│                                                                              │
+│ Partial Action Reward: 2/2 (100.0%)                                          │
+│   Read:  2/2 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2/5 (trial 1/1). Running task 2, trial 1
+2026-05-31 20:36:42.328 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 2, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:36:42.403 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+Status: 2/5 complete. Avg reward: 0.50 (N=2). 1 running: 2.0(18s)
+2026-05-31 20:37:07.426 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=2, reward=0.0
+
+2026-05-31 20:37:07.471 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 2, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 2                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 23.90s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0054                                                          │
+│ User Cost: $0.0020                                                           │
+│ Reward: ❌ 0.0000 (COMMUNICATE: 1.0, DB: 0.0)                                │
+│                                                                              │
+│ DB Check:❌ 0.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent get_user_details [read] ✅ 1.0                                    │
+│ - 1: agent get_reservation_details [read] ❌ 0.0                             │
+│ - 2: agent get_reservation_details [read] ✅ 1.0                             │
+│                                                                              │
+│ Partial Action Reward: 2/3 (66.7%)                                           │
+│   Read:  2/3 (66.7%)                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+3/5 (trial 1/1). Running task 3, trial 1
+2026-05-31 20:37:07.482 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 3, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:37:07.567 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 20:37:20.898 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=3, reward=0.0
+
+2026-05-31 20:37:20.948 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 3, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 3                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 12.24s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0025                                                          │
+│ User Cost: $0.0017                                                           │
+│ Reward: ❌ 0.0000 (COMMUNICATE: 0.0, DB: 1.0)                                │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: agent get_reservation_details [read] ✅ 1.0                             │
+│ - 1: agent get_user_details [read] ❌ 0.0                                    │
+│                                                                              │
+│ Partial Action Reward: 1/2 (50.0%)                                           │
+│   Read:  1/2 (50.0%)                                                         │
+│                                                                              │
+│ Communicate Checks:                                                          │
+│ - 0: 4 ❌                                                                    │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: None                                                            │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+4/5 (trial 1/1). Running task 4, trial 1
+2026-05-31 20:37:20.960 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: airline, Task: 4, Agent: llm_agent, User: user_simulator
+
+2026-05-31 20:37:21.042 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+Status: 4/5 complete. Avg reward: 0.25 (N=4). 1 running: 4.0(9s)
+2026-05-31 20:37:51.431 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=airline, task=4, reward=0.0
+
+2026-05-31 20:37:51.483 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: airline, Task: 4, Reward: 0.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 4                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 30.32s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Agent Cost: $0.0112                                                          │
+│ User Cost: $0.0013                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         5                                                │
+│   Total Tasks               5                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.2000                                           │
+│      Pass^1                 0.200                                            │
+│   💰 Avg Cost/Conversation  $0.0057                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           5/7 (71.4%)                                      │
+│   ✏️  Write Actions          -                                                │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               ✓ 2 / ✗ 2 (50.0%)                                │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            5                                                │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            4 (👤 4 / 🤖 0)                                  │
+│   ⏱️  Max Steps              1                                                │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
