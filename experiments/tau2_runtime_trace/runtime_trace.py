@@ -22,6 +22,8 @@ from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
+from experiments.write_intent_observer import PassiveWriteIntentObserver
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 VENDOR_DIR = REPO_ROOT / "vendor" / "tau2-bench"
 VENDOR_SRC = VENDOR_DIR / "src"
@@ -258,8 +260,9 @@ class RuntimeTraceWriter:
 
 
 class Tau2RuntimeTracer:
-    def __init__(self, writer: RuntimeTraceWriter):
+    def __init__(self, writer: RuntimeTraceWriter, write_intent_observer: PassiveWriteIntentObserver | None = None):
         self.writer = writer
+        self.write_intent_observer = write_intent_observer
         self.patches: list[PatchRecord] = []
         self.installed_hooks: list[str] = []
         self.deferred_hooks: list[str] = []
@@ -422,7 +425,10 @@ class Tau2RuntimeTracer:
         def wrapped(environment, message, *args, **kwargs):
             before = object_state_hash(environment)
             tool_name = getattr(message, "name", None)
-            eid = self.writer.record(component="tau2.environment", event_type="tool_dispatch_start", tool_name=tool_name, state_hash=before, payload={"requestor": getattr(message, "requestor", None), "arguments": to_jsonable(getattr(message, "arguments", None))})
+            arguments = to_jsonable(getattr(message, "arguments", None))
+            eid = self.writer.record(component="tau2.environment", event_type="tool_dispatch_start", tool_name=tool_name, state_hash=before, payload={"requestor": getattr(message, "requestor", None), "arguments": arguments})
+            if self.write_intent_observer is not None:
+                self.write_intent_observer.observe_runtime_tool_dispatch(task_id=None, tool_name=tool_name, arguments=arguments if isinstance(arguments, dict) else {}, state_hash=before)
             try:
                 result = original(environment, message, *args, **kwargs)
                 after = object_state_hash(environment)
@@ -438,7 +444,10 @@ class Tau2RuntimeTracer:
         @functools.wraps(original)
         def wrapped(toolkit, tool_name, *args, **kwargs):
             before = object_state_hash(toolkit)
-            eid = self.writer.record(component="tau2.environment.toolkit", event_type="toolkit_dispatch_start", tool_name=tool_name, state_hash=before, payload={"kwargs": kwargs})
+            observed_kwargs = to_jsonable(kwargs)
+            eid = self.writer.record(component="tau2.environment.toolkit", event_type="toolkit_dispatch_start", tool_name=tool_name, state_hash=before, payload={"kwargs": observed_kwargs})
+            if self.write_intent_observer is not None:
+                self.write_intent_observer.observe_runtime_tool_dispatch(task_id=None, tool_name=tool_name, arguments=observed_kwargs if isinstance(observed_kwargs, dict) else {}, state_hash=before)
             try:
                 result = original(toolkit, tool_name, *args, **kwargs)
                 after = object_state_hash(toolkit)

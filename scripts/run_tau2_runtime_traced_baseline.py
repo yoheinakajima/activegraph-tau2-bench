@@ -86,6 +86,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS, help=f"Wrapper subprocess timeout. Default: {DEFAULT_TIMEOUT_SECONDS}.")
     parser.add_argument("--allow-non-mock-domain", action="store_true", help="Second explicit override required for any domain other than mock.")
     parser.add_argument("--yes-i-understand-this-may-call-paid-apis", action="store_true", help="Required acknowledgement that this command may call paid model APIs.")
+    parser.add_argument("--enable-write-intent-observer", action="store_true", help="Also emit passive write-intent observer artifacts from runtime tool dispatch hooks. Observational only; no control.")
     return parser.parse_args()
 
 
@@ -268,6 +269,7 @@ def write_wrapper_summary(out_dir: pathlib.Path, status: str, reason: str | None
         f"- tau2 executed: `{returncode is not None}`",
         f"- returncode: `{returncode}`",
         f"- command: `{shell_join(command) if command else 'not built'}`",
+        f"- passive write-intent observer enabled: `{bool(args.enable_write_intent_observer)}`",
         "",
         "## API key-like environment variable presence",
         "",
@@ -330,6 +332,8 @@ def main() -> int:
             env["PYTHONUNBUFFERED"] = "1"
             env["TAU2_RUNTIME_TRACE_RUN_DIR"] = str(out_dir)
             env["TAU2_RUNTIME_TRACE_PENDING_STATUS"] = FAILED_STATUS
+            if args.enable_write_intent_observer:
+                env["TAU2_WRITE_INTENT_OBSERVER_ENABLED"] = "1"
             env.setdefault("PYTHONPATH", str(REPO_ROOT))
             env["PYTHONPATH"] = str(REPO_ROOT) + os.pathsep + str(VENDOR_DIR / "src") + os.pathsep + env.get("PYTHONPATH", "")
             env.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
