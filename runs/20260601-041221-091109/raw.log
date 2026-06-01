@@ -1,0 +1,129 @@
+status_start=tau2_runtime_traced_baseline_ready_not_run
+cwd=vendor/tau2-bench
+command=/Users/yoheinakajima/activegraph-tau2-bench/.venv/bin/python /Users/yoheinakajima/activegraph-tau2-bench/experiments/tau2_runtime_trace/traced_tau2_cli.py run --domain telecom --agent llm_agent --agent-llm openai/gpt-4.1-mini --user user_simulator --user-llm openai/gpt-4.1-mini --num-trials 1 --max-steps 30 --max-concurrency 1 --save-to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-041221-091109/tau2_output --log-level INFO --num-tasks 1
+api_key_values_printed=false
+
+2026-05-31 21:12:21.570 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-05-31 21:12:21.570 | INFO     | tau2.utils.utils:<module>:23 - Using data directory from environment: /Users/yoheinakajima/activegraph-tau2-bench/vendor/tau2-bench/data
+2026-05-31 21:12:22.902 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-05-31 21:12:23.023 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-05-31 21:12:23.025 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-05-31 21:12:23.025 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: telecom  Task Set: Default  Tasks: All                               │
+│ Trials: 1  Max Steps: 30  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: llm_agent → openai/gpt-4.1-mini                                       │
+│ User:  user_simulator → openai/gpt-4.1-mini                                  │
+│                                                                              │
+│ Save:                                                                        │
+│ /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-041221-091109/tau2 │
+│ _output  Concurrency: 1  Verbose: False                                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-05-31 21:12:23.352 | INFO     | tau2.runner.checkpoint:try_resume:73 - Saving simulation batch to /Users/yoheinakajima/activegraph-tau2-bench/runs/20260601-041221-091109/tau2_output/results.json
+
+0/1 (trial 1/1). Running task 
+[mobile_data_issue]airplane_mode_on|user_abroad_roaming_enabled_off[PERSONA:None
+], trial 1
+2026-05-31 21:12:23.357 | INFO     | tau2.runner.batch:run_single_task:382 - STARTING SIMULATION: Domain: telecom, Task: [mobile_data_issue]airplane_mode_on|user_abroad_roaming_enabled_off[PERSONA:None], Agent: llm_agent, User: user_simulator
+
+2026-05-31 21:12:23.384 | INFO     | tau2.orchestrator.orchestrator:_validate_mode_compatibility:477 - Orchestrator initialized in HALF_DUPLEX mode (turn-based) with agent=LLMAgent, user=UserSimulator
+
+2026-05-31 21:12:44.097 | INFO     | tau2.runner.simulation:run_simulation:87 - Simulation complete: domain=telecom, task=[mobile_data_issue]airplane_mode_on|user_abroad_roaming_enabled_off[PERSONA:None], reward=1.0
+
+2026-05-31 21:12:44.098 | INFO     | tau2.runner.batch:run_single_task:443 - FINISHED SIMULATION: Domain: telecom, Task: [mobile_data_issue]airplane_mode_on|user_abroad_roaming_enabled_off[PERSONA:None], Reward: 1.0
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mobile_data_issue]airplane_mode_on|user_abroad_roaming_enabled_off[PERSONA: │
+│ None]                                                                        │
+│ Trial: 0                                                                     │
+│ Duration: 20.66s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0113                                                          │
+│ User Cost: $0.0051                                                           │
+│ Reward: ✅ 1.0000 (ENV_ASSERTION: 1.0)                                       │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Env Assertions:                                                              │
+│ - 0: user assert_mobile_data_status ✅ 1.0                                   │
+│ - 1: user assert_internet_speed ✅ 1.0                                       │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: user toggle_airplane_mode [write] ✅ 1.0                                │
+│ - 1: user toggle_roaming [write] ✅ 1.0                                      │
+│                                                                              │
+│ Partial Action Reward: 2/2 (100.0%)                                          │
+│   Write: 2/2 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         1                                                │
+│   Total Tasks               1                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         1.0000                                           │
+│      Pass^1                 1.000                                            │
+│   💰 Avg Cost/Conversation  $0.0113                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          2/2 (100.0%)                                     │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               ✓ 1 / ✗ 0 (100.0%)                               │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            1                                                │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            1 (👤 1 / 🤖 0)                                  │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
