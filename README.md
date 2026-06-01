@@ -338,11 +338,14 @@ calling model/API services:
 python scripts/run_write_intent_observer_smoke.py
 ```
 
-The smoke writes `observer_events.jsonl`, `constraint_ledger_snapshots.jsonl`,
-`write_intent_diffs.jsonl`, `observer_summary.md`, `observer_final_state.json`,
-and `raw.log` under `runs/<timestamp>/`. It validates fixture coverage for the
-airline task 8 write gaps, a successful `create_task_1`, a no-write case, and a
-DB mismatch/scoring ambiguity case. An explicit paid/API-backed runtime traced
-baseline can optionally add passive emission with `--enable-write-intent-observer`,
-but the observer remains no-control and does not block or rewrite tau2 tool
-calls. See [Passive write-intent observer](docs/write_intent_passive_observer.md).
+The smoke writes non-empty `observer_events.jsonl`,
+`constraint_ledger_snapshots.jsonl`, `write_intent_diffs.jsonl`,
+`observer_summary.md`, `observer_final_state.json`, and `raw.log` under
+`runs/<timestamp>/`. It validates fixture coverage for the airline task 8 write
+gaps, a successful `create_task_1`, a no-write case, a DB mismatch/scoring
+ambiguity case, and a live-runtime fallback that emits an incomplete ledger plus
+not-evaluable diff when no task-specific offline ledger is available. An explicit
+paid/API-backed runtime traced baseline can optionally add passive emission with
+`--enable-write-intent-observer`, but the observer remains no-control and does
+not block or rewrite tau2 tool calls. See
+[Passive write-intent observer](docs/write_intent_passive_observer.md).

@@ -64,6 +64,36 @@ observation. It does not alter tau2 inputs, task state, tool calls, or control
 flow. Do not run paid observer-enabled episodes until the no-LLM smoke output is
 reviewed.
 
+
+## Live runtime fallback ledger/diff behavior
+
+During fixture/offline evaluation, the observer has a task-specific ledger with
+expected write arguments, required entities, prerequisite reads, supported
+options, and evidence references. Live runtime hooks often see only the tool
+dispatch boundary and local runtime context, not the task-specific offline
+ledger. In that case, every live `write_intent_candidate` now emits companion
+artifacts rather than leaving the ledger/diff files empty:
+
+- `constraint_ledger_snapshots.jsonl` receives a snapshot with
+  `status: runtime_incomplete_ledger`, low confidence, the observed tool name,
+  state hash, tool arguments, and explicit `missing_evidence_fields` such as
+  `expected_write_args`, `required_entities`, `required_prerequisite_reads`, and
+  `supported_options`.
+- `write_intent_diffs.jsonl` receives a diff row with
+  `argument_vs_ledger_diff.status: not_evaluable`. Proposed arguments are listed
+  with `comparison_status: unknown` when no expected ledger field exists, so the
+  observer does not fabricate a match or mismatch.
+- Runtime fallback diffs include a deterministic `readiness_score`, warnings such
+  as `runtime_candidate_without_fixture_ledger` and
+  `runtime_diff_not_evaluable_without_expected_ledger`, and the same explicit
+  no-control boundary flags as all other observer artifacts.
+
+This fallback is intentionally conservative: it records available evidence from
+live tool arguments and local runtime context only, marks missing evidence
+explicitly, and does not infer task constraints that were not present. It remains
+fully passive and does not block, rewrite, repair, roll back, or feed state
+packets back into tau2.
+
 ## Fixture coverage
 
 The smoke covers five representative cases from the completed offline scan and
