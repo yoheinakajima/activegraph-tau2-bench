@@ -209,35 +209,161 @@ class PassiveWriteIntentObserver:
         return result
 
     def observe_runtime_tool_dispatch(self, *, task_id: str | None, tool_name: str | None, arguments: dict[str, Any] | None, turn_index: int | None = None, state_hash: str | None = None) -> None:
-        """Emit a best-effort runtime candidate from live trace hooks.
+        """Emit best-effort runtime artifacts from live trace hooks.
+
+        Live runtime hooks do not have the deterministic fixture/offline ledger
+        used by :meth:`observe_case`.  The observer therefore emits an explicit
+        incomplete ledger and a not-evaluable diff next to every runtime write
+        candidate rather than fabricating constraints.
 
         This method intentionally has no return value used by tau2 execution.
         It cannot block, mutate, or rewrite dispatch arguments.
         """
         if tool_name not in WRITE_TOOL_HINTS:
             return
-        payload = {
+
+        proposed_arguments = arguments or {}
+        timestamp = utc_now()
+        runtime_id = uuid.uuid4().hex[:8]
+        candidate_id = f"runtime-intent-{runtime_id}"
+        case_id = task_id
+        evidence_refs = [
+            {
+                "evidence_id": f"runtime-tool-args-{runtime_id}",
+                "source": "runtime_tool_dispatch",
+                "description": "Live tool dispatch arguments observed by passive runtime trace hook.",
+                "turn_index": turn_index,
+                "tool_name": tool_name,
+                "state_hash": state_hash,
+                "available_fields": sorted(proposed_arguments.keys()),
+            }
+        ]
+        missing_evidence_fields = [
+            "fixture_or_offline_constraint_ledger",
+            "task_instruction_constraints",
+            "expected_write_args",
+            "required_entities",
+            "required_prerequisite_reads",
+            "supported_options",
+        ]
+        warnings = [
+            ObserverWarning(
+                "runtime_candidate_without_fixture_ledger",
+                "runtime_observable",
+                "low",
+                "Runtime write candidate observed without fixture/offline expected ledger; emitted incomplete passive artifacts and took no control action.",
+                [evidence_refs[0]["evidence_id"]],
+            ).to_dict(),
+            ObserverWarning(
+                "runtime_diff_not_evaluable_without_expected_ledger",
+                "runtime_observable",
+                "info",
+                "No expected ledger fields were available, so proposed write arguments were marked unknown/not_evaluable instead of treated as matching or mismatching.",
+                [evidence_refs[0]["evidence_id"]],
+            ).to_dict(),
+        ]
+        for warning in warnings:
+            self.warning_counts[warning["phase"]] = self.warning_counts.get(warning["phase"], 0) + 1
+
+        readiness_score = max(0.0, round(1.0 - sum(_severity_penalty(w["severity"]) for w in warnings), 2))
+        ledger = {
+            "status": "runtime_incomplete_ledger",
+            "confidence": "low",
+            "confidence_score": 0.35,
+            "source": "live_runtime_trace_hook",
+            "tool_name": tool_name,
+            "state_hash": state_hash,
+            "available_evidence": {
+                "tool_arguments": proposed_arguments,
+                "task_id": task_id,
+                "turn_index": turn_index,
+            },
+            "missing_evidence_fields": missing_evidence_fields,
+            "required_entities": [],
+            "expected_write_args": {},
+            "required_prerequisite_reads": [],
+            "supported_options": [],
+            "fabricated_constraints": False,
+            "notes": "Live fallback ledger records only observed runtime context; no task-specific constraints were inferred.",
+            "evidence": evidence_refs,
+        }
+        ledger_snapshot = {
             "schema": SCHEMA_VERSION,
-            "candidate_id": f"runtime-intent-{uuid.uuid4().hex[:8]}",
+            "snapshot_id": f"runtime-ledger-{runtime_id}",
+            "timestamp": timestamp,
+            "run_id": self.run_id,
+            "case_id": case_id,
             "task_id": task_id,
+            "domain": None,
+            "source": "live_runtime_trace_hook",
+            "status": "runtime_incomplete_ledger",
+            "confidence": "low",
+            "constraint_ledger": ledger,
+            "evidence_refs": evidence_refs,
+            "missing_evidence_fields": missing_evidence_fields,
+            "observer_boundary": dict(BOUNDARY_FLAGS),
+        }
+        self.ledger_writer.write(ledger_snapshot)
+        self._event("constraint_ledger_snapshot", case_id, ledger_snapshot)
+
+        candidate = {
+            "schema": SCHEMA_VERSION,
+            "candidate_id": candidate_id,
+            "task_id": task_id,
+            "case_id": case_id,
             "turn_index": turn_index,
             "tool_name": tool_name,
             "state_hash": state_hash,
-            "proposed_write_arguments": arguments or {},
-            "evidence_refs": [],
-            "warnings": [
-                ObserverWarning(
-                    "runtime_candidate_without_fixture_ledger",
-                    "runtime_observable",
-                    "low",
-                    "Runtime write candidate observed without fixture/offline expected ledger; no control action taken.",
-                    [],
-                ).to_dict()
-            ],
-            "readiness_score": 0.92,
+            "proposed_write_arguments": proposed_arguments,
+            "evidence_refs": evidence_refs,
+            "ledger_snapshot_id": ledger_snapshot["snapshot_id"],
+            "warnings": warnings,
+            "readiness_score": readiness_score,
             "observer_boundary": dict(BOUNDARY_FLAGS),
         }
-        self._event("write_intent_candidate", task_id, payload)
+        self._event("write_intent_candidate", case_id, candidate)
+
+        argument_comparisons = []
+        for path, actual in sorted(proposed_arguments.items()):
+            argument_comparisons.append(
+                {
+                    "path": path,
+                    "expected": None,
+                    "actual": actual,
+                    "comparison_status": "unknown",
+                    "evaluable": False,
+                    "reason": "no_expected_ledger_field_available",
+                }
+            )
+        diff = {
+            "schema": SCHEMA_VERSION,
+            "diff_id": f"runtime-diff-{runtime_id}",
+            "timestamp": timestamp,
+            "run_id": self.run_id,
+            "case_id": case_id,
+            "task_id": task_id,
+            "candidate_id": candidate_id,
+            "ledger_snapshot_id": ledger_snapshot["snapshot_id"],
+            "tool_name": tool_name,
+            "state_hash": state_hash,
+            "proposed_write_arguments": proposed_arguments,
+            "argument_vs_ledger_diff": {
+                "status": "not_evaluable",
+                "comparison_basis": "runtime_incomplete_ledger",
+                "argument_comparisons": argument_comparisons,
+                "missing_entities": [],
+                "argument_mismatches": [],
+                "missing_prerequisite_reads": [],
+                "unknown_expected_fields": missing_evidence_fields,
+                "selected_option": proposed_arguments.get("selected_option") or proposed_arguments.get("assignee") or proposed_arguments.get("status"),
+                "selected_option_supported": "unknown",
+            },
+            "warnings": warnings,
+            "readiness_score": readiness_score,
+            "observer_boundary": dict(BOUNDARY_FLAGS),
+        }
+        self.diff_writer.write(diff)
+        self._event("write_argument_diff", case_id, diff)
 
     def final_state(self, status: str) -> dict[str, Any]:
         return {

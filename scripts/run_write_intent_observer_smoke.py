@@ -37,6 +37,15 @@ def write(path: pathlib.Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def load_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                records.append(json.loads(line))
+    return records
+
+
 def validate_results(out_dir: pathlib.Path, results: list[dict[str, Any]], raw_log: list[str]) -> list[str]:
     errors: list[str] = []
     for artifact in ("observer_events.jsonl", "constraint_ledger_snapshots.jsonl", "write_intent_diffs.jsonl"):
@@ -44,8 +53,18 @@ def validate_results(out_dir: pathlib.Path, results: list[dict[str, Any]], raw_l
         try:
             count = validate_jsonl(path)
             raw_log.append(f"[OK] validated {artifact} jsonl_records={count}")
+            if count <= 0:
+                errors.append(f"{artifact} should be non-empty")
         except Exception as exc:  # noqa: BLE001 - smoke should report all validation errors.
             errors.append(f"{artifact} is invalid JSONL: {exc!r}")
+
+    try:
+        ledger_records = load_jsonl(out_dir / "constraint_ledger_snapshots.jsonl")
+        diff_records = load_jsonl(out_dir / "write_intent_diffs.jsonl")
+    except Exception as exc:  # noqa: BLE001 - reported as validation error.
+        ledger_records = []
+        diff_records = []
+        errors.append(f"failed to load observer artifacts for semantic checks: {exc!r}")
 
     by_case = {result["case_id"]: result for result in results}
     required_cases = {
@@ -71,6 +90,46 @@ def validate_results(out_dir: pathlib.Path, results: list[dict[str, Any]], raw_l
         errors.append("successful_create_task_1 should retain a high readiness score")
     if success and any(w.get("severity") in {"medium", "high"} for w in success.get("warnings", [])):
         errors.append("successful_create_task_1 should not emit medium/high warnings")
+    if success and success.get("warning_codes"):
+        errors.append("successful_create_task_1 should retain low/no warning behavior")
+
+    task8_cases = [
+        by_case.get("airline_task8_baseline_missing_kevin_wrong_payment"),
+        by_case.get("airline_task8_prompt_variant_wrong_payment_missing_search"),
+    ]
+    relevant_task8_warnings = {
+        "required_entity_missing",
+        "payment_mismatch",
+        "price_mismatch",
+        "selected_option_unsupported",
+        "write_before_prerequisite_read",
+    }
+    for task8 in [case for case in task8_cases if case]:
+        if not (set(task8.get("warning_codes", [])) & relevant_task8_warnings):
+            errors.append(f"{task8['case_id']} should still emit relevant airline task 8 warnings")
+
+    runtime_ledgers = [
+        record for record in ledger_records
+        if record.get("status") == "runtime_incomplete_ledger"
+        or (record.get("constraint_ledger") or {}).get("status") == "runtime_incomplete_ledger"
+    ]
+    if not runtime_ledgers:
+        errors.append("live-runtime fallback fixture should emit a runtime_incomplete_ledger snapshot")
+    runtime_diffs = [
+        record for record in diff_records
+        if (record.get("argument_vs_ledger_diff") or {}).get("status") == "not_evaluable"
+    ]
+    if not runtime_diffs:
+        errors.append("live-runtime fallback fixture should emit a not_evaluable diff")
+    runtime_warning_codes = {
+        warning.get("code")
+        for record in runtime_diffs
+        for warning in record.get("warnings", [])
+    }
+    if "runtime_candidate_without_fixture_ledger" not in runtime_warning_codes:
+        errors.append("live-runtime fallback diff should warn runtime_candidate_without_fixture_ledger")
+    if not all(record.get("observer_boundary", {}).get("activegraph_control_enabled") is False for record in runtime_diffs):
+        errors.append("live-runtime fallback diffs must preserve no-control boundary fields")
 
     boundary = BOUNDARY_FLAGS
     for key in ("activegraph_control_enabled", "blocks_tool_calls", "rewrites_tool_arguments", "repairs_or_rolls_back", "feeds_state_packets_back_to_tau2", "mutates_vendor_tau2_bench", "llm_or_api_calls_made"):
@@ -171,6 +230,14 @@ def main() -> int:
             result = observer.observe_case(case)
             results.append(result)
             raw_log.append(f"[CASE] {result['case_id']} readiness={result['readiness_score']} warnings={','.join(result['warning_codes']) or 'none'}")
+        observer.observe_runtime_tool_dispatch(
+            task_id="live_runtime_fallback_fixture",
+            tool_name="book_reservation",
+            arguments={"passengers": [{"name": "Daniel"}], "payment_method": "credit_card", "total_price": 500},
+            turn_index=8,
+            state_hash="fixture-runtime-state-hash",
+        )
+        raw_log.append("[RUNTIME] emitted live_runtime_fallback_fixture book_reservation fallback artifacts")
         validation_errors = validate_results(out_dir, results, raw_log)
         status = PASS_STATUS if not validation_errors else FAIL_STATUS
         final_state = observer.final_state(status)
