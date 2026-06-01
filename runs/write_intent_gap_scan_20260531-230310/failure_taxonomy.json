@@ -1,0 +1,73 @@
+{
+  "counts": {
+    "communication correct but DB state wrong": 3,
+    "insufficient evidence to classify": 1,
+    "max-steps before write": 0,
+    "missing entity": 1,
+    "missing prerequisite read": 1,
+    "no-write failure": 1,
+    "post-write state mismatch": 4,
+    "scoring/evaluation ambiguity": 3,
+    "unsupported selected option": 0,
+    "write before sufficient evidence": 1,
+    "wrong date/time": 0,
+    "wrong price/payment": 2,
+    "wrong quantity": 0
+  },
+  "definitions": {
+    "communication correct but DB state wrong": "The conversation/communication score is acceptable while DB state fails.",
+    "insufficient evidence to classify": "The offline artifacts do not support a more specific deterministic classification.",
+    "max-steps before write": "The episode hit max steps before a required write could be completed.",
+    "missing entity": "A write omits a required passenger/user/task/item/entity.",
+    "missing prerequisite read": "A write lacks required prior search/get/list evidence for irreversible argument grounding.",
+    "no-write failure": "The task expected a write, but no matching write tool was dispatched.",
+    "post-write state mismatch": "A write occurred, but final DB/scoring evidence does not match the expected state.",
+    "scoring/evaluation ambiguity": "Artifacts indicate ambiguity between action, DB, environment assertion, or scoring outcomes.",
+    "unsupported selected option": "A write selects an option not supported by task constraints or prior read evidence.",
+    "write before sufficient evidence": "A write is dispatched before the available trace contains enough evidence for its arguments.",
+    "wrong date/time": "A write uses an incorrect date, time, deadline, or scheduled slot.",
+    "wrong price/payment": "A write uses an incorrect price, payment total, payment split, or payment instrument.",
+    "wrong quantity": "A write uses an incorrect count, amount, baggage count, item quantity, or equivalent non-price quantity."
+  },
+  "examples": {
+    "communication correct but DB state wrong": [
+      "20260531-170523-841701:update_task_1",
+      "20260531-204930-608103:8",
+      "20260531-222346-104165:8"
+    ],
+    "insufficient evidence to classify": [
+      "20260531-170618-525260:create_task_1_with_env_assertions"
+    ],
+    "max-steps before write": [],
+    "missing entity": [
+      "20260531-204930-608103:8"
+    ],
+    "missing prerequisite read": [
+      "20260531-222346-104165:8"
+    ],
+    "no-write failure": [
+      "20260531-170523-841701:update_task_1"
+    ],
+    "post-write state mismatch": [
+      "20260531-191847-173904:update_task_with_user_tools",
+      "20260531-204930-608103:8",
+      "20260531-222346-104165:8",
+      "20260531-184109-726391:update_task_with_history_and_env_assertions"
+    ],
+    "scoring/evaluation ambiguity": [
+      "20260531-191847-173904:update_task_with_user_tools",
+      "20260531-184109-726391:update_task_with_initialization_data",
+      "20260531-184109-726391:update_task_with_user_tools"
+    ],
+    "unsupported selected option": [],
+    "write before sufficient evidence": [
+      "20260531-222346-104165:8"
+    ],
+    "wrong date/time": [],
+    "wrong price/payment": [
+      "20260531-204930-608103:8",
+      "20260531-222346-104165:8"
+    ],
+    "wrong quantity": []
+  }
+}

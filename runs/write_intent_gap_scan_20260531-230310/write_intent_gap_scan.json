@@ -1,0 +1,983 @@
+{
+  "aggregate": {
+    "cases_scanned": 8,
+    "future_activegraph_control_would_be_needed": 2,
+    "general_pre_write_checker_could_have_flagged": 2,
+    "offline_analysis_can_detect_today": 7,
+    "run_dirs_scanned": 6,
+    "runtime_observation_would_be_needed": 3,
+    "taxonomy_counts": {
+      "communication correct but DB state wrong": 3,
+      "insufficient evidence to classify": 1,
+      "max-steps before write": 0,
+      "missing entity": 1,
+      "missing prerequisite read": 1,
+      "no-write failure": 1,
+      "post-write state mismatch": 4,
+      "scoring/evaluation ambiguity": 3,
+      "unsupported selected option": 0,
+      "write before sufficient evidence": 1,
+      "wrong date/time": 0,
+      "wrong price/payment": 2,
+      "wrong quantity": 0
+    }
+  },
+  "cases": [
+    {
+      "case_id": "20260531-170523-841701:update_task_1",
+      "confidence": "medium",
+      "constraint_gaps_detected": [
+        {
+          "expected_write_tools": [
+            "update_task_status"
+          ],
+          "issue": "expected_write_action_not_dispatched",
+          "source": "reward_action_checks_vs_tool_calls"
+        },
+        {
+          "issue": "communicated_success_or_acceptably_but_db_failed",
+          "source": "reward_breakdown"
+        }
+      ],
+      "detected_read_tools": [],
+      "detected_write_tools": [],
+      "domain": "mock",
+      "expected_write_tools": [
+        "update_task_status"
+      ],
+      "failure_categories": [
+        "communication correct but DB state wrong",
+        "no-write failure"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation."
+      ],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": false,
+        "reward": 0.0,
+        "reward_basis": [
+          "DB",
+          "COMMUNICATE"
+        ],
+        "reward_breakdown": {
+          "COMMUNICATE": 1.0,
+          "DB": 0.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-170523-841701",
+      "runtime_observation_would_be_needed": true,
+      "task_description": {
+        "notes": "Basic task status update test",
+        "purpose": "Test the update_task_status functionality"
+      },
+      "task_id": "update_task_1"
+    },
+    {
+      "case_id": "20260531-170618-525260:create_task_1_with_env_assertions",
+      "confidence": "low",
+      "constraint_gaps_detected": [],
+      "detected_read_tools": [
+        {
+          "message_index": 2,
+          "name": "get_users",
+          "turn_idx": 2
+        }
+      ],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "title": "Important Meeting",
+            "user_id": "user_1"
+          },
+          "message_index": 4,
+          "name": "create_task",
+          "turn_idx": 4
+        }
+      ],
+      "domain": "mock",
+      "expected_write_tools": [],
+      "failure_categories": [
+        "insufficient evidence to classify"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "The available artifacts do not expose a concrete intended write argument mismatch or an unambiguous pre-write ledger.",
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation."
+      ],
+      "offline_analysis_can_detect_today": false,
+      "reward_outcome": {
+        "db_match": null,
+        "reward": 0.0,
+        "reward_basis": null,
+        "reward_breakdown": null,
+        "termination_reason": "max_steps"
+      },
+      "run_dir": "runs/20260531-170618-525260",
+      "runtime_observation_would_be_needed": false,
+      "task_description": {
+        "notes": "Basic task creation test with a simple title",
+        "purpose": "Test the create_task functionality"
+      },
+      "task_id": "create_task_1_with_env_assertions"
+    },
+    {
+      "case_id": "20260531-191847-173904:update_task_with_user_tools",
+      "confidence": "medium",
+      "constraint_gaps_detected": [
+        {
+          "db_check": {
+            "db_match": false,
+            "db_reward": 0.0
+          },
+          "issue": "db_mismatch_after_write",
+          "source": "reward_db_check"
+        },
+        {
+          "analysis_path": "runs/20260531-191847-173904/db_mismatch_analysis/db_mismatch_analysis.json",
+          "issue": "db_mismatch_or_scoring_ambiguity_for_user_tool_state",
+          "source": "known_prior_analysis"
+        }
+      ],
+      "detected_read_tools": [
+        {
+          "message_index": 4,
+          "name": "get_users",
+          "turn_idx": 4
+        }
+      ],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "status": "completed",
+            "task_id": "task_1"
+          },
+          "message_index": 6,
+          "name": "update_task_status",
+          "turn_idx": 6
+        },
+        {
+          "arguments": {
+            "notification_id": "notif_1"
+          },
+          "message_index": 9,
+          "name": "dismiss_notification",
+          "turn_idx": 9
+        }
+      ],
+      "domain": "mock",
+      "expected_write_tools": [
+        "update_task_status"
+      ],
+      "failure_categories": [
+        "post-write state mismatch",
+        "scoring/evaluation ambiguity"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation."
+      ],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": false,
+        "reward": 0.0,
+        "reward_basis": [
+          "DB",
+          "ACTION",
+          "ENV_ASSERTION"
+        ],
+        "reward_breakdown": {
+          "ACTION": 1.0,
+          "DB": 0.0,
+          "ENV_ASSERTION": 1.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-191847-173904",
+      "runtime_observation_would_be_needed": false,
+      "task_description": {
+        "notes": "The user checks their notification inbox, sees a task assigned to them, asks the agent to mark it completed, then dismisses the notification.",
+        "purpose": "Test user tool calling with check_notifications and dismiss_notification"
+      },
+      "task_id": "update_task_with_user_tools"
+    },
+    {
+      "case_id": "20260531-204930-608103:8",
+      "confidence": "high",
+      "constraint_gaps_detected": [
+        {
+          "detail": {
+            "dropped": [
+              {
+                "dob": "2001-04-12",
+                "first_name": "Kevin",
+                "last_name": "Smith"
+              }
+            ],
+            "field": "passengers",
+            "issue": "dropped_required_entities"
+          },
+          "field": "passengers",
+          "issue": "dropped_required_entities",
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "detail": {
+            "actual_total": 174,
+            "expected_total": 348,
+            "field": "payment_methods.amount",
+            "issue": "payment_total_mismatch"
+          },
+          "field": "payment_methods.amount",
+          "issue": "payment_total_mismatch",
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "db_check": {
+            "db_match": false,
+            "db_reward": 0.0
+          },
+          "issue": "db_mismatch_after_write",
+          "source": "reward_db_check"
+        },
+        {
+          "issue": "communicated_success_or_acceptably_but_db_failed",
+          "source": "reward_breakdown"
+        }
+      ],
+      "detected_read_tools": [
+        {
+          "message_index": 4,
+          "name": "get_user_details",
+          "turn_idx": 4
+        },
+        {
+          "message_index": 6,
+          "name": "get_reservation_details",
+          "turn_idx": 6
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        },
+        {
+          "message_index": 10,
+          "name": "get_reservation_details",
+          "turn_idx": 10
+        },
+        {
+          "message_index": 12,
+          "name": "get_reservation_details",
+          "turn_idx": 12
+        },
+        {
+          "message_index": 14,
+          "name": "get_reservation_details",
+          "turn_idx": 14
+        },
+        {
+          "message_index": 20,
+          "name": "search_direct_flight",
+          "turn_idx": 20
+        }
+      ],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "cabin": "economy",
+            "destination": "PHL",
+            "flight_type": "one_way",
+            "flights": [
+              {
+                "date": "2024-05-26",
+                "flight_number": "HAT271"
+              }
+            ],
+            "insurance": "no",
+            "nonfree_baggages": 0,
+            "origin": "ORD",
+            "passengers": [
+              {
+                "dob": "1957-10-05",
+                "first_name": "Sophia",
+                "last_name": "Silva"
+              }
+            ],
+            "payment_methods": [
+              {
+                "amount": 174,
+                "payment_id": "certificate_8045380"
+              }
+            ],
+            "total_baggages": 0,
+            "user_id": "sophia_silva_7557"
+          },
+          "message_index": 26,
+          "name": "book_reservation",
+          "turn_idx": 26
+        }
+      ],
+      "domain": "airline",
+      "expected_write_tools": [
+        "book_reservation"
+      ],
+      "failure_categories": [
+        "communication correct but DB state wrong",
+        "missing entity",
+        "post-write state mismatch",
+        "wrong price/payment"
+      ],
+      "future_activegraph_control_would_be_needed": true,
+      "general_pre_write_checker_could_have_flagged": true,
+      "ledger_evidence_available": true,
+      "ledger_evidence_path": "runs/20260531-222346-104165/write_intent_analysis/write_argument_diff.json",
+      "limitations": [],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": false,
+        "reward": 0.0,
+        "reward_basis": [
+          "DB",
+          "COMMUNICATE"
+        ],
+        "reward_breakdown": {
+          "COMMUNICATE": 1.0,
+          "DB": 0.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-204930-608103",
+      "runtime_observation_would_be_needed": true,
+      "task_description": {
+        "notes": null,
+        "purpose": "Booking with extra passenger.",
+        "relevant_policies": null
+      },
+      "task_id": "8"
+    },
+    {
+      "case_id": "20260531-222346-104165:8",
+      "confidence": "high",
+      "constraint_gaps_detected": [
+        {
+          "detail": {
+            "actual_total": 320,
+            "expected_total": 348,
+            "field": "payment_methods.amount",
+            "issue": "payment_total_mismatch"
+          },
+          "field": "payment_methods.amount",
+          "issue": "payment_total_mismatch",
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "detail": {
+            "field": "prerequisite_evidence",
+            "issue": "missing_prior_search_direct_flight"
+          },
+          "field": "prerequisite_evidence",
+          "issue": "missing_prior_search_direct_flight",
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "field": "write_timing",
+          "issue": "write_happened_before_sufficient_evidence",
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "field": "prerequisite_evidence",
+          "issue": {
+            "field": "prerequisite_evidence",
+            "issue": "missing_prior_search_direct_flight"
+          },
+          "source": "task8_write_intent_diff"
+        },
+        {
+          "db_check": {
+            "db_match": false,
+            "db_reward": 0.0
+          },
+          "issue": "db_mismatch_after_write",
+          "source": "reward_db_check"
+        },
+        {
+          "issue": "communicated_success_or_acceptably_but_db_failed",
+          "source": "reward_breakdown"
+        }
+      ],
+      "detected_read_tools": [
+        {
+          "message_index": 4,
+          "name": "get_user_details",
+          "turn_idx": 4
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        },
+        {
+          "message_index": 8,
+          "name": "get_reservation_details",
+          "turn_idx": 8
+        }
+      ],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "cabin": "economy",
+            "destination": "PHL",
+            "flight_type": "one_way",
+            "flights": [
+              {
+                "date": "2024-05-26",
+                "flight_number": "HAT271"
+              }
+            ],
+            "insurance": "no",
+            "nonfree_baggages": 0,
+            "origin": "ORD",
+            "passengers": [
+              {
+                "dob": "1957-10-05",
+                "first_name": "Sophia",
+                "last_name": "Silva"
+              },
+              {
+                "dob": "2001-04-12",
+                "first_name": "Kevin",
+                "last_name": "Smith"
+              }
+            ],
+            "payment_methods": [
+              {
+                "amount": 320,
+                "payment_id": "certificate_8045380"
+              }
+            ],
+            "total_baggages": 0,
+            "user_id": "sophia_silva_7557"
+          },
+          "message_index": 20,
+          "name": "book_reservation",
+          "turn_idx": 20
+        }
+      ],
+      "domain": "airline",
+      "expected_write_tools": [
+        "book_reservation"
+      ],
+      "failure_categories": [
+        "communication correct but DB state wrong",
+        "missing prerequisite read",
+        "post-write state mismatch",
+        "write before sufficient evidence",
+        "wrong price/payment"
+      ],
+      "future_activegraph_control_would_be_needed": true,
+      "general_pre_write_checker_could_have_flagged": true,
+      "ledger_evidence_available": true,
+      "ledger_evidence_path": "runs/20260531-222346-104165/write_intent_analysis/write_argument_diff.json",
+      "limitations": [],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": false,
+        "reward": 0.0,
+        "reward_basis": [
+          "DB",
+          "COMMUNICATE"
+        ],
+        "reward_breakdown": {
+          "COMMUNICATE": 1.0,
+          "DB": 0.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-222346-104165",
+      "runtime_observation_would_be_needed": true,
+      "task_description": {
+        "notes": null,
+        "purpose": "Booking with extra passenger.",
+        "relevant_policies": null
+      },
+      "task_id": "8"
+    },
+    {
+      "case_id": "20260531-184109-726391:update_task_with_initialization_data",
+      "confidence": "medium",
+      "constraint_gaps_detected": [
+        {
+          "issue": "reward_zero_despite_db_match_after_write",
+          "source": "reward_vs_db_check"
+        }
+      ],
+      "detected_read_tools": [],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "status": "completed",
+            "task_id": "task_2"
+          },
+          "message_index": 2,
+          "name": "update_task_status",
+          "turn_idx": 2
+        }
+      ],
+      "domain": "mock",
+      "expected_write_tools": [
+        "update_task_status"
+      ],
+      "failure_categories": [
+        "scoring/evaluation ambiguity"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation.",
+        "No prerequisite read evidence was reconstructed for this case outside tool-name heuristics."
+      ],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": true,
+        "reward": 0.0,
+        "reward_basis": [
+          "DB",
+          "COMMUNICATE"
+        ],
+        "reward_breakdown": {
+          "COMMUNICATE": 0.0,
+          "DB": 1.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-184109-726391",
+      "runtime_observation_would_be_needed": false,
+      "task_description": {
+        "notes": "Tests updating a task status with initial message history showing previous context",
+        "purpose": "Test the update_task_status functionality with pre-existing conversation history"
+      },
+      "task_id": "update_task_with_initialization_data"
+    },
+    {
+      "case_id": "20260531-184109-726391:update_task_with_history_and_env_assertions",
+      "confidence": "medium",
+      "constraint_gaps_detected": [
+        {
+          "db_check": {
+            "db_match": false,
+            "db_reward": 0.0
+          },
+          "issue": "db_mismatch_after_write",
+          "source": "reward_db_check"
+        }
+      ],
+      "detected_read_tools": [],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "description": "Review Q4 project status",
+            "title": "Project Review",
+            "user_id": "user_1"
+          },
+          "message_index": 1,
+          "name": "create_task",
+          "turn_idx": 1
+        },
+        {
+          "arguments": {
+            "status": "completed",
+            "task_id": "task_2"
+          },
+          "message_index": 5,
+          "name": "update_task_status",
+          "turn_idx": 5
+        }
+      ],
+      "domain": "mock",
+      "expected_write_tools": [],
+      "failure_categories": [
+        "post-write state mismatch"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation.",
+        "No prerequisite read evidence was reconstructed for this case outside tool-name heuristics."
+      ],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": false,
+        "reward": 1.0,
+        "reward_basis": [
+          "ENV_ASSERTION"
+        ],
+        "reward_breakdown": {
+          "ENV_ASSERTION": 1.0
+        },
+        "termination_reason": "user_stop"
+      },
+      "run_dir": "runs/20260531-184109-726391",
+      "runtime_observation_would_be_needed": false,
+      "task_description": {
+        "notes": "Tests updating a task status with initial message history showing previous context",
+        "purpose": "Test the update_task_status functionality with pre-existing conversation history and env assertions"
+      },
+      "task_id": "update_task_with_history_and_env_assertions"
+    },
+    {
+      "case_id": "20260531-184109-726391:update_task_with_user_tools",
+      "confidence": "medium",
+      "constraint_gaps_detected": [
+        {
+          "analysis_path": "runs/20260531-184109-726391/db_mismatch_analysis/db_mismatch_analysis.json",
+          "issue": "db_mismatch_or_scoring_ambiguity_for_user_tool_state",
+          "source": "known_prior_analysis"
+        }
+      ],
+      "detected_read_tools": [
+        {
+          "message_index": 4,
+          "name": "get_users",
+          "turn_idx": 4
+        }
+      ],
+      "detected_write_tools": [
+        {
+          "arguments": {
+            "status": "completed",
+            "task_id": "task_1"
+          },
+          "message_index": 8,
+          "name": "update_task_status",
+          "turn_idx": 8
+        }
+      ],
+      "domain": "mock",
+      "expected_write_tools": [],
+      "failure_categories": [
+        "scoring/evaluation ambiguity"
+      ],
+      "future_activegraph_control_would_be_needed": false,
+      "general_pre_write_checker_could_have_flagged": false,
+      "ledger_evidence_available": false,
+      "ledger_evidence_path": null,
+      "limitations": [
+        "Static task instructions/evaluation criteria are present, but this scan intentionally uses deterministic artifact heuristics rather than LLM interpretation."
+      ],
+      "offline_analysis_can_detect_today": true,
+      "reward_outcome": {
+        "db_match": null,
+        "reward": 0.0,
+        "reward_basis": null,
+        "reward_breakdown": null,
+        "termination_reason": "max_steps"
+      },
+      "run_dir": "runs/20260531-184109-726391",
+      "runtime_observation_would_be_needed": false,
+      "task_description": {
+        "notes": "The user checks their notification inbox, sees a task assigned to them, asks the agent to mark it completed, then dismisses the notification.",
+        "purpose": "Test user tool calling with check_notifications and dismiss_notification"
+      },
+      "task_id": "update_task_with_user_tools"
+    }
+  ],
+  "generated_at": "2026-05-31T23:03:10.796818Z",
+  "input_warnings": [],
+  "recommendation": {
+    "do_not_add_activegraph_control_yet": true,
+    "proceed_to_passive_runtime_observer": true,
+    "write_intent_mechanism_generalizes_beyond_task8": "partially: strongest for multi-constraint irreversible writes with reconstructable intended arguments; adjacent failures support passive observation but not all are pre-write ledger failures"
+  },
+  "scope": {
+    "activegraph_control_added": false,
+    "api_keys_required": false,
+    "llm_api_calls": false,
+    "model_backed_episode": false,
+    "offline_artifact_analysis_only": true,
+    "tau2_rerun": false,
+    "vendor_tau2_bench_mutated": false
+  },
+  "sources": [
+    {
+      "prior_analysis_files": [
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/comparison_to_postrun_trace.json",
+          "sha256": "sha256:5d7a31d03034537f230c8740ab2652e2f55494bf69db06802aa36185c0ab2c75"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/comparison_to_short_run.json",
+          "sha256": "sha256:7c7dc50d1fcf7315a6f26a175e354bfde7731ebdef64951cb3b2cd9b9d60403f"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/completion_path.json",
+          "sha256": "sha256:fb1dfe53ca88706669248bbf92b903b98494200d1ddce9315e6efcc920cbfc90"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/final_state.json",
+          "sha256": "sha256:fd092a63d205e0ebbc51802c42bae4b15e9890974a5afee472e55090ae579247"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/runtime_event_coverage.json",
+          "sha256": "sha256:79e46da4482807a688578c907adb77e565eafa3439cb690898bb06e549fc2bef"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_analysis.json",
+          "sha256": "sha256:bacb94f546626e7047001b34279f4a943bbd37a899cd8d258e8a4fedf0945aac"
+        },
+        {
+          "path": "runs/20260531-170523-841701/runtime_success_analysis/successful_runtime_trace_summary.md",
+          "sha256": "sha256:e926f60730abcc35439b3aa9d99a49f945e9b192ae5ce2fe975ec1629b39f955"
+        },
+        {
+          "path": "runs/20260531-170523-841701/db_mutation_analysis/db_mutation_summary.json",
+          "sha256": "sha256:3be051f2efa7fc8501182a0ea9db5fdf025d87cb32ed204708f4d5b1ac3838da"
+        },
+        {
+          "path": "runs/20260531-170523-841701/db_mutation_analysis/final_state.json",
+          "sha256": "sha256:454572411b5812d8e519dc0acc2b2e49a9a07226f5f2d576edc2a54315eeed50"
+        },
+        {
+          "path": "runs/20260531-170523-841701/db_mutation_analysis/mutation_evidence_index.json",
+          "sha256": "sha256:2d7e6cf5e1b8db707050b776ac154d6de0367b68c8020b8237755b876eb02e2b"
+        },
+        {
+          "path": "runs/20260531-170523-841701/db_mutation_analysis/db_mutation_summary.md",
+          "sha256": "sha256:4bcbd0e94ceb08121561e09dd084f36c9b21a23bccd4098a1918ebcfba383f76"
+        }
+      ],
+      "results_path": "runs/20260531-170523-841701/tau2_output/results.json",
+      "results_sha256": "sha256:f3f25e490f599f65c839ddae3031c5b8be3fd96cbcd8240c607e013ebc510d55",
+      "run_dir": "runs/20260531-170523-841701",
+      "runtime_events_path": "runs/20260531-170523-841701/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:2fecc85a5dfdf6cc1bb081d02f12fef8cec36c73b685d0fe0413c7c2c5995dde"
+    },
+    {
+      "prior_analysis_files": [
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/comparison_to_postrun_trace.json",
+          "sha256": "sha256:a7bc36b8add260e747d02607b21fe9df13d54d769279c37afadc8f665834c95a"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/comparison_to_short_run.json",
+          "sha256": "sha256:b1ab99d14ddf31ab1797a7f01cfb6d45c114ba0dd5a228845ba34b17121ed2bb"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/completion_path.json",
+          "sha256": "sha256:125e39360abca06bbd268e2b94e1e6c7093da246726abbc9194c5a6e71c056c1"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/final_state.json",
+          "sha256": "sha256:f137b0a1a1935d91c83eb687f0f5ceeff81f7494a4db27a4d0f99e5e64c53bdd"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/runtime_event_coverage.json",
+          "sha256": "sha256:bbb6d4c5c7815d7620ff28f52f4ca8824ac52aca06ec3af613227a933569f95e"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/successful_runtime_trace_analysis.json",
+          "sha256": "sha256:43489d77878f83b021756da80ee2cf20cd392928c8422b3407f4f3f13dacdf21"
+        },
+        {
+          "path": "runs/20260531-170618-525260/runtime_success_analysis/successful_runtime_trace_summary.md",
+          "sha256": "sha256:1c8d4a13766d3fba7cf7a30ed7d590e0f8566b2a3567e932bcaddb5bc0f26d00"
+        },
+        {
+          "path": "runs/20260531-170618-525260/db_mutation_analysis/db_mutation_summary.json",
+          "sha256": "sha256:26d4597e58f01612584cc1c1d40ac64953cd90def32f7ff2ad513d4c7b14c19f"
+        },
+        {
+          "path": "runs/20260531-170618-525260/db_mutation_analysis/final_state.json",
+          "sha256": "sha256:30f09ca04d3246a4ef00cc101ef916abc885185128349ec6359f298cb35641ca"
+        },
+        {
+          "path": "runs/20260531-170618-525260/db_mutation_analysis/mutation_evidence_index.json",
+          "sha256": "sha256:8e2dc1b835fde94927412849d7cfdefa8a33c5955c6b7e1b6a8d47b7ff25830a"
+        },
+        {
+          "path": "runs/20260531-170618-525260/db_mutation_analysis/db_mutation_summary.md",
+          "sha256": "sha256:012ef8081b49cb76dfa2f8cf52fe4f7002f83b7f76c8fafea7e39182bbdef838"
+        }
+      ],
+      "results_path": "runs/20260531-170618-525260/tau2_output/results.json",
+      "results_sha256": "sha256:9993d9b2c5637e695d31a6a2ec785dee8c58a3ab6639d0d48dc234ebbf63a73d",
+      "run_dir": "runs/20260531-170618-525260",
+      "runtime_events_path": "runs/20260531-170618-525260/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:e5395db3fce15c4ad93e863618d541077c0e9724dc82546c99a214b2fb16617f"
+    },
+    {
+      "prior_analysis_files": [
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/db_mismatch_analysis.json",
+          "sha256": "sha256:f2b794e2e4bb49a571f9980710a6b636890ed17ad702a519c42ee4f441f3e80b"
+        },
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/expected_vs_observed.json",
+          "sha256": "sha256:30444a642169e6105defc22fbd7e37e34e0a2af453021d2c57b703ab2a385045"
+        },
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/final_state.json",
+          "sha256": "sha256:4e76e998438769425f78beaa8dda0e7cf51133e635e55ff30daab82cf16a6538"
+        },
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/scoring_evidence.json",
+          "sha256": "sha256:0fb837b442b75414cd3501269e46d958d4d9b478a19af172bb0eb7e09407a1c5"
+        },
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/tool_call_timeline.json",
+          "sha256": "sha256:8c4e833747a0d57cfc7eabae9ddc52d78ccb6c2a579eb4354a7892615fe1a5c8"
+        },
+        {
+          "path": "runs/20260531-191847-173904/db_mismatch_analysis/db_mismatch_summary.md",
+          "sha256": "sha256:281c11f14a4f183471c9f5fe0f15cf4b42e700c693677401ead7f2f4bb569f62"
+        }
+      ],
+      "results_path": "runs/20260531-191847-173904/tau2_output/results.json",
+      "results_sha256": "sha256:7a7c3acf899c47ce583f8426ad0e9a486265bd166b4b6d2c08c130e8a7c7b754",
+      "run_dir": "runs/20260531-191847-173904",
+      "runtime_events_path": "runs/20260531-191847-173904/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:d4de266113e9ae0221533489bafe70b27e96857cb5b86f6553a7b0735d614dd8"
+    },
+    {
+      "prior_analysis_files": [
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/action_expectation_analysis.json",
+          "sha256": "sha256:a488b70eeeae6df6bdbb68469670d35a0b3624db07854e31f754af95d06d861b"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/airline_task8_failure_analysis.json",
+          "sha256": "sha256:b75ca5a0f20430197202c339e24655a48e700943d22c6bee04df04c95d35f580"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/expected_vs_observed.json",
+          "sha256": "sha256:961f356f24ceb851a3e55e1d5443ddafd489d0581808d0b221e91a982f53fb82"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/final_state.json",
+          "sha256": "sha256:59c1f6c645147663be476fd5333ac81271f4c98a01724528f34e3fa34d4b30c7"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/scoring_evidence.json",
+          "sha256": "sha256:e588925706aa7a9da569a99f0dafb39f418ab081bfa9fedcb118d2359bfa8579"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/tool_call_timeline.json",
+          "sha256": "sha256:be09be7aa30042d94b2db8b4e301522a514770756170b83a0dfcfa069b87b4ce"
+        },
+        {
+          "path": "runs/20260531-204930-608103/airline_task8_failure_analysis/airline_task8_failure_summary.md",
+          "sha256": "sha256:bf62d3bcbc862c847f2dc506c3f79f3e3554ec2a3d810e522fb53ad9d353d12e"
+        }
+      ],
+      "results_path": "runs/20260531-204930-608103/tau2_output/results.json",
+      "results_sha256": "sha256:98c490f0cc263777d0cd547dbfb8f59a6d52945c21c70c38301108773dda7920",
+      "run_dir": "runs/20260531-204930-608103",
+      "runtime_events_path": "runs/20260531-204930-608103/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:20e05828fe92ad7a543b04ae16ae6ecf4b7ab10d4879a08e14de6a3b5ad089e1"
+    },
+    {
+      "prior_analysis_files": [
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/action_score_delta.json",
+          "sha256": "sha256:8aed2e0e7271fad0c98cf1f7e03ca879b21280d8d5a6c4298ad31493ef805974"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/final_state.json",
+          "sha256": "sha256:f2057d1727419c53a87b5171014b15bcb0bc72f9831884a780ba7054fe96be0f"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/generalization_assessment.json",
+          "sha256": "sha256:ccf1cd44a98f2883c9b013f26f6f79c649c7ea95695d9ffaf1cd14967da96e54"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/message_path_delta.json",
+          "sha256": "sha256:bf26c95ad6328ef8d51912ede1e24a80d14e07d9944ad91afb0b31d7e264723e"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/prompt_variant_comparison.json",
+          "sha256": "sha256:f02faa84daeb0abd22753dba79cc5fde5e8e948f94f2bf94d22d5505bf2de72b"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/tool_argument_delta.json",
+          "sha256": "sha256:1b3bc3c874f9587e7c553468c4dc0c8919fa36e91d3e0b16b5eeb4d085f2131a"
+        },
+        {
+          "path": "runs/20260531-222346-104165/prompt_variant_comparison/prompt_variant_comparison_summary.md",
+          "sha256": "sha256:dd051003bcb0ad03fd0c82e1fa203f3cc2261c9d733fba6ae7526c8c581c90f0"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/constraint_ledger.json",
+          "sha256": "sha256:dc55033deef759e8daff0e16bd5c98ccf77d65ae373052d149ebff19aaffdbcc"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/evidence_timeline.json",
+          "sha256": "sha256:5160a265ff5795d450921ec42754d89c4529c03bcf73de1895041f3ccf6f7866"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/final_state.json",
+          "sha256": "sha256:301b664503825632370d58e423ddf70a65d5871bcfe2c293af9c66059b06f92c"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/general_intervention_hypotheses.json",
+          "sha256": "sha256:bb55a688706a1fff66a0a87f7272e741a802f5b3e9567d9dbb0e1108af88e7e3"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/write_argument_diff.json",
+          "sha256": "sha256:48dbf72d91c4a22a0ec5657572605c076082ccff9009276e4ddbecd54310d74c"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/write_intent_analysis.json",
+          "sha256": "sha256:7a2f4281b77e67a98575785fd99dd52c29890b1365d9ccde86ba9f1fe3e6dbf7"
+        },
+        {
+          "path": "runs/20260531-222346-104165/write_intent_analysis/write_intent_summary.md",
+          "sha256": "sha256:d36d208effb83d262718344452f20601e8f3fc3b4358047ebd1bc5c5dbd69421"
+        }
+      ],
+      "results_path": "runs/20260531-222346-104165/tau2_output/results.json",
+      "results_sha256": "sha256:e25d745784c9c2a8d2256138b04f3c978750678e2d94926ceb32df9ca06e728b",
+      "run_dir": "runs/20260531-222346-104165",
+      "runtime_events_path": "runs/20260531-222346-104165/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:729ad2e883569d575b3b88be1e36e8df3088c86df2f571600e71bb58e0323e20"
+    },
+    {
+      "prior_analysis_files": [],
+      "results_path": "runs/20260531-184109-726391/tau2_output/results.json",
+      "results_sha256": "sha256:ef0441a638faae4972a1a96aad274b7275223ad75beed2c5be3358386c2378bb",
+      "run_dir": "runs/20260531-184109-726391",
+      "runtime_events_path": "runs/20260531-184109-726391/runtime_events.jsonl",
+      "runtime_events_sha256": "sha256:dab748e2eb71ccb9828ad735f044efc4b69bf85d8625c2a18ad34aef23e3835f"
+    }
+  ],
+  "status": "write_intent_gap_scan_passed"
+}

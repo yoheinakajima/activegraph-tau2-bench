@@ -1,0 +1,10 @@
+2026-05-31T23:03:10.801786Z status=write_intent_gap_scan_passed
+offline_artifact_analysis_only=true
+tau2_rerun=false
+model_backed_episode=false
+llm_api_calls=false
+api_keys_required=false
+vendor_tau2_bench_mutated=false
+activegraph_control_added=false
+run_dirs_scanned=6
+cases_scanned=8
