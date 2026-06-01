@@ -42,6 +42,12 @@ SMOKES = [
         "expected_statuses": ["state_packet_smoke_passed"],
     },
     {
+        "name": "write_intent_observer",
+        "command": [sys.executable, "scripts/run_write_intent_observer_smoke.py"],
+        "display_command": "python scripts/run_write_intent_observer_smoke.py",
+        "expected_statuses": ["write_intent_observer_smoke_passed"],
+    },
+    {
         "name": "reactive_manager_dry_run",
         "command": [sys.executable, "scripts/run_reactive_manager_dry_run.py"],
         "display_command": "python scripts/run_reactive_manager_dry_run.py",
