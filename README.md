@@ -32,6 +32,7 @@ python scripts/check_repo_health.py --run-smokes
 
 - [Phase matrix](docs/phase_matrix.md) — phase-by-phase command/status/artifact table.
 - [Milestone report](docs/milestone_report.md) — consolidated Phase 1.5 through Phase 13 report.
+- [tau2 Regimes port milestone](docs/tau2_regimes_port_milestone.md) — implementation handoff for adding an artifact-first tau2 target, outcome schema, taxonomy, tool ownership registry, and stop conditions to the separate `regimes` repo.
 - [Operations guide](docs/operations.md) — setup, validation, artifact inspection, cleanup, and safety boundaries.
 - [Source map](docs/source_map.md) — local map of the vendored tau2-bench source.
 
